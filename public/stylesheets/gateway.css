@@ -1,0 +1,69 @@
+/*initial stylesheet template taken from bootstrap sign in example - https://getbootstrap.com/docs/4.1/examples/sign-in/ */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #336600;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 480px;
+  padding: 15px;
+  margin: auto;
+  align-items: center;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin .button {
+  position: relative;
+  border-radius: 25px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 5px solid white;
+  color: white;
+  background-color: #336600;
+}
+
+.form-signin input {
+  position: relative;
+  border-radius: 25px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  border: 1px solid white;
+  color: black;
+}
+
+.form-signin .btn-text{
+  text-align: left;
+  margin-left: 20px;
+  margin-bottom: 2px;
+  color: white;
+  font-size: 18px;
+}
+
+.form-signin .btn-link:hover{
+  background-color: blanchedalmond;
+  color: #336600;
+  text-decoration: none;
+}
