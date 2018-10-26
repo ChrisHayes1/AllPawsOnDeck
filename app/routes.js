@@ -19,6 +19,12 @@ module.exports = function(app, passport) {
     });
 
     // process the login form
+/******************************************************
+ * All Paws On Deck
+ * CS 506
+ * Routes 
+ *****************************************************/
+    
     // app.post('/login', do all our passport stuff here);
 // process the login form
     app.post('/login', passport.authenticate('local-login', {
