@@ -1,3 +1,10 @@
+/******************************************************
+ * All Paws On Deck
+ * CS 506
+ * Routes 
+ *****************************************************/
+
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -19,19 +26,28 @@ module.exports = function(app, passport) {
     });
 
     // process the login form
-/******************************************************
- * All Paws On Deck
- * CS 506
- * Routes 
- *****************************************************/
+
     
     // app.post('/login', do all our passport stuff here);
-// process the login form
-    app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+    // process the login form
+    app.post('/login', 
+        passport.authenticate('local-login', 
+            {
+                successRedirect : '/profile', // redirect to the secure profile section
+                failureRedirect : '/login', // redirect back to the signup page if there is an error
+                failureFlash : true // allow flash messages
+            }
+        )
+    );
+
+    // app.post('/login', function(req, res){
+    //     console.log('Login detected');
+    //     var keyName1=req.body;
+    //     console.log(keyName1);
+
+
+    // });
+
     // =====================================
     // SIGNUP ==============================
     // =====================================
