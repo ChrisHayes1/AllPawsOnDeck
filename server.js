@@ -30,8 +30,26 @@ var path = require('path');
 
 //var configDB = require('./config/database.js');
 
-// configuration ===============================================================
-mongoose.connect('mongodb://myUserAdmin:abc123@127.0.0.1:27017'); // connect to our database
+// // configuration ===============================================================
+// console.log("Connecting to mongose");
+// mongoose.connect('mongodb://myUserAdmin:abc123@127.0.0.1:27017', { useNewUrlParser: true }, err=> {
+//     if(err) {
+//         console.log('connection to mongo.db threw the following error ' + err);
+//     } else {
+//         console.log('Connection to mongo.db succesful')
+//     }
+
+// }); // connect to our database
+
+mongoose.connect('mongodb://localhost:27017/apodDB', { useNewUrlParser: true }, err=> {
+    if(err) {
+        console.log('connection to mongo.db threw the following error ' + err);
+    } else {
+        console.log('Connection to mongo.db succesful')
+    }
+
+}); // connect to our database
+//mongoose.connect('mongodb://localhost:27017/apodDB');
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -47,7 +65,8 @@ app.use('/css', express.static(path.join(__dirname,  path.join('public', 'styles
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
-app.use(session({ secret: 'AllPawsBestTeamEver' })); // session secret
+//app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(session({ secret: 'allpawsondeckbestpawsondeck' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

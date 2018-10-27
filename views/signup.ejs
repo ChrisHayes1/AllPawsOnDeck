@@ -19,20 +19,28 @@
     </head>
 
     <body class = "text-center" style>
-        <form class = "form-signin">
-                <p class = "btn-text">First Name</p>
-                <input type="text" id="firstName" class="form-control" required="" autofocus="">
+        <form class = "form-signin" action ="/signup" method="post">
+            <div class = "form-group">
+                <label for="firstName" class = "btn-text">First Name</label>
+                <input type="text" class="form-control" id="firstName"  required="" autofocus="">
+            </div>
 
-                <p class = "btn-text">Last Name</p>
-                <input type="text" id="firstName" class="form-control" required="">
+            <div class = "form-group">
+                <label for="lastName" class = "btn-text">Last Name</label>
+                <input type="text" class="form-control" id="lastName"  required="">
+            </div>
 
-                <p class = "btn-text">Email Address</p>
-                <input type="email" id="inputEmail" class="form-control" required="">
+            <div class = "form-group">
+                <label for="userEmail" class = "btn-text">Email Address</label>
+                <input type="email" class="form-control" id="userEmail"  required="" name = "userEmail">
+            </div>
 
-                <p class = "btn-text">Password</p>
-                <input type="password" id="inputPassword" class="form-control" required="">
+            <div class = "form-group">
+                <label for="userPassword" class = "btn-text">Password</label>
+                <input type="password" class="form-control" id="userPassword"  required="" name = "userPassword"> 
+            </div>
 
-                <button class = "btn btn-lg btn-block button btn-link">Sign Up</button>
+            <button type="submit" class = "btn btn-lg btn-block button btn-link">Sign Up</button>
         </form>
     </body> 
 
