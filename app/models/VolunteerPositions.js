@@ -1,10 +1,11 @@
-class VolunteerPositions(postionID, postionName, roleDescription){
+function VolunteerPositions(postionID, postionName, roleDescription, trainings){
 
 	this.postionID = postionID;
 	this.postionName = postionName;
 	this.roleDescription = roleDescription;
+	this.trainings = trainings;
 
-	this.trainings = function() {
+	this.requiredTrainings = function() {
 		
 	}
 
