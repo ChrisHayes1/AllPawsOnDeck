@@ -1,28 +1,106 @@
 <!DOCTYPE html>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
 <html lang="en">
-<head>
-        <meta charset = "utf-8">
-        <meta name = "viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Welcome to All Paws On Deck</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="stylesheets/gateway.css">
-    </head>
-<body class="container">
+ 
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
 
-	<main>
-			<h1>All Paws on Deck</h1>
-			<meta charset = "utf-8">
-			<meta name = "viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-			<p><%= user.local.firstname %> <%= user.local.lastname %></p>
-			<p><%= user.local.email %></p>
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-			<link rel="stylesheet" type="text/css" href="stylesheets/gateway.css">
-	</main>
-	
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*  header style */
+header {
+  background-color: #638650;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/*  two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 30%;
+  height: 300px; /* filler until we have a real side bar with info */
+  background: #777;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  background-color: #f1f1f1;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* footer style */
+footer {
+  background-color: #638650;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+      width: 100%;
+      height: auto;
+  }
+}
+</style>
+</head>
+<body>
+
+
+
+<header>
+<h2>Welcome!</h2>
+</header>
+
+<section>
+<nav>
+<H1> My Profile </H1>
+<p> View Application </p>
+<p> Onboarding </p>
+<p> Calendar </p>
+<p> Volunteer </p>
+
+
+</nav>
+
+<article>
+	<h2>Name</h2>
+
+	<p1><%= user.local.firstname %> <%= user.local.lastname %></p1>
+    <h2>Email</h2>
+
+    <p><%= user.local.email %></p>
+</article>
+</section>
+
+<footer>
+All Paws on Deck!
+</footer>
+
 </body>
 </html>
