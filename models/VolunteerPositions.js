@@ -5,8 +5,8 @@ function VolunteerPositions(postionID, postionName, roleDescription, trainings){
 	this.roleDescription = roleDescription;
 	this.trainings = trainings;
 
-	this.requiredTrainings = function() {
+	this.requiredTraining = function() {
 		
-	}
+	};
 
 }
