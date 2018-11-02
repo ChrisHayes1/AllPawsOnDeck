@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\app",
-    "\\app\\models",
     "\\config",
+    "\\controller",
+    "\\models",
+    "\\public",
     "\\views"
   ],
   "PreviewInSolutionExplorer": false
