@@ -1,4 +1,6 @@
-function VolunteerPositions(postionID, postionName, roleDescription, trainings){
+var mongoose = require('mongoose');
+
+/*function VolunteerPositions(postionID, postionName, roleDescription, trainings){
 
 	this.postionID = postionID;
 	this.postionName = postionName;
@@ -9,4 +11,16 @@ function VolunteerPositions(postionID, postionName, roleDescription, trainings){
 		
 	};
 
-}
+}*/
+
+var vpSchema = mongoose.Schema({
+
+
+	postionID        : Number,
+	postionName     : String,
+	roleDescription    : String,
+	trainings     : [Number],
+    
+});
+
+module.exports = mongoose.model('VolunteerPosition', vpSchema);
