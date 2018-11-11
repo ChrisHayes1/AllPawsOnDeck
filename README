@@ -1,0 +1,4 @@
+To start application:
+'node server'
+To run tests:
+'npm test'
