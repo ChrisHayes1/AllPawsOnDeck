@@ -1,0 +1,5 @@
+1) Sign up with email already in use, stay on signup and let user know email is already in use
+2) Sign up with new email, redirect into profile
+3) Log in with bad email - error message email not recognized
+4) Log in with bad password - error message bad password
+5) Log in with valid email - redirect to profile
