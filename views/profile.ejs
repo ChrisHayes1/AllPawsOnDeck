@@ -1,40 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>All Paws On Deck</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <header>
-    <h2>Welcome!</h2>
-    </header>
+ 
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    <section>
-    <nav>
-    <p class = "NavMenuButton NavMenuSelection"> My Profile </p>
-    <a href="/application" class="NavMenuButton"> Application</a>
-    <p class="NavMenuButton"> Onboarding </p>
-    <p class="NavMenuButton"> Calendar </p>
-    <p class="NavMenuButton"> Volunteer </p>
-    <a href="/logout" class="NavMenuButton">Log out</a>
-    </nav>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    <article>
-      <h2>Name</h2>
+/*  header style */
+header {
+  background-color: #638650;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
 
-      <p1><%= user.local.firstname %> <%= user.local.lastname %></p1>
-        <h2>Email</h2>
+/*  two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 30%;
+  height: 300px; /* filler until we have a real side bar with info */
+  background: #777;
+  padding: 20px;
+}
 
-        <p><%= user.local.email %></p>
-    </article>
-    </section>
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-    <footer>
-    All Paws on Deck!
-    </footer>
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  background-color: #f1f1f1;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* footer style */
+footer {
+  background-color: #638650;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+      width: 100%;
+      height: auto;
+  }
+}
+</style>
+</head>
+<body>
+
+
+
+<header>
+<h2>Welcome!</h2>
+</header>
+
+<section>
+<nav>
+<H1> My Profile </H1>
+<p> View Application </p>
+<p> Onboarding </p>
+<p> Calendar </p>
+<p> Volunteer </p>
+<a href="/logout">Log out</a>
+
+
+</nav>
+
+<article>
+	<h2>Name</h2>
+
+	<p1><%= user.local.firstname %> <%= user.local.lastname %></p1>
+    <h2>Email</h2>
+
+    <p><%= user.local.email %></p>
+</article>
+</section>
+
+<footer>
+All Paws on Deck!
+</footer>
 
 </body>
 </html>
-
-
