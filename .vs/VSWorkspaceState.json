@@ -1,10 +1,15 @@
 {
   "ExpandedNodes": [
+    "",
     "\\config",
     "\\controller",
-    "\\models",
-    "\\public",
-    "\\views"
+    "\\node_modules\\backbone",
+    "\\node_modules\\backbone\\docs",
+    "\\node_modules\\backbone\\docs\\images",
+    "\\node_modules\\underscore",
+    "\\views",
+    "\\__tests__"
   ],
+  "SelectedNode": "\\config\\passport.js",
   "PreviewInSolutionExplorer": false
 }
