@@ -19,17 +19,19 @@
         <a href="/application" class="NavMenuButton"> Application</a>
         <p class="NavMenuButton"> Onboarding </p>
         <p class="NavMenuButton"> Calendar </p>
-        <p class="NavMenuButton"> Volunteer </p>
+        <a href="/volunteerpositions" class="NavMenuButton"> Volunteer </a>
         <a href="/logout" class="NavMenuButton">Log out</a>
     </nav>
 
     <article>
-      <h2>Name</h2>
+      <div id = "userProfile"
+        <%- include partials/partialUserProfile.ejs %>
+      </div>
 
-      <p1><%= user.local.firstname %> <%= user.local.lastname %></p1>
-        <h2>Email</h2>
-
-        <p><%= user.local.email %></p>
+		<h2>Training Status</h2>
+		<p>Completed Training: <%= user.local.completedTraining %></p>
+		<h2>Account Type</h2>
+		<p><%= user.local.userType %></p>
     </article>
     </section>
 

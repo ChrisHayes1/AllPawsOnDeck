@@ -1,0 +1,15 @@
+<!--Displays user profile and allows me to switch between edit and display views with unlock button. -->
+<!--When in edit mode also need a button to submit changes with post. -->
+
+<body class = "text-center" style="border: 1px solid #000000;">
+    <h2>My Profile</h2>
+    <fieldset>
+        <form class = "form-signin" action ="/signup" method="post">
+            <div>
+                <!-- Maybe use a table to organize-->
+                <p>Name: <%= user.local.firstname %> <%= user.local.lastname %></p>
+                <p>Email: <%= user.local.email %></p>
+            </div>
+        </form>
+    </fieldset>
+</body>

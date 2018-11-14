@@ -70,6 +70,10 @@ module.exports = function(app, passport) {
         });
     });
 
+    
+    
+
+
     // **********************************
     // APPLICATION
     // **********************************
@@ -77,6 +81,16 @@ module.exports = function(app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/application', isLoggedIn, function(req, res) {
         res.render('application.ejs', {
+            //user : req.user // get the user out of session and pass to template
+        });
+    });
+
+    // **********************************
+    // Volunteer postions
+    // **********************************
+    //This page needs to be different for user and cordinator
+    app.get('/volunteerpositions', isLoggedIn, function(req, res) {
+        res.render('volunteerposition.ejs', {
             //user : req.user // get the user out of session and pass to template
         });
     });
