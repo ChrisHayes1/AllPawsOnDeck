@@ -9,6 +9,15 @@
                 <!-- Maybe use a table to organize-->
                 <p>Name: <%= user.local.firstname %> <%= user.local.lastname %></p>
                 <p>Email: <%= user.local.email %></p>
+                
+                <p>Phone Number: <%= user.local.phoneNumber %></p>
+
+                <p>Address: <%= user.address.address1 %></p>
+                <p>         <%= user.address.address2 %></p>
+                <p>         <%= user.address.city %>, <%= user.address.state %> <%= user.address.zip %></p>
+                
+                <p>Date Of Birth: <%= user.dob.day %>-<%= user.dob.month %>-<%= user.dob.year %></p>
+
             </div>
         </form>
     </fieldset>
