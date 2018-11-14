@@ -82,6 +82,16 @@ module.exports = function(app, passport) {
     });
 
     // **********************************
+    // Volunteer postions
+    // **********************************
+    //This page needs to be different for user and cordinator
+    app.get('/volunteerpositions', isLoggedIn, function(req, res) {
+        res.render('volunteerposition.ejs', {
+            //user : req.user // get the user out of session and pass to template
+        });
+    });
+
+    // **********************************
     // LOGOUT 
     // **********************************
     app.get('/logout', function(req, res) {
