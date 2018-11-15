@@ -15,7 +15,7 @@
                         name="firstName"
                         required
                         type="text" 
-                        value= <%= user.local.firstname %>>
+                        value= "<%= user.local.firstname %>">
                 </th>
             </tr>
             <tr>
@@ -25,7 +25,7 @@
                         name="lastName"
                         required
                         type="text" 
-                        value= <%= user.local.lastname %>>
+                        value= "<%= user.local.lastname %>">
                 </th>
             </tr>
             <tr>
@@ -34,7 +34,7 @@
                     <input class = "EditProfileInput" 
                         name="phoneNumber"
                         type="text" 
-                        value= <%= user.local.phoneNumber %>>
+                        value= "<%= user.local.phoneNumber %>">
                 </th>
             </tr>
         </table>
@@ -50,7 +50,7 @@
                                 <input name="address1"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.address1 %>>
+                                    value= "<%= user.address.address1 %>">
                                 
                             </th>
                         <tr>
@@ -59,7 +59,7 @@
                                 <input name="address2"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.address2 %>>
+                                    value= "<%- user.address.address2 %>">
                                 
                             </th>
                         </tr>
@@ -69,7 +69,7 @@
                                 <input name="city"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.city %>>
+                                    value= "<%= user.address.city %>">
                                 
                             </th>
                         </tr>
@@ -79,7 +79,7 @@
                                 <input name="state"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.state %>>
+                                    value= "<%= user.address.state %>">
                                 
                             </th>
                         </tr>
@@ -89,7 +89,7 @@
                                 <input name="zip"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.zip %>>
+                                    value= "<%= user.address.zip %>">
                                 
                             </th>
                         </tr>
@@ -109,7 +109,7 @@
                                 <input name="day"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.day %>>
+                                    value= <%= user.dob.day %>>
                                 
                             </th>
                         <tr>
@@ -118,7 +118,7 @@
                                 <input name="month"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.month %>>
+                                    value= <%= user.dob.month %>>
                                 
                             </th>
                         </tr>
@@ -128,7 +128,7 @@
                                 <input name="year"
                                     class = "EditProfileInputSub" 
                                     type="text" 
-                                    value= <%= user.local.year %>>
+                                    value= <%= user.dob.year %>>
                                 
                             </th>
                         </tr>

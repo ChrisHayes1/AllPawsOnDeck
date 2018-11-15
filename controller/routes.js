@@ -1,9 +1,10 @@
 /******************************************************
  * All Paws On Deck
  * CS 506
- * Routes 
+ * Routes.js handles all routing for the server 
  *****************************************************/
 
+var mUser = require('../models/user');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -70,9 +71,21 @@ module.exports = function(app, passport) {
         });
     });
 
-    
-    
+    app.post('/profile', function(req, res) {
+        //Add code for successful post
+        if (isLoggedIn)
+        {
+            mUser.editUserProfile(req, res, function(err, mBool){
+                //TODO Deal with error instead of just loging
+                if (err)  console.log("error response was " + err);
+                
+                res.redirect('/profile');
 
+            });
+        } else {
+            res.redirect('/');
+        }
+    });
 
     // **********************************
     // APPLICATION

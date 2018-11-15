@@ -3,7 +3,8 @@ var passport = require("passport");
 var LocalStrategy   = require('passport-local').Strategy;
 
 // load up the user model
-var User            = require('../models/user');
+var mUser = require('../models/user');
+var User = mUser.userData;
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -40,6 +41,7 @@ module.exports = function(passport) {
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
+        
         User.findOne({ 'local.email' :  email }, function(err, user) {
             // if there are any errors, return the error before anything else
             if (err)
@@ -76,6 +78,7 @@ module.exports = function(passport) {
     function(req, email, password, done) {
         console.log('running local-signup');
         console.log('email = ' + email);
+        console.log('firstName = ' + req.body.firstName);
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
