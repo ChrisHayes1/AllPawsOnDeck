@@ -3,15 +3,16 @@ var mongoose = require('mongoose');
 var vpSchema = mongoose.Schema({
 
 
-	postionID        : Number,
+	postionID       : Number,
 	postionName     : String,
-	roleDescription    : String,
-	trainings     : [Number],
+	roleDescription : String,
+    trainings       : [Number],
+    isCleared       : Boolean
     
 });
 
 vpSchema.methods.requiredTrainings = function () {
-    //return trainingList.
+    
 }
 
 module.exports = mongoose.model('VolunteerPosition', vpSchema);

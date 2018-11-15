@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema({
         isActive        : Boolean,
         appStatus       : String,
         isOrientationComplete: Boolean,
-        completedTraining : Boolean,
+        //completedTraining : Boolean,
         userType     : String,
     },
     address : {

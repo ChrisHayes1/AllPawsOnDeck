@@ -6,8 +6,6 @@ var trainingSchema = mongoose.Schema({
     TrainingDescription: String,
     isCompleted: Boolean,
 
-
-
 });
 
 
