@@ -135,7 +135,7 @@
 /*Styles reldated to editing the profile*/
 
 .EditProfile {
-  background-color: #99b27f;
+  background-color: #e79541;
 }
 
 .EditProfileBtn {
@@ -144,6 +144,7 @@
   border-radius: 25px;
   border: 3px solid #638650;
   margin-bottom: 20px;
+  margin-top : 5px;
   color: black;
   background-color: white;
 }
@@ -152,10 +153,11 @@
   position: relative;
   float: right;
   border-radius: 25px;
-  border: 2px solid #d63a12;
+  border: 3px solid #e79541;
   margin-bottom: 20px;
   color: black;
   background-color: white;
+  margin-top : 5px;
 }
 
 .EditProfileHeader {
