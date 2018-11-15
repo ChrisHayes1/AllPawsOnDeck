@@ -1,29 +1,152 @@
 <!--Displays user profile and allows me to switch between edit and display views with unlock button. -->
 <!--When in edit mode also need a button to submit changes with post. -->
+<body class = "text-center" style="border: 1px solid #000000;"></body>
 
-<body class = "text-center" style="border: 1px solid #000000;">
-    <h2>My Profile</h2>
-    <fieldset>
-        <form class = "form-signin" action ="/signup" method="post">
-            <div class = "form-group">
-                    <label for="Name" class = "btn-text">Name</label>
-                    <input type="text" 
-                            class="form-control" 
-                            id="firstName"  
-                            required="" 
-                            autofocus="" 
-                            name="firstName"
-                            value=<%= user.local.firstname %> <%= user.local.lastname %>>
-            </div>
-            
-            <div>
-                <p>Name</p>
+    <form class = "EditProfile" action="/profile" method="post" id = "frmEditProfile">
+        <table class = "EditProfileHeader">
+            <tr>
+                <th class = "EditProfileLabel">Email:</th>
+                <th> <%= user.local.email %> </th>
+            </tr>
+            <tr>
+                <th class = "EditProfileLabel">First Name:</th>
+                <th>
+                    <input class = "EditProfileInput" 
+                        name="firstName"
+                        required
+                        type="text" 
+                        value= <%= user.local.firstname %>>
+                </th>
+            </tr>
+            <tr>
+                <th class = "EditProfileLabel">Last Name:</th>
+                <th>
+                    <input class = "EditProfileInput" 
+                        name="lastName"
+                        required
+                        type="text" 
+                        value= <%= user.local.lastname %>>
+                </th>
+            </tr>
+            <tr>
+                <th class = "EditProfileLabel">Phone Number:</th>
+                <th>
+                    <input class = "EditProfileInput" 
+                        name="phoneNumber"
+                        type="text" 
+                        value= <%= user.local.phoneNumber %>>
+                </th>
+            </tr>
+        </table>
+        <table class = "EditProfileHeader">
+            <tr>
 
-                <p><%= user.local.firstname %> <%= user.local.lastname %></p>
-                <p>Email</p>
+                <th class = "EditProfileLabel" style = "vertical-align: top; padding-left: 67px;"> Address: </th>
+                <th>
+                    <table>
+                        <tr>
+                            <th class = "EditProfileLabelSub">Address 1</th>
+                            <th>
+                                <input name="address1"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.address1 %>>
+                                
+                            </th>
+                        <tr>
+                            <th class = "EditProfileLabelSub">Address 2</th>
+                            <th>
+                                <input name="address2"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.address2 %>>
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class = "EditProfileLabelSub">City</th>
+                            <th>
+                                <input name="city"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.city %>>
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class = "EditProfileLabelSub">State</th>
+                            <th>
+                                <input name="state"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.state %>>
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class = "EditProfileLabelSub">Zip</th>
+                            <th>
+                                <input name="zip"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.zip %>>
+                                
+                            </th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </table>
+        <table class = "EditProfileHeader">
+            <tr>
 
-                <p><%= user.local.email %></p>
-            </div>
-        </form>
-    </fieldset>
+                <th class = "EditProfileLabel" style = "vertical-align: top; padding-left: 35px; padding-right: 25px;"> Date Of Birth: </th>
+                <th>
+                    <table>
+                        <tr>
+                            <th class = "EditProfileLabelSub">Day</th>
+                            <th>
+                                <input name="day"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.day %>>
+                                
+                            </th>
+                        <tr>
+                            <th class = "EditProfileLabelSub">Month</th>
+                            <th>
+                                <input name="month"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.month %>>
+                                
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class = "EditProfileLabelSub">Year</th>
+                            <th>
+                                <input name="year"
+                                    class = "EditProfileInputSub" 
+                                    type="text" 
+                                    value= <%= user.local.year %>>
+                                
+                            </th>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+        </table>    
+    </form>
+    
+    <button class = "EditProfileBtnCancel" onclick="editUserProfile()">Cancel</button>
+    <button class = "EditProfileBtn" onclick = "submitChanges()" >Save</button>
+    
 </body>
+
+<script>
+    function submitChanges(){
+        console.log("about to post");
+        document.getElementById("frmEditProfile").submit();
+        console.log("done with post");
+    }
+</script>
