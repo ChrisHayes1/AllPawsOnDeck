@@ -76,6 +76,8 @@ require('./controller/routes.js')(app, passport); // load our routes and pass in
 
 // launch ======================================================================
 //app.listen(port);
-app.listen(3001);
+var server = app.listen(3001);
+
 console.log('The magic happens on port ' + port);
 
+module.exports = server;
