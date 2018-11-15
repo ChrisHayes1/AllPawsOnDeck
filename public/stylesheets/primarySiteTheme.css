@@ -34,7 +34,7 @@
   
   article {
     float: left;
-    padding: 20px;
+    padding-left: 20px;
     width: 85%;
     background-color: #f1f1f1;
     height: 80vh;
@@ -111,8 +111,7 @@
   text-align: right;
   color: #638650;
   font-size: 18px;
-  margin: 3px;
-  margin-bottom:  6px;
+  margin-left: 3px;
   padding-left: 10px;
 }
 
@@ -128,7 +127,10 @@
   font-size: 18px;
 }
 
-
+.ViewProfileHeader {
+  padding-top: 10px;
+  padding-bottom: 0px;
+}
 
 /*Styles reldated to editing the profile*/
 

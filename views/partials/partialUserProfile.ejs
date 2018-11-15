@@ -4,19 +4,19 @@
 <body style="border: 1px solid #000000;">
     <h2>My Profile</h2>
     <fieldset class = "ViewProfile">
-        <div id="viewUP" class = "ViewProfileHeader" style = "display:block">
-                <table class = "EditProfileHeader">
+        <div id="viewUP" class = "ViewProfileHeader"  style = "display:block">
+                <table >
+                    <tr>
+                        <th class = "ViewProfileLabel">Email: </th>
+                        <th class = "ViewProfileValue">
+                            <%= user.local.email %>
+                        </th>
+                    </tr>
                     <tr>
                         <!-- Maybe use a table to organize-->
                         <th class = "ViewProfileLabel">Name: </th>
                         <th class = "ViewProfileValue">
                             <%= user.local.firstname %> <%= user.local.lastname %>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class = "ViewProfileLabel">Email: </th>
-                        <th class = "ViewProfileValue">
-                            <%= user.local.email %>
                         </th>
                     </tr>
                     <tr>
@@ -60,8 +60,6 @@
         swapVisible("viewUP");
         swapVisible("editUP");
     };
-
-    
 
     function swapVisible(mID) {
         var x = document.getElementById(mID);
