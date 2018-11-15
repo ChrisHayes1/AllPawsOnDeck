@@ -1,26 +1,18 @@
 var mongoose = require('mongoose');
 
-/*function VolunteerPositions(postionID, postionName, roleDescription, trainings){
-
-	this.postionID = postionID;
-	this.postionName = postionName;
-	this.roleDescription = roleDescription;
-	this.trainings = trainings;
-
-	this.requiredTraining = function() {
-		
-	};
-
-}*/
-
 var vpSchema = mongoose.Schema({
 
 
-	postionID        : Number,
+	postionID       : Number,
 	postionName     : String,
-	roleDescription    : String,
-	trainings     : [Number],
+	roleDescription : String,
+    trainings       : [Number],
+    isCleared       : Boolean
     
 });
+
+vpSchema.methods.requiredTrainings = function () {
+    
+}
 
 module.exports = mongoose.model('VolunteerPosition', vpSchema);
