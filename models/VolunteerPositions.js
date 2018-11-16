@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var vpSchema = mongoose.Schema({
-	postionName     : String,
+	positionName     : String,
 	roleDescription : String,
     trainings       : [String]
 });
