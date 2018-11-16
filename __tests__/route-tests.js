@@ -40,5 +40,53 @@ describe('Test application path', () => {
         })
     });
 });
+describe('Test profile path', () => {
+    test('Login route returns 302 response when not logged in', () => {
+
+        return request(app).get("/profile").then(response => {
+            expect(response.statusCode).toBe(302)
+        })
+    });
+});
+
+describe('Test application path', () => {
+    test('Login route returns 302 response when not logged in', () => {
+        return request(app).get("/application").then(response => {
+            expect(response.statusCode).toBe(302)
+        })
+    });
+});
+
+describe('GET /api/getDir', function(){
+    it('login', loginUser());
+    it('uri that requires user to be logged in', function(done){
+    request(app)
+        .get('/profile')                       
+        .expect(200)
+        .end(function(err, res){
+            if (err) return done(err);
+            console.log(res.body);
+            done()
+        });
+    });
+});
+
+
+function loginUser() {
+    return function(done) {
+        request(app)
+            .post('/login')
+            .send({ userEmail: 'Logan@email.com', userPassword: 'password' })
+            .expect(302)
+            .expect('Location', '/profile')
+            .end(onResponse);
+
+        function onResponse(err, res) {
+           if (err) return done(err);
+           return done();
+        }
+    };
+};
+
 
 app.close();
