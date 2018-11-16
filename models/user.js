@@ -30,7 +30,9 @@ var userSchema = mongoose.Schema({
         year            : Number,
         month           : Number,
         day             : Number,
-    }
+    },
+    completedTrainings           : [String],
+    qualifiedPositions           : [String]
 });
 
 // methods ======================

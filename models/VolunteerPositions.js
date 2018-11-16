@@ -1,14 +1,9 @@
 var mongoose = require('mongoose');
 
 var vpSchema = mongoose.Schema({
-
-
-	postionID       : Number,
 	postionName     : String,
 	roleDescription : String,
-    trainings       : [Number],
-    isCleared       : Boolean
-    
+    trainings       : [String]
 });
 
 vpSchema.methods.requiredTrainings = function () {
