@@ -2,7 +2,7 @@
 <html lang="en">
  
   <head>
-    <title>APOD Profile</title>
+    <title>APOD Coordinator Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/primarySiteTheme.css">
@@ -10,38 +10,28 @@
 
   <body>
     <header>
-    <h2>Welcome!</h2>
+    <h2>Coordinator Dashboard</h2>
     </header>
 
     <section>
     <nav>
-        <p class = "NavMenuButton NavMenuSelection"> My Profile </p>
+        <a href="/profile" class="NavMenuButton"> My Profile</a>
         <a href="/application" class="NavMenuButton"> Application</a>
         <p class="NavMenuButton"> Onboarding </p>
         <p class="NavMenuButton"> Calendar </p>
         <a href="/volunteerpositions" class="NavMenuButton"> Volunteer </a>
         <a href="/logout" class="NavMenuButton">Log out</a>
-        <a href="/coorDash" class="NavMenuButton">Dashboard</a>
+        <p class = "NavMenuButton NavMenuSelection"> Dashboard </p>
     </nav>
 
     <article>
       <div id = "userProfile"
         <%- include partials/partialUserProfile.ejs %>
       </div>
-
-		<h2>Training Status</h2>
-    <p>Completed Training: 
-    <% if ((user.completedTrainings).length===0) {%>
-          No training has been done
-    <%}  else{%>
-      <% for(var i=0;i<(user.completedTrainings).length;i++){%>
-        <%=user.completedTrainings[i]%><br>
-      <%}%>
-    <%}%>
-      </p>
-
-		<h2>Account Type</h2>
-		<p><%= user.local.userType %></p>
+    
+    <h2>Training List</h2>
+    
+    <h2>Position List</h2>
     </article>
     </section>
 

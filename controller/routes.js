@@ -86,6 +86,32 @@ module.exports = function(app, passport) {
     });
 
     // **********************************
+    // Coordinator Dashboard
+    // **********************************
+    //This page needs to be shown only to cordinators
+    app.get('/coorDash', isLoggedIn, function(req, res) {
+        res.render('coorDash.ejs', {
+            user : req.user // get the user out of session and pass to template
+        });
+    });
+
+    app.post('/coorDash', function(req, res) {
+        //Add code for successful post
+        if (isLoggedIn)
+        {
+            mUser.editUserProfile(req, res, function(err, mBool){
+                //TODO Deal with error instead of just loging
+                if (err)  console.log("error response was " + err);
+                
+                res.redirect('/coorDash');
+
+            });
+        } else {
+            res.redirect('/');
+        }
+    });
+
+    // **********************************
     // APPLICATION
     // **********************************
     // we will want this protected so you have to be logged in to visit
