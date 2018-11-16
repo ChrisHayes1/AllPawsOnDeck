@@ -51,12 +51,19 @@ mongoose.connect('mongodb://localhost:27017/apodDB', { useNewUrlParser: true }, 
 }); // connect to our database
 //mongoose.connect('mongodb://localhost:27017/apodDB');
 
+app.use(cookieParser()); // read cookies (needed for auth)
+//app.use(require('connect').bodyParser());
+app.use(bodyParser()); // get information from html forms
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser()); // get information from html forms
+
+//app.use(bodyParser.urlencoded({ extended: false }));
+
 
 //Added by todd for static distribution of public items
 app.use(express.static(path.join(__dirname, 'public')));
@@ -75,6 +82,13 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./controller/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
+<<<<<<< HEAD
 app.listen(port);
+=======
+//app.listen(port);
+var server = app.listen(3001);
+
+>>>>>>> 1803dd18d8a6520c3db349fbcaa91eae8c18e5d1
 console.log('The magic happens on port ' + port);
 
+module.exports = server;

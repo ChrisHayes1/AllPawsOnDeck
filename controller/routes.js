@@ -1,9 +1,10 @@
 /******************************************************
  * All Paws On Deck
  * CS 506
- * Routes 
+ * Routes.js handles all routing for the server 
  *****************************************************/
 
+var mUser = require('../models/user');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -70,6 +71,22 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/profile', function(req, res) {
+        //Add code for successful post
+        if (isLoggedIn)
+        {
+            mUser.editUserProfile(req, res, function(err, mBool){
+                //TODO Deal with error instead of just loging
+                if (err)  console.log("error response was " + err);
+                
+                res.redirect('/profile');
+
+            });
+        } else {
+            res.redirect('/');
+        }
+    });
+
     // **********************************
     // APPLICATION
     // **********************************
@@ -77,6 +94,16 @@ module.exports = function(app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/application', isLoggedIn, function(req, res) {
         res.render('application.ejs', {
+            //user : req.user // get the user out of session and pass to template
+        });
+    });
+
+    // **********************************
+    // Volunteer postions
+    // **********************************
+    //This page needs to be different for user and cordinator
+    app.get('/volunteerpositions', isLoggedIn, function(req, res) {
+        res.render('volunteerposition.ejs', {
             //user : req.user // get the user out of session and pass to template
         });
     });

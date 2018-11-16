@@ -1,0 +1,74 @@
+<!--Displays user profile and allows me to switch between edit and display views with unlock button. -->
+<!--When in edit mode also need a button to submit changes with post. -->
+
+<body style="border: 1px solid #000000;">
+    <h2>My Profile</h2>
+    <fieldset class = "ViewProfile">
+        <div id="viewUP" class = "ViewProfileHeader"  style = "display:block">
+                <div>
+                    <button class = "EditProfileBtn" onclick="editUserProfile()">Edit Profile</button>
+                </div>    
+                <table >
+                    <tr>
+                        <th class = "ViewProfileLabel">Email: </th>
+                        <th class = "ViewProfileValue">
+                            <%= user.local.email %>
+                        </th>
+                    </tr>
+                    <tr>
+                        <!-- Maybe use a table to organize-->
+                        <th class = "ViewProfileLabel">Name: </th>
+                        <th class = "ViewProfileValue">
+                            <%= user.local.firstname %> <%= user.local.lastname %>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class = "ViewProfileLabel">Phone Number: </th>
+                        <th class = "ViewProfileValue">
+                                <%= user.local.phoneNumber %>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class = "ViewProfileLabel">Address:  </th>
+                        <th class = "ViewProfileValue">
+                                <%= user.address.address1 %>
+                        </th>
+                        <th class = "ViewProfileValue">
+                                <%= user.address.address2 %>
+                        </th>
+                        <th class = "ViewProfileValue">
+                                <%= user.address.city %>, <%= user.address.state %> <%= user.address.zip %>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class = "ViewProfileLabel">Date Of Birth </th>
+                        <th class = "ViewProfileValue">
+                                <%= user.dob.day %>-<%= user.dob.month %>-<%= user.dob.year %>
+                        </th>
+                    </tr>
+                </table>
+            
+        </div>
+        <div id="editUP" style="display:none">
+            <%- include partialEditUserProfile.ejs %>
+        </div>
+    </fieldset>
+</body>
+
+<script>
+    function editUserProfile(){
+        console.log('Attempting to edit user profile');
+        swapVisible("viewUP");
+        swapVisible("editUP");
+    };
+
+    function swapVisible(mID) {
+        var x = document.getElementById(mID);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    };
+
+</script>
