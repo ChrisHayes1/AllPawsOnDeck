@@ -6,10 +6,31 @@ var vpSchema = mongoose.Schema({
     trainings       : [String]
 });
 
-vpSchema.methods.requiredTrainings = function () {
-    
+var positions = mongoose.model('VolunteerPosition', vpSchema);
+
+
+exports.GetPositionList = function (callback) {
+    // var mTraining = [
+    //     { name: 'Bloody Mary'},
+    //     { name: 'Martini' },
+    //     { name: 'Scotch' }
+    // ];
+
+    positions.find({}, function (err, positions) {
+        var positionList = [];
+
+        positions.forEach(function (position) {
+            positionList.push(position.positionName);
+        });
+
+        return callback(positionList);
+    });
+
+
+
 }
 
+<<<<<<< HEAD
 exports.vpdata = mongoose.model('VolunteerPosition', vpSchema);
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 exports.addvp = function(req, res, callback){
@@ -44,3 +65,6 @@ exports.addvp = function(req, res, callback){
 		}
 	});
 } 
+=======
+//module.exports = mongoose.model('VolunteerPosition', vpSchema);
+>>>>>>> ba35d6bd0c8b51905562a2c1e4d6ed10fece979f

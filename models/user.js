@@ -4,6 +4,10 @@ var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 var bodyParser   = require('body-parser');
 
+
+/****************************
+ * Define user schema and a couple of functions tied to passport
+ ***************************/
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
@@ -46,9 +50,72 @@ userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
+/****************************
+ * Exposed buisiness logic
+ ***************************/
+var User = mongoose.model('User', userSchema);
+
+
+/**
+ * Validates user.  Returns user if valid email and password
+ */
+exports.validateUser = function(email, password, callback){
+    //get user, returns error if user not found
+    getUserByEmail(email, function(err, user){
+        if (err){
+            console.log('error thrown on validateUser = ' + err); 
+            return callback(err);
+        }
+
+        //User found, validate password
+        // if the user is found but the password is wrong
+        if (!user.validPassword(password)){
+            console.log('Wrong password');
+            return callback(new Error('Wrong Password'));
+        }
+        // all is well, return successful user
+        return callback(null, user);
+    });
+}
+
+/**
+ * attempts to create a new user, returns error if user already exists or other issue arrises
+ */
+exports.attemptNewUser = function(req, email, password, callback){
+    console.log('about to get user');
+    getUserByEmail(email, function(err, user){
+        console.log('got user, checking response');
+        //if user is found the return flash message as part of callback
+        if (err){
+            if (err.message  === "User Not Found"){
+                console.log('user not found, can creat account with first name - ' + req.body.firstName);
+                //User not found, go ahead and create
+                AddNewUser(req, email, password, function(err, newUser){
+                    if (err) return callback(err);
+                    return callback(null, newUser)
+                });
+            }else { //else just return the error to done
+                console.log('error thrown on attemptNewUser = ' + err); 
+                return callback(err);
+            }
+        } else {
+            //no error so user already exists
+            console.log('User Already Existed');
+            return callback(new error('Account Already Exists')); // req.flash is the way to set flashdata using connect-flash
+        }
+
+        
+    });
+}
+
+
+
+/**
+ * Modify profile values (everything but email)
+ */
 exports.editUserProfile = function(req, res, callback){
-    //var currentUser = getUser(req.user.local.email, function(err, result){
-    getUser(req.user.local.email, function(err, result){
+    //var currentUser = getUserByEmail(req.user.local.email, function(err, result){
+    getUserByEmail(req.user.local.email, function(err, result){
         if(err){
             console.log('error thrown = ' + err);    
             return callback(err);
@@ -77,17 +144,33 @@ exports.editUserProfile = function(req, res, callback){
     });
 }
 
-function createNewUser(req){
+exports.getUserByID = function(id, callback){
     
+    User.findById(id, function(err, user) {
+       return  callback(err, user);
+    });
 }
 
-function isUser(req){
-
+exports.deleteUserByID = function(req, callback){
+    User.remove({ _id: req.body.id }, function(err) {
+        if (!err) {
+                message.type = 'notification!';
+        }
+        else {
+                message.type = 'error';
+        }
+    });
 }
+/****************************
+ * Associated helper functions
+ ***************************/
 
-function getUser(email, callback){
-    var mUserDB = mongoose.model('User', userSchema);
-    mUserDB.findOne({ 'local.email' :  email }, function(err, user) {
+ /**
+ * Returns requested user if they exist other returns error
+ */
+function getUserByEmail(email, callback){
+    
+    User.findOne({ 'local.email' :  email }, function(err, user) {
         // if there are any errors, return the error before anything else
         if (err)
             return callback(err);
@@ -100,5 +183,37 @@ function getUser(email, callback){
     });
 }
 
+/**
+ * Inserts new user into DB
+ */
+function AddNewUser(req, email, password, callback){
+    
+    var newUser = new User();
 
+    // set the user's local credentials
+    newUser.local.email    = email;
+    console.log('about to generate hash');
+    newUser.local.password = newUser.generateHash(password);
+    console.log('has generate');
+    newUser.local.firstname = req.body.firstName;
+    newUser.local.lastname = req.body.lastName;
+    newUser.local.completedTraining = false;
+    newUser.local.userType = "standard";
+
+    // save the user
+    console.log('abuot to save the user');
+    newUser.save(function(err) {
+        console.log('saved, checking error');
+        if (err)
+            return callback(err);
+        console.log('no error, running callback');
+        console.log('just saved save the user with firstName ' + newUser.local.firstName);
+        return callback(null, newUser);
+    });
+}
+
+
+/****************************
+ * export as needed
+ ***************************/
 exports.userData = mongoose.model('User', userSchema);

@@ -5,8 +5,13 @@
  *****************************************************/
 
 var mUser = require('../models/user');
+<<<<<<< HEAD
 var vPostition = require('../models/VolunteerPositions');
 var VolunteerPosition = vPostition.vpdata;
+=======
+var Training = require('../models/training');
+var Position = require('../models/VolunteerPositions');
+>>>>>>> ba35d6bd0c8b51905562a2c1e4d6ed10fece979f
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -68,8 +73,11 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
+        Training.GetTrainingList(function(mTraining) {
+            res.render('profile.ejs', {
+                user : req.user, // get the user out of session and pass to template
+                trainings : mTraining
+            });
         });
     });
 
@@ -81,6 +89,37 @@ module.exports = function(app, passport) {
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
                 res.redirect('/profile');
+            });
+        } else {
+            res.redirect('/');
+        }
+    });
+
+    // **********************************
+    // Coordinator Dashboard
+    // **********************************
+    //This page needs to be shown only to coordinators
+    app.get('/coorDash', isLoggedIn, function(req, res) {
+        Training.GetTrainingList(function (mTraining) {
+            Position.GetPositionList(function (mPositions) { 
+                res.render('coorDash.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    trainings: mTraining,
+                    positions: mPositions
+                });
+            });
+        });
+    });
+
+    app.post('/coorDash', function(req, res) {
+        //Add code for successful post
+        if (isLoggedIn)
+        {
+            mUser.editUserProfile(req, res, function(err, mBool){
+                //TODO Deal with error instead of just loging
+                if (err)  console.log("error response was " + err);
+                
+                res.redirect('/coorDash');
 
             });
         } else {
@@ -103,6 +142,7 @@ module.exports = function(app, passport) {
     // Volunteer postions
     // **********************************
     //This page needs to be different for user and cordinator
+<<<<<<< HEAD
     app.get('/volunteerpositions', isLoggedIn, function(req, res) {
         /*Testing of how to add new tables and print
         var newVP = new VolunteerPosition();
@@ -112,6 +152,14 @@ module.exports = function(app, passport) {
         res.render('volunteerposition.ejs', {
             //user : req.user // get the user out of session and pass to template
             //vp: newVP
+=======
+    app.get('/volunteerpositions', isLoggedIn, function (req, res) {
+        Position.GetPositionList(function (mPositions) {
+            res.render('volunteerposition.ejs', {
+                //user : req.user // get the user out of session and pass to template
+                positions: mPositions
+            });
+>>>>>>> ba35d6bd0c8b51905562a2c1e4d6ed10fece979f
         });
     });
 
