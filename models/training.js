@@ -1,11 +1,8 @@
 var mongoose = require('mongoose');
 
 var trainingSchema = mongoose.Schema({
-
     trainingName : String,
-    TrainingDescription: String,
-    isCompleted: Boolean,
-
+    TrainingDescription: String
 });
 
 
