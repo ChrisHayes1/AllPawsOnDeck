@@ -21,15 +21,25 @@
         <p class="NavMenuButton"> Calendar </p>
         <a href="/volunteerpositions" class="NavMenuButton"> Volunteer </a>
         <a href="/logout" class="NavMenuButton">Log out</a>
+        <a href="/coorDash" class="NavMenuButton">Dashboard</a>
     </nav>
 
     <article>
-      <div id = "userProfile">
+      <div id = "userProfile"
         <%- include partials/partialUserProfile.ejs %>
       </div>
 
 		<h2>Training Status</h2>
-		<p>Completed Training: <%= user.local.completedTraining %></p>
+    <p>Completed Training: 
+    <% if ((user.completedTrainings).length===0) {%>
+          No training has been done
+    <%}  else{%>
+      <% for(var i=0;i<(user.completedTrainings).length;i++){%>
+        <%=user.completedTrainings[i]%><br>
+      <%}%>
+    <%}%>
+      </p>
+
 		<h2>Account Type</h2>
 		<p><%= user.local.userType %></p>
     </article>
@@ -41,4 +51,3 @@
 
   </body>
 </html>
-
