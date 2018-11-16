@@ -6,6 +6,7 @@
 
 var mUser = require('../models/user');
 var vPostition = require('../models/VolunteerPositions');
+var VolunteerPosition = vPostition.vpdata;
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -79,7 +80,6 @@ module.exports = function(app, passport) {
             mUser.editUserProfile(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
-                
                 res.redirect('/profile');
 
             });
@@ -104,8 +104,14 @@ module.exports = function(app, passport) {
     // **********************************
     //This page needs to be different for user and cordinator
     app.get('/volunteerpositions', isLoggedIn, function(req, res) {
+        /*Testing of how to add new tables and print
+        var newVP = new VolunteerPosition();
+        newVP.postionName = "My job";
+        newVP.save();
+        */
         res.render('volunteerposition.ejs', {
             //user : req.user // get the user out of session and pass to template
+            //vp: newVP
         });
     });
 
@@ -113,6 +119,7 @@ module.exports = function(app, passport) {
         //Add code for successful post
         if (isLoggedIn)
         {
+            console.log("HERE!!!!")
             vPostition.addvp(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
