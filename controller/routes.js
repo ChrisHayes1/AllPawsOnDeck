@@ -78,9 +78,7 @@ module.exports = function(app, passport) {
             mUser.editUserProfile(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
-                
                 res.redirect('/profile');
-
             });
         } else {
             res.redirect('/');
