@@ -6,8 +6,28 @@ var vpSchema = mongoose.Schema({
     trainings       : [String]
 });
 
-vpSchema.methods.requiredTrainings = function () {
-    
+var positions = mongoose.model('VolunteerPosition', vpSchema);
+
+
+exports.GetPositionList = function (callback) {
+    // var mTraining = [
+    //     { name: 'Bloody Mary'},
+    //     { name: 'Martini' },
+    //     { name: 'Scotch' }
+    // ];
+
+    positions.find({}, function (err, positions) {
+        var positionList = [];
+
+        positions.forEach(function (position) {
+            positionList.push(position.positionName);
+        });
+
+        return callback(positionList);
+    });
+
+
+
 }
 
-module.exports = mongoose.model('VolunteerPosition', vpSchema);
+//module.exports = mongoose.model('VolunteerPosition', vpSchema);

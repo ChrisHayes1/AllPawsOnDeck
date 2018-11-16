@@ -6,6 +6,8 @@
 
 var mUser = require('../models/user');
 var Training = require('../models/training');
+var Position = require('../models/VolunteerPositions');
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -132,9 +134,12 @@ module.exports = function(app, passport) {
     // Volunteer postions
     // **********************************
     //This page needs to be different for user and cordinator
-    app.get('/volunteerpositions', isLoggedIn, function(req, res) {
-        res.render('volunteerposition.ejs', {
-            //user : req.user // get the user out of session and pass to template
+    app.get('/volunteerpositions', isLoggedIn, function (req, res) {
+        Position.GetPositionList(function (mPositions) {
+            res.render('volunteerposition.ejs', {
+                //user : req.user // get the user out of session and pass to template
+                positions: mPositions
+            });
         });
     });
 

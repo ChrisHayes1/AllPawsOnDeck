@@ -29,7 +29,9 @@
 
 <article>
     <h2>Open Job List</h2>
-
+	<% positions.forEach(function(position) { %>
+      <li><%= position %> </li>
+    <% }); %>
     
 </article>
 </section>
