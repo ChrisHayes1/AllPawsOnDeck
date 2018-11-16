@@ -5,6 +5,7 @@
  *****************************************************/
 
 var mUser = require('../models/user');
+var vPostition = require('../models/VolunteerPositions');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -106,6 +107,22 @@ module.exports = function(app, passport) {
         res.render('volunteerposition.ejs', {
             //user : req.user // get the user out of session and pass to template
         });
+    });
+
+    app.post('/volunteerpositions', function(req, res) {
+        //Add code for successful post
+        if (isLoggedIn)
+        {
+            vPostition.addvp(req, res, function(err, mBool){
+                //TODO Deal with error instead of just loging
+                if (err)  console.log("error response was " + err);
+                
+                res.redirect('/volunteerpositions');
+
+            });
+        } else {
+            res.redirect('/');
+        }
     });
 
     // **********************************
