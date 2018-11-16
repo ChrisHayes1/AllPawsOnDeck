@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <title>APOD Profile</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/primarySiteTheme.css">
+  </head>
+
+  <body>
+    <header>
+    <h2>Welcome!</h2>
+    </header>
+
+    <section>
+    <nav>
+        <p class = "NavMenuButton NavMenuSelection"> My Profile </p>
+        <a href="/application" class="NavMenuButton"> Application</a>
+        <p class="NavMenuButton"> Onboarding </p>
+        <p class="NavMenuButton"> Calendar </p>
+        <a href="/volunteerpositions" class="NavMenuButton"> Volunteer </a>
+        <a href="/logout" class="NavMenuButton">Log out</a>
+        <a href="/coorDash" class="NavMenuButton"> Dashboard</a>
+    </nav>
+
+    <article>
+      <div id = "userProfile"
+        <%- include partials/partialUserProfile.ejs %>
+      </div>
+
+		<h2>Training Status</h2>
+    <p>Completed Training: <%= user.local.completedTraining %></p>
+    <% if (user.local.completedTraining) {%>
+          
+    <%} %>
+    
+
+		<h2>Account Type</h2>
+		<p><%= user.local.userType %></p>
+    </article>
+    </section>
+
+    <footer>
+    All Paws on Deck!
+    </footer>
+
+  </body>
+</html>
