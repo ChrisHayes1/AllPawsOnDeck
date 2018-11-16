@@ -95,10 +95,13 @@ module.exports = function(app, passport) {
     // **********************************
     //This page needs to be shown only to coordinators
     app.get('/coorDash', isLoggedIn, function(req, res) {
-        Training.GetTrainingList(function(mTraining) {
-            res.render('coorDash.ejs', {
-                user : req.user, // get the user out of session and pass to template
-                trainings : mTraining
+        Training.GetTrainingList(function (mTraining) {
+            Position.GetPositionList(function (mPositions) { 
+                res.render('coorDash.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    trainings: mTraining,
+                    positions: mPositions
+                });
             });
         });
     });
