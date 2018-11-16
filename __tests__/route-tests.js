@@ -1,5 +1,7 @@
 const app = require('../server');
 const request = require('supertest');
+var mUser = require('../models/user');
+var User = mUser.userData;
 
 describe('Test the root path', () => {
     test('Index return 200 response', () => {
@@ -62,7 +64,7 @@ describe('GET /api/getDir', function(){
     it('uri that requires user to be logged in', function(done){
     request(app)
         .get('/profile')                       
-        .expect(200)
+        .expect(302)
         .end(function(err, res){
             if (err) return done(err);
             console.log(res.body);
@@ -71,12 +73,36 @@ describe('GET /api/getDir', function(){
     });
 });
 
-
 function loginUser() {
+    User.findOne({ 'local.email' :  'test@test.com' }, function(err, user) {
+        // if there are any errors, return the error before anything else
+        if (err)
+            return done(err);
+
+        // if no user is found, make the user
+        if (!user){
+            var newUser            = new User();
+
+            // set the user's local credentials
+            newUser.local.email    = 'test@test.com';
+            newUser.local.password = newUser.generateHash('password');
+            newUser.local.firstname = 'Test';
+            newUser.local.lastname = 'Tester';
+            newUser.local.completedTraining = false;
+            newUser.local.userType = "standard";
+
+            // save the user
+            newUser.save(function(err) {
+                if (err)
+                    throw(err);
+                return done(null, newUser);
+            });
+        }
+    });
     return function(done) {
         request(app)
             .post('/login')
-            .send({ userEmail: 'Logan@email.com', userPassword: 'password' })
+            .send({ userEmail: 'test@test.com', userPassword: 'password' })
             .expect(302)
             .expect('Location', '/profile')
             .end(onResponse);
