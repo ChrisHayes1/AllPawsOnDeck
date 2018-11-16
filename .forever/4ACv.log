@@ -1,0 +1,28 @@
+Fri, 16 Nov 2018 00:14:26 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:59:9
+Fri, 16 Nov 2018 00:14:26 GMT body-parser deprecated undefined extended: provide extended option at node_modules/body-parser/index.js:105:29
+Fri, 16 Nov 2018 00:14:26 GMT express-session deprecated undefined resave option; provide resave option at server.js:69:9
+Fri, 16 Nov 2018 00:14:26 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at server.js:69:9
+The magic happens on port 80
+Connection to mongo.db succesful
+[0mGET / [36m304 [0m14.510 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m2.237 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m2.213 ms - -[0m
+[0mGET /profile [36m302 [0m4.920 ms - 46[0m
+[0mGET / [36m304 [0m2.482 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.745 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.462 ms - -[0m
+[0mGET /login [32m200 [0m2.646 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.713 ms - -[0m
+[0mGET /login [32m200 [0m2.016 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.458 ms - -[0m
+running serializeUser
+[0mPOST /login [36m302 [0m116.516 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.932 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.569 ms - -[0m
+running serializeUser
+[0mPOST /login [36m302 [0m78.009 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [32m200 [0m3.862 ms - 1037[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.543 ms - -[0m
+error: Forever detected script was killed by signal: SIGKILL
