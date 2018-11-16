@@ -2,6 +2,7 @@ const app = require('../server');
 const request = require('supertest');
 var mUser = require('../models/user');
 var User = mUser.userData;
+var agent = request.agent(app);
 
 describe('Test the root path', () => {
     test('Index return 200 response', () => {
@@ -59,12 +60,20 @@ describe('Test application path', () => {
     });
 });
 
-describe('GET /api/getDir', function(){
-    it('login', loginUser());
+describe('Go to profile if after successful log in', () => {
+    it('login', loginUser(true));
+});
+
+describe('Go to / if failed log in', () => {
+    it('login', loginUser(false));
+});
+
+describe('Redirect to / if not logged in', function(){
     it('uri that requires user to be logged in', function(done){
     request(app)
         .get('/profile')                       
         .expect(302)
+        .expect('Location','/')
         .end(function(err, res){
             if (err) return done(err);
             console.log(res.body);
@@ -73,7 +82,18 @@ describe('GET /api/getDir', function(){
     });
 });
 
-function loginUser() {
+function loginUser(correct) {
+    var password;
+    var expect;
+    if(correct == true){
+        password = 'password';
+        expect = '/profile';
+    }
+    else {
+        password = 'wrongpassword';
+        expect = '/login';
+    }
+
     User.findOne({ 'local.email' :  'test@test.com' }, function(err, user) {
         // if there are any errors, return the error before anything else
         if (err)
@@ -102,9 +122,9 @@ function loginUser() {
     return function(done) {
         request(app)
             .post('/login')
-            .send({ userEmail: 'test@test.com', userPassword: 'password' })
+            .send({ userEmail: 'test@test.com', userPassword: password })
             .expect(302)
-            .expect('Location', '/profile')
+            .expect('Location', expect)
             .end(onResponse);
 
         function onResponse(err, res) {
