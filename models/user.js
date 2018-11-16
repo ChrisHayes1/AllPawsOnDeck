@@ -81,7 +81,7 @@ exports.validateUser = function(email, password, callback){
 /**
  * attempts to create a new user, returns error if user already exists or other issue arrises
  */
-exports.attempNewUser = function(req, email, password, callback){
+exports.attemptNewUser = function(req, email, password, callback){
     console.log('about to get user');
     getUserByEmail(email, function(err, user){
         console.log('got user, checking response');
@@ -95,13 +95,13 @@ exports.attempNewUser = function(req, email, password, callback){
                     return callback(null, newUser)
                 });
             }else { //else just return the error to done
-                console.log('error thrown on attempNewUser = ' + err); 
+                console.log('error thrown on attemptNewUser = ' + err); 
                 return callback(err);
             }
         } else {
             //no error so user already exists
             console.log('User Already Existed');
-            return callback(new error('That email is already taken.')); // req.flash is the way to set flashdata using connect-flash
+            return callback(new error('Account Already Exists')); // req.flash is the way to set flashdata using connect-flash
         }
 
         
@@ -143,6 +143,7 @@ exports.editUserProfile = function(req, res, callback){
         });
     });
 }
+
 exports.getUserByID = function(id, callback){
     
     User.findById(id, function(err, user) {
@@ -150,6 +151,16 @@ exports.getUserByID = function(id, callback){
     });
 }
 
+exports.deleteUserByID = function(req, callback){
+    User.remove({ _id: req.body.id }, function(err) {
+        if (!err) {
+                message.type = 'notification!';
+        }
+        else {
+                message.type = 'error';
+        }
+    });
+}
 /****************************
  * Associated helper functions
  ***************************/
@@ -200,6 +211,7 @@ function AddNewUser(req, email, password, callback){
         return callback(null, newUser);
     });
 }
+
 
 /****************************
  * export as needed

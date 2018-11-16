@@ -74,10 +74,10 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
         process.nextTick(function() {
-            mUser.attempNewUser(req, email, password, function (err, mUser){
+            mUser.attemptNewUser(req, email, password, function (err, mUser){
                 console.log('about to return done')
                 if (err){
-                    if (err.message === 'That email is already taken.'){
+                    if (err.message === 'Account Already Exists'){
                         return done(null, false, req.flash('signupMessage', err.message));
                     }else {
                         console.log("local-signup threw the following " + err);
