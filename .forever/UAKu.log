@@ -1,0 +1,411 @@
+Fri, 16 Nov 2018 00:26:51 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:56:9
+Fri, 16 Nov 2018 00:26:51 GMT body-parser deprecated undefined extended: provide extended option at node_modules/body-parser/index.js:105:29
+Fri, 16 Nov 2018 00:26:51 GMT express-session deprecated undefined resave option; provide resave option at server.js:76:9
+Fri, 16 Nov 2018 00:26:51 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at server.js:76:9
+The magic happens on port 80
+Connection to mongo.db succesful
+[0mGET / [36m304 [0m13.484 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m2.106 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m2.100 ms - -[0m
+[0mGET /login [32m200 [0m2.547 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.471 ms - -[0m
+running serializeUser
+[0mPOST /login [36m302 [0m172.501 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m9.784 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.549 ms - -[0m
+running DEserializeUser
+[0mGET /application [32m200 [0m5.594 ms - 1244[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.576 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.795 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.421 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [32m200 [0m4.602 ms - 814[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.370 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m4.142 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.389 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.448 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.481 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.920 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.499 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.542 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.625 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.765 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.403 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.461 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.437 ms - -[0m
+running DEserializeUser
+[0mPOST /profile [36m302 [0m18.470 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [32m200 [0m4.830 ms - 9826[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.394 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.812 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.524 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m6.051 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.470 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.695 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.406 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.590 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.383 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m4.507 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.522 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.513 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.487 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.686 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.423 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.248 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.350 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.759 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.403 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.543 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.408 ms - -[0m
+running DEserializeUser
+[0mGET / [36m304 [0m4.383 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.665 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m1.066 ms - -[0m
+running DEserializeUser
+[0mGET /login [32m200 [0m4.084 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.402 ms - -[0m
+running DEserializeUser
+running serializeUser
+[0mPOST /login [36m302 [0m80.447 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.418 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.382 ms - -[0m
+running DEserializeUser
+[0mGET /logout [36m302 [0m4.024 ms - 46[0m
+[0mGET / [36m304 [0m1.321 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.887 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m1.489 ms - -[0m
+[0mGET /profile [36m302 [0m1.757 ms - 46[0m
+[0mGET / [36m304 [0m1.062 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.715 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.816 ms - -[0m
+[0mGET /login [32m200 [0m1.182 ms - 2023[0m
+running serializeUser
+[0mPOST /login [36m302 [0m242.934 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [32m200 [0m5.605 ms - 9826[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.376 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.956 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.430 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.281 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.424 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.757 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.513 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.648 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.573 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m4.441 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.481 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m10.838 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.420 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m4.450 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.441 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.074 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.392 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.445 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.387 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m8.084 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.403 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.663 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.359 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.238 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.356 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m8.409 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.372 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.291 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.523 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.537 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.373 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m10.986 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.538 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.196 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.375 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m4.672 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m2.651 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m6.686 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.369 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.895 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.376 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.477 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.391 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.680 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.326 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.005 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.374 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.636 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.487 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.178 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.518 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m12.190 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.342 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.134 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.469 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.334 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.387 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.248 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.370 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.018 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.383 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.166 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.348 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.234 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.372 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m4.096 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.401 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.503 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.339 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m2.979 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.336 ms - -[0m
+running DEserializeUser
+[0mGET /logout [36m302 [0m4.273 ms - 46[0m
+[0mGET / [36m304 [0m1.156 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.661 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.785 ms - -[0m
+[0mGET /profile [36m302 [0m0.995 ms - 46[0m
+[0mGET / [36m304 [0m0.994 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.618 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.872 ms - -[0m
+[0mGET /login [32m200 [0m1.322 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.392 ms - -[0m
+running serializeUser
+[0mPOST /login [36m302 [0m75.410 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [32m200 [0m4.912 ms - 9826[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.402 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.540 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.598 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.664 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.519 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.723 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.391 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.129 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.362 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.508 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.386 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m6.677 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.365 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.434 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.374 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m9.319 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.337 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.302 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.517 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.574 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.352 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.420 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.371 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.449 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.471 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.330 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.352 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.808 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.357 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.489 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.329 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.218 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.420 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.473 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m1.464 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.059 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.348 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.472 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.471 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.252 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m2.702 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.125 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.392 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.296 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.342 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.325 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.362 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m4.152 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.503 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m16.487 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.363 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.501 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.389 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.057 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.336 ms - -[0m
+[0mGET / [32m200 [0m1.257 ms - 1627[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.689 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.352 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.900 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.339 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.720 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.341 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.311 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.546 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.385 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.227 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.346 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.423 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.358 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.097 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.468 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.831 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.451 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.195 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.350 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.405 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.382 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.914 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.507 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.364 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.433 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.248 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.330 ms - -[0m
+[0mGET /profile [36m302 [0m1.102 ms - 46[0m
+[0mGET / [36m304 [0m1.285 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.702 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.921 ms - -[0m
+[0mGET /login [32m200 [0m1.128 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.481 ms - -[0m
+running serializeUser
+[0mPOST /login [36m302 [0m78.782 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [32m200 [0m4.926 ms - 9746[0m
+[0mGET /stylesheets/primarySiteTheme.css [32m200 [0m2.683 ms - 3835[0m
+running DEserializeUser
+[0mGET /application [32m200 [0m3.806 ms - 1244[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.510 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m5.628 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.407 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.381 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.378 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.390 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.334 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.953 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.375 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.487 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.486 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.162 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.519 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.571 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.348 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.719 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.485 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.316 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.348 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.303 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.327 ms - -[0m
+[0mGET / [32m200 [0m1.588 ms - 1627[0m
+[0mGET /favicon.ico [33m404 [0m2.101 ms - 150[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.952 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.517 ms - -[0m
+running DEserializeUser
+[0mGET /application [36m304 [0m3.586 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.359 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m3.361 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.444 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.423 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.354 ms - -[0m
+running DEserializeUser
+[0mGET /volunteerpositions [36m304 [0m12.954 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.360 ms - -[0m
+[0mGET / [32m200 [0m1.149 ms - 1627[0m

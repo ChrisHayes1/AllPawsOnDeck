@@ -1,0 +1,56 @@
+Fri, 16 Nov 2018 00:06:31 GMT body-parser deprecated bodyParser: use individual json/urlencoded middlewares at server.js:59:9
+Fri, 16 Nov 2018 00:06:31 GMT body-parser deprecated undefined extended: provide extended option at node_modules/body-parser/index.js:105:29
+Fri, 16 Nov 2018 00:06:31 GMT express-session deprecated undefined resave option; provide resave option at server.js:69:9
+Fri, 16 Nov 2018 00:06:31 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at server.js:69:9
+The magic happens on port 80
+Connection to mongo.db succesful
+[0mGET / [36m304 [0m14.455 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m2.234 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m2.149 ms - -[0m
+[0mGET / [32m200 [0m2.294 ms - 1627[0m
+[0mGET /stylesheets/gateway.css [32m200 [0m3.952 ms - 1222[0m
+[0mGET /assets/apod_logo.png [32m200 [0m4.296 ms - 95486[0m
+[0mGET /favicon.ico [33m404 [0m2.306 ms - 150[0m
+[0mGET /login [32m200 [0m2.241 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.561 ms - -[0m
+No user found
+[0mPOST /login [36m302 [0m26.846 ms - 56[0m
+[0mGET /login [32m200 [0m1.800 ms - 2105[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m2.379 ms - -[0m
+[0mGET /signup [32m200 [0m1.843 ms - 2508[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.434 ms - -[0m
+running local-signup
+email = thbstudent@gmail.com
+nextTick started
+findOne started
+running serializeUser
+[0mPOST /signup [36m302 [0m108.569 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [32m200 [0m6.366 ms - 1037[0m
+[0mGET /stylesheets/primarySiteTheme.css [32m200 [0m1.021 ms - 1888[0m
+running DEserializeUser
+[0mGET /application [32m200 [0m4.542 ms - 1310[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.407 ms - -[0m
+running DEserializeUser
+[0mGET /logout [36m302 [0m4.764 ms - 46[0m
+[0mGET / [36m304 [0m1.141 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.570 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.556 ms - -[0m
+[0mGET / [32m200 [0m1.373 ms - 1627[0m
+[0mGET / [36m304 [0m1.375 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.815 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.923 ms - -[0m
+[0mGET / [36m304 [0m1.470 ms - -[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.886 ms - -[0m
+[0mGET /assets/apod_logo.png [36m304 [0m0.960 ms - -[0m
+[0mGET /login [32m200 [0m1.364 ms - 2023[0m
+[0mGET /stylesheets/gateway.css [36m304 [0m0.711 ms - -[0m
+running serializeUser
+[0mPOST /login [36m302 [0m75.890 ms - 60[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m4.545 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.611 ms - -[0m
+running DEserializeUser
+[0mGET /profile [36m304 [0m5.408 ms - -[0m
+[0mGET /stylesheets/primarySiteTheme.css [36m304 [0m0.530 ms - -[0m
+error: Forever detected script was killed by signal: SIGKILL
