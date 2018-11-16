@@ -30,7 +30,10 @@
       </div>
     
     <h2>Training List</h2>
-    
+    <% trainings.forEach(function(training) { %>
+      <li><%= training %> </li>
+    <% }); %>
+
     <h2>Position List</h2>
     </article>
     </section>

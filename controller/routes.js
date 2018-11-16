@@ -91,10 +91,13 @@ module.exports = function(app, passport) {
     // **********************************
     // Coordinator Dashboard
     // **********************************
-    //This page needs to be shown only to cordinators
+    //This page needs to be shown only to coordinators
     app.get('/coorDash', isLoggedIn, function(req, res) {
-        res.render('coorDash.ejs', {
-            user : req.user // get the user out of session and pass to template
+        Training.GetTrainingList(function(mTraining) {
+            res.render('coorDash.ejs', {
+                user : req.user, // get the user out of session and pass to template
+                trainings : mTraining
+            });
         });
     });
 
