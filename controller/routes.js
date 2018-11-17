@@ -71,7 +71,8 @@ module.exports = function(app, passport) {
         Training.GetTrainingList(function(mTraining) {
             res.render('profile.ejs', {
                 user : req.user, // get the user out of session and pass to template
-                trainings : mTraining
+                trainings : mTraining,
+                page : "profile"
             });
         });
     });
@@ -98,7 +99,8 @@ module.exports = function(app, passport) {
         Training.GetTrainingList(function(mTraining) {
             res.render('coorDash.ejs', {
                 user : req.user, // get the user out of session and pass to template
-                trainings : mTraining
+                trainings : mTraining,
+                page : "dash"
             });
         });
     });
@@ -126,7 +128,8 @@ module.exports = function(app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/application', isLoggedIn, function(req, res) {
         res.render('application.ejs', {
-            //user : req.user // get the user out of session and pass to template
+            user : req.user, // get the user out of session and pass to template
+            page : "application"
         });
     });
 
@@ -137,8 +140,9 @@ module.exports = function(app, passport) {
     app.get('/volunteerpositions', isLoggedIn, function (req, res) {
         Position.GetPositionList(function (mPositions) {
             res.render('volunteerposition.ejs', {
-                //user : req.user // get the user out of session and pass to template
-                positions: mPositions
+                user : req.user, // get the user out of session and pass to template
+                positions: mPositions,
+                page : "volunteer"
             });
         });
     });

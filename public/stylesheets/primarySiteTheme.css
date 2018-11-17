@@ -32,6 +32,15 @@
     padding: 0;
   }
   
+  /* style for the nav options */
+  #volunteerbuttons {
+    display: none;
+  }
+
+  #coordinatorbuttons {
+    display: none;
+  }
+
   article {
     float: left;
     padding-left: 20px;
