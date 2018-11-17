@@ -2,7 +2,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver')
 require('selenium-webdriver/chrome')
 require('chromedriver')
 
-const site = "http://localhost:3000/#";
+const site = "http://localhost:3001/#";
 const browser = new Builder().forBrowser('chrome').build()
 
 browser.get(site)

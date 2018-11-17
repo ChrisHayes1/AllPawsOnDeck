@@ -4,11 +4,15 @@
  * Author:   Todd Hayes-Birchler
  * Date:     11/11/2018
  ****************************/
+// jest.resetModules();
+// jest.unmock('mongoose');
+// jest.unmock('../models/user.js');
+// jest.dontMock('../models/user.js');
 
 /****************************
  * Imports
  ****************************/
-const User = require('../models/user.js');
+const User = require.requireActual('../models/user.js');
 
 /****************************
  * Globals
@@ -21,7 +25,7 @@ var testEmail = "testTestNameThatWillNeverBeAccidentlyUsed@gmail.faketest.com";
 
 var email;
 var password;
-var testReqBody_EditPost =  {
+var testReqBody =  {
     body : {
         firstName       : String,
         lastName        : String,
@@ -43,11 +47,9 @@ var testReqBody_EditPost =  {
  ****************************/
 
  beforeEach(() => {
-    newUser = new User();
-
     email = testEmail;
     password =  testPassword;
-    req = new testReqBody();
+    req = testReqBody;
     req.firstName = "TestFirst";
     req.lastName = "TestLast";
     req.phoneNumber = "6085555555";
@@ -86,11 +88,13 @@ var testReqBody_EditPost =  {
  /****************************
  * Tests - Creating Accounts
  ****************************/
-describe('Testing User Model', () => {
-    describe('Testing ability to generate new accounts', () => {
+// describe('Testing User Model', () => {
+//     describe('Testing ability to generate new accounts', () => {
 
-        test('Verify that a new account can be created'), (done) => {
+        test('Verify that a new account can be created', (done) => {
+            console.log('TEST STARTED:');
             User.attemptNewUser(req, email, password, function(err, user){
+                console.log('validateUser called back');
                 expect(err).toBeNull();
                 expect(user.local.firstname).toBe(req.firstName);
                 expect(user.local.lastname).toBe(req.lastName);
@@ -103,29 +107,29 @@ describe('Testing User Model', () => {
                 expect(user.local.day).toBe(req.day);
                 expect(user.local.month).toBe(req.month);
                 expect(user.local.year).toBe(req.year);
-                done();
+                return done();
             });
-        }
+        },3000);
         
-        test('Verify that a new account can not be created if email is already in the system'), (done) => {
+        test('Verify that a new account can not be created if email is already in the system', (done) => {
             User.attemptNewUser(req, email, password, function(err, user){
                 expect(err.message).toBe('Account Already Exists');
                 expect(user).toBeNull();
                 done();
             });
-        }
+        },3000);
 
 
-        test('ensure hash generation returns value', () => {
-            expect(newUser.local.password = newUser.generateHash(testPassword)).not.toBeNull();
-        });
+        // test('ensure hash generation returns value', () => {
+        //     expect(newUser.local.password = newUser.generateHash(testPassword)).not.toBeNull();
+        // });
         
-        test('check valid password', () => {
-            expect(newUser.validPassword(testPassword)).toBeTruthy();
-        });
+        // test('check valid password', () => {
+        //     expect(newUser.validPassword(testPassword)).toBeTruthy();
+        // });
         
-        test('check invalid password', () => {
-            expect(newUser.validPassword(testBadPassword)).toBeFalsy();
-        });
-    })
-})
+        // test('check invalid password', () => {
+        //     expect(newUser.validPassword(testBadPassword)).toBeFalsy();
+        // });
+//     })
+// })
