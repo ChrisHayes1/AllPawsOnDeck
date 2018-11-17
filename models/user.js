@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 var bodyParser   = require('body-parser');
 
+const USER_TYPE_STANDARD = "standard";
+const USER_TYPE_COORDINATOR = "coordinator";
 
 /****************************
  * Define user schema and a couple of functions tied to passport
@@ -22,6 +24,7 @@ var userSchema = mongoose.Schema({
         isOrientationComplete: Boolean,
         //completedTraining : Boolean,
         userType     : String,
+        isCoordinator   : Boolean
     },
     address : {
         address1        : String,
@@ -128,6 +131,15 @@ exports.editUserProfile = function(req, res, callback){
         result.local.firstname = req.body.firstName;
         result.local.lastname = req.body.lastName;
         result.local.phoneNumber = req.body.phoneNumber;
+        console.log('isCoord return = ' + req.body.isCoordinator);
+        if (req.body.isCoordinator){
+            console.log('isCoord true');
+            result.local.isCoordinator = true;
+        }else {
+            console.log('isCoord false');
+            result.local.isCoordinator = false;
+        }
+
 
         result.address.address1 = req.body.address1;
         result.address.address2 = req.body.address2;
@@ -137,7 +149,7 @@ exports.editUserProfile = function(req, res, callback){
         result.dob.day = req.body.day;
         result.dob.month = req.body.month;
         result.dob.year = req.body.year;
-
+        
         // save the user - return true in callback
         result.save(function(err) {
             if (err)
@@ -204,7 +216,8 @@ function AddNewUser(req, email, password, callback){
     newUser.local.firstname = req.body.firstName;
     newUser.local.lastname = req.body.lastName;
     newUser.local.completedTraining = false;
-    newUser.local.userType = "standard";
+    newUser.local.userType = USER_TYPE_STANDARD;
+    newUser.local.isCoordinator = false;
 
     // save the user
     console.log('abuot to save the user');

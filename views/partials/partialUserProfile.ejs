@@ -6,7 +6,6 @@
     <fieldset class = "ViewProfile">
         <div id="viewUP" class = "ViewProfileHeader"  style = "display:block">
                 <div>
-                    <button class = "EditProfileBtn" onclick="deleteUserByID">Delete Account</button>
                     <button class = "EditProfileBtn" onclick="editUserProfile()">Edit Profile</button>
                 </div>
                 <table >
@@ -58,7 +57,7 @@
 
 <script>
     function editUserProfile(){
-        console.log('Attempting to edit user profile');
+        console.log('Attempting to edit user profile ' + <%= user.local.phoneNumber %>);
         swapVisible("viewUP");
         swapVisible("editUP");
     };

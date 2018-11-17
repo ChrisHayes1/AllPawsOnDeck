@@ -1,7 +1,6 @@
 <div id = "volunteerbuttons">
     <a href="/profile" id = "profile" class="NavMenuButton"> Profile</a>
     <a href = "/application" id = "application" class = "NavMenuButton"> Application </a>
-    <p id = "onboarding" class="NavMenuButton"> Onboarding </p>
     <p id = "calendar" class= "NavMenuButton"> Calendar </p>
     <a href="/volunteerpositions" id = "volunteer" class="NavMenuButton"> Volunteer </a>
     <a href="/logout" id = "logout" class="NavMenuButton">Logout</a>
@@ -18,8 +17,8 @@
 <script>
 
 var userType = '<%= user.local.userType %>';
-
-if (userType === "standard") {
+var isCoordinator =   '<%=user.local.isCoordinator %>';
+if (isCoordinator == 'false') {
     isVolunteer = true;
 }
 else {
@@ -28,7 +27,9 @@ else {
 
 document.getElementById('<%= page %>').classList.add('NavMenuSelection');
 
-if (isVolunteer) {
+console.log('isVolunteer = ' + isVolunteer);
+console.log('isCoordinator = ' + isCoordinator);
+if (isVolunteer == true) {
     document.getElementById("volunteerbuttons").style.display = "block";
     document.getElementById("coordinatorbuttons").style.display = "none";
 }
