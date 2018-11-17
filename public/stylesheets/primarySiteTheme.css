@@ -31,7 +31,6 @@
     list-style-type: none;
     padding: 0;
   }
-<<<<<<< HEAD
   
   /* style for the nav options */
   #volunteerbuttons {
@@ -41,8 +40,6 @@
   #coordinatorbuttons {
     display: none;
   }
-=======
->>>>>>> 120c764b26185a4aa3f8547b66dfbc895d885b09
 
   article {
     float: left;
