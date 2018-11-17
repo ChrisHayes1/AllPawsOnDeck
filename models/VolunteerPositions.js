@@ -30,9 +30,10 @@ exports.GetPositionList = function (callback) {
 
 }
 
-<<<<<<< HEAD
-exports.vpdata = mongoose.model('VolunteerPosition', vpSchema);
+
+
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
+
 exports.addvp = function(req, res, callback){
 	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
 		// if there are any errors, return the error
@@ -65,6 +66,4 @@ exports.addvp = function(req, res, callback){
 		}
 	});
 } 
-=======
-//module.exports = mongoose.model('VolunteerPosition', vpSchema);
->>>>>>> ba35d6bd0c8b51905562a2c1e4d6ed10fece979f
+//exports.vpdata = mongoose.model('VolunteerPosition', vpSchema);

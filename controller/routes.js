@@ -5,13 +5,8 @@
  *****************************************************/
 
 var mUser = require('../models/user');
-<<<<<<< HEAD
-var vPostition = require('../models/VolunteerPositions');
-var VolunteerPosition = vPostition.vpdata;
-=======
 var Training = require('../models/training');
 var Position = require('../models/VolunteerPositions');
->>>>>>> ba35d6bd0c8b51905562a2c1e4d6ed10fece979f
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -142,24 +137,12 @@ module.exports = function(app, passport) {
     // Volunteer postions
     // **********************************
     //This page needs to be different for user and cordinator
-<<<<<<< HEAD
-    app.get('/volunteerpositions', isLoggedIn, function(req, res) {
-        /*Testing of how to add new tables and print
-        var newVP = new VolunteerPosition();
-        newVP.postionName = "My job";
-        newVP.save();
-        */
-        res.render('volunteerposition.ejs', {
-            //user : req.user // get the user out of session and pass to template
-            //vp: newVP
-=======
     app.get('/volunteerpositions', isLoggedIn, function (req, res) {
         Position.GetPositionList(function (mPositions) {
             res.render('volunteerposition.ejs', {
                 //user : req.user // get the user out of session and pass to template
                 positions: mPositions
             });
->>>>>>> ba35d6bd0c8b51905562a2c1e4d6ed10fece979f
         });
     });
 
@@ -168,7 +151,7 @@ module.exports = function(app, passport) {
         if (isLoggedIn)
         {
             console.log("HERE!!!!")
-            vPostition.addvp(req, res, function(err, mBool){
+            Position.addvp(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
                 
