@@ -6,8 +6,9 @@
     <fieldset class = "ViewProfile">
         <div id="viewUP" class = "ViewProfileHeader"  style = "display:block">
                 <div>
+                    <button class = "EditProfileBtn" onclick="deleteUserByID">Delete Account</button>
                     <button class = "EditProfileBtn" onclick="editUserProfile()">Edit Profile</button>
-                </div>    
+                </div>
                 <table >
                     <tr>
                         <th class = "ViewProfileLabel">Email: </th>
@@ -47,7 +48,7 @@
                         </th>
                     </tr>
                 </table>
-            
+
         </div>
         <div id="editUP" style="display:none">
             <%- include partialEditUserProfile.ejs %>

@@ -63,7 +63,7 @@ exports.validateUser = function(email, password, callback){
     //get user, returns error if user not found
     getUserByEmail(email, function(err, user){
         if (err){
-            console.log('error thrown on validateUser = ' + err); 
+            console.log('error thrown on validateUser = ' + err);
             return callback(err);
         }
 
@@ -95,7 +95,7 @@ exports.attemptNewUser = function(req, email, password, callback){
                     return callback(null, newUser)
                 });
             }else { //else just return the error to done
-                console.log('error thrown on attemptNewUser = ' + err); 
+                console.log('error thrown on attemptNewUser = ' + err);
                 return callback(err);
             }
         } else {
@@ -104,7 +104,7 @@ exports.attemptNewUser = function(req, email, password, callback){
             return callback(new error('Account Already Exists')); // req.flash is the way to set flashdata using connect-flash
         }
 
-        
+
     });
 }
 
@@ -117,15 +117,15 @@ exports.editUserProfile = function(req, res, callback){
     //var currentUser = getUserByEmail(req.user.local.email, function(err, result){
     getUserByEmail(req.user.local.email, function(err, result){
         if(err){
-            console.log('error thrown = ' + err);    
+            console.log('error thrown = ' + err);
             return callback(err);
         }
-        
+
         // set the user's new values
         result.local.firstname = req.body.firstName;
         result.local.lastname = req.body.lastName;
         result.local.phoneNumber = req.body.phoneNumber;
-        
+
         result.address.address1 = req.body.address1;
         result.address.address2 = req.body.address2;
         result.address.city = req.body.city;
@@ -145,7 +145,7 @@ exports.editUserProfile = function(req, res, callback){
 }
 
 exports.getUserByID = function(id, callback){
-    
+
     User.findById(id, function(err, user) {
        return  callback(err, user);
     });
@@ -169,7 +169,7 @@ exports.deleteUserByID = function(req, callback){
  * Returns requested user if they exist other returns error
  */
 function getUserByEmail(email, callback){
-    
+
     User.findOne({ 'local.email' :  email }, function(err, user) {
         // if there are any errors, return the error before anything else
         if (err)
@@ -187,7 +187,7 @@ function getUserByEmail(email, callback){
  * Inserts new user into DB
  */
 function AddNewUser(req, email, password, callback){
-    
+
     var newUser = new User();
 
     // set the user's local credentials
