@@ -11,7 +11,7 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #336600;
+  background-color: #638650;
 }
 
 .form-signin {
@@ -43,6 +43,11 @@ body {
   border: 5px solid white;
   color: white;
   background-color: #336600;
+  background: linear-gradient(to right, white 50%, #638650 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all .5s ease-out;
+  font-weight: bold;
 }
 
 .form-signin input {
@@ -63,7 +68,9 @@ body {
 }
 
 .form-signin .btn-link:hover{
-  background-color: blanchedalmond;
+  background-color: white;
   color: #336600;
   text-decoration: none;
+  font-weight: bold;
+  background-position: left bottom;
 }

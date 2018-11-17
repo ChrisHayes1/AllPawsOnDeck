@@ -1,11 +1,11 @@
 * {
     box-sizing: border-box;
   }
-  
+
   body {
     font-family: Arial, Helvetica, sans-serif;
   }
-  
+
   /*  header style */
   header {
     background-color: #638650;
@@ -16,7 +16,7 @@
     color: white;
     height: 15vh;
   }
-  
+
   /*  two columns/boxes that floats next to each other */
   nav {
     float: left;
@@ -25,12 +25,13 @@
     background: #99b27f;
     padding: 10px;
   }
-  
+
   /* Style the list inside the menu */
   nav ul {
     list-style-type: none;
     padding: 0;
   }
+<<<<<<< HEAD
   
   /* style for the nav options */
   #volunteerbuttons {
@@ -40,6 +41,8 @@
   #coordinatorbuttons {
     display: none;
   }
+=======
+>>>>>>> 120c764b26185a4aa3f8547b66dfbc895d885b09
 
   article {
     float: left;
@@ -48,14 +51,28 @@
     background-color: #f1f1f1;
     height: 80vh;
   }
-  
+
+  Application_Status_Bar {
+    width: 90%;
+    background-color: #ddd;
+  }
+
+#progressBar {
+  width: 10%;
+  height: 50px;
+  background-color: #638650;
+  text-align: center;
+  line-height: 50px;
+  color: black;
+  }
+
   /* Clear floats after the columns */
   section:after {
     content: "";
     display: table;
     clear: both;
   }
-  
+
   /* footer style */
   footer {
     background-color: #638650;
@@ -64,8 +81,8 @@
     color: white;
     height: 5vh;
   }
-  
-  
+
+
   .NavMenuButton {
     border-color: #99b27f;
     position: relative;
@@ -81,7 +98,7 @@
     line-height: 30px;
     width: 90%;
   }
-  
+
   .NavMenuSelection{
       background-color: #e79541;
   }
@@ -91,17 +108,18 @@
     margin-top: 2px;
     margin-bottom: 5px;
   }
-  
+
   a {
     display: block;
     width: 200px;
     height: 35px;
     line-height: 30px;
-    text-decoration: none; 
+    text-decoration: none;
   }
-  
+
   a:hover {
-      color: #bea694;
+    color: #336600;
+    background-color: white;
   }
 
   fieldset {
@@ -217,9 +235,9 @@
 }
 
 legend {
-    padding: 2px;    
+    padding: 2px;
 }
-  
+
 
   /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
   @media (max-width: 600px) {

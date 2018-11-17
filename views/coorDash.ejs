@@ -24,11 +24,10 @@
       </div>
     
     <h2>Training List</h2>
-    <% trainings.forEach(function(training) { %>
-      <li><%= training %> </li>
-    <% }); %>
+    <%-include partials/partialDisplayTrainingList.ejs %>
 
     <h2>Position List</h2>
+	<%- include partials/partialDisplayPositionList.ejs %>
     </article>
     </section>
 

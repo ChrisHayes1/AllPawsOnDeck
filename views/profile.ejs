@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
   <head>
     <title>APOD Profile</title>
     <meta charset="utf-8">
@@ -24,7 +24,7 @@
       </div>
 
 		<h2>Training Status</h2>
-    <p>Completed Training: 
+    <p>Completed Training:
     <% if ((user.completedTrainings).length===0) {%>
           No training has been done
     <%}  else{%>
@@ -39,6 +39,29 @@
       <li><%= training %> </li>
     <% }); %>
 
+    <div id="Application_Status_Bar">
+      <div id="progressBar">1%</div>
+    </div>
+
+    <br>
+    <button onclick="update()">Check Status</button>
+
+    <script>
+    function update() {
+    var element = document.getElementById("progressBar");
+    var width = 1;
+    var identity = setInterval(scene, 10);
+    function scene() {
+     if (width >= 100) {
+       clearInterval(identity);
+     } else {
+       width++;
+       element.style.width = width + '%';
+       element.innerHTML = width * 1  + '%';
+     }
+    }
+    }
+    </script>
 
 		<h2>Account Type</h2>
 		<p><%= user.local.userType %></p>

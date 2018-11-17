@@ -24,9 +24,34 @@
 
 <article>
     <h2>Open Job List</h2>
-	<% positions.forEach(function(position) { %>
-      <li><%= position %> </li>
-    <% }); %>
+	<%- include partials/partialDisplayPositionList.ejs %>
+
+
+    <body class = "text-center" style="border: 1px solid #000000;"></body>
+
+    <form class = "EditProfile" action="/volunteerpositions" method="post" id = "frmEditProfile">
+        <table class = "EditProfileHeader">
+            <tr>
+                <th class = "EditProfileLabel">Position Name:</th>
+                <th>
+                    <input class = "EditProfileInput" 
+                        name="positionName"
+                        type="text" >
+                        
+                </th>
+            </tr>
+            <tr>
+                <th class = "EditProfileLabel">Role Description:</th>
+                <th>
+                    <input class = "EditProfileInput" 
+                        name="roleDescription"
+                        type="text" >          
+                </th>
+            </tr>
+        </table>      
+    </form>
+    
+    <button class = "EditProfileBtn" onclick = "submitChanges()" >ADD</button>
     
 </article>
 </section>
@@ -37,7 +62,13 @@ All Paws on Deck!
 
 </body>
 
-
+<script>
+    function submitChanges(){
+        console.log("about to post");
+        document.getElementById("frmEditProfile").submit();
+        console.log("done with post");
+    }
+</script>
 
 </html>
 

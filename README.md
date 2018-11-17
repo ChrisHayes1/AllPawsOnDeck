@@ -17,3 +17,8 @@ This application is used to manage volunteers for the Humane Society of Southern
 7) Run the project from terminal with node server.js
 
 8) Visit localhost:xxxx on your web browser to bring page up (where xxxx is the selected port reference above)
+
+
+Additional Notes:
+
+* If you pull new versions of the repo from github you may need to run 'npm install' in terminal within the project folder. This will ensure you have all required dependancies
