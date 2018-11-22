@@ -13,7 +13,7 @@
  * Imports
  ****************************/
 const User = require.requireActual('../models/user.js');
-
+var mongoose = require('mongoose');
 /****************************
  * Globals
  ****************************/
@@ -25,43 +25,27 @@ var testEmail = "testTestNameThatWillNeverBeAccidentlyUsed@gmail.faketest.com";
 
 var email;
 var password;
-var testReqBody =  {
-    body : {
-        firstName       : String,
-        lastName        : String,
-        phoneNumber     : String,
+var request;
+var req;
 
-        address1        : String,
-        address2        : String,
-        city            : String,
-        state           : String,
-        zip             : Number,
+// var testReqBody =  {
+//     body : {
+//         firstName       : String,
+//         lastName        : String,
+//         phoneNumber     : String,
 
-        year            : Number,
-        month           : Number,
-        day             : Number,
-    }
-}
-/****************************
- * Setup and Teardown
- ****************************/
+//         address1        : String,
+//         address2        : String,
+//         city            : String,
+//         state           : String,
+//         zip             : Number,
 
- beforeEach(() => {
-    email = testEmail;
-    password =  testPassword;
-    req = testReqBody;
-    req.firstName = "TestFirst";
-    req.lastName = "TestLast";
-    req.phoneNumber = "6085555555";
-    req.address1 = "Address 1";
-    req.address2 = "Address 2";
-    req.city = "City";
-    req.state = "State";
-    req.zip = 53711;
-    req.month = 1;
-    req.day  = 25;
-    req.year = 1983;
- })
+//         year            : Number,
+//         month           : Number,
+//         day             : Number
+//     }
+// }
+
 
 /****************************
  * Tests
@@ -88,36 +72,115 @@ var testReqBody =  {
  /****************************
  * Tests - Creating Accounts
  ****************************/
-// describe('Testing User Model', () => {
-//     describe('Testing ability to generate new accounts', () => {
+describe('Testing User Model', () => {
+    describe('Testing ability to generate new accounts', () => {
+
+        /****************************
+ * Setup and Teardown
+ ****************************/
+
+        beforeAll((done) => {
+            console.log('#######running BEFORE ALL')
+            var options = {
+                server: { socketOptions: { keepAlive: 30000, connectTimeoutMS: 30000, reconnectTries: 30, reconnectInterval: 2000 } },
+                replset: { socketOptions: { keepAlive: 30000, connectTimeoutMS: 30000, reconnectTries: 30, reconnectInterval: 2000 } }
+              };
+            mongoose.connect('mongodb://localhost:27017/apodDBTest',  options, { useNewUrlParser: true }, err=> {
+                if(err) {
+                    console.log('connection to mongo.db threw the following error ' + err);
+                } else {
+                    console.log('Connection to mongo.db succesful')
+                }
+                return done();
+            }); // connect to our database
+            console.log('disconnect connection state prior : ' + mongoose.connection.readyState);
+            
+        });
+
+        afterAll((done) => {
+            console.log('#######running AFTER ALL')
+            console.log('disconnecting from server')
+            console.log('disconnect connection state prior : ' + mongoose.connection.readyState);
+            mongoose.disconnect(done);
+            console.log('disconnect connection post : ' + mongoose.connection.readyState);
+            return done();
+        });
+
+
+        beforeEach((done) => {
+            console.log('#######running BEFORE EACH')
+            email = testEmail;
+            password =  testPassword;
+            request = {
+                "body" : {
+                    "firstName" : "TestFirst",
+                    "lastName" : "TestLast",
+                    "phoneNumber" : "6085555555",
+                    "address1" : "1930 Monroe St",
+                    "address2" : "Suite 200",
+                    "city" : "Madison",
+                    "state" : "WI",
+                    "zip" : 53711,
+                    "month" : 1,
+                    "day"  : 25,
+                    "year" : 1983
+                }
+            }
+            
+            //request = "[" + request + "]";
+            //req = JSON.stringify(request);
+            req = request;
+            //jest.setTimeout(10000);
+            function clearDB() {
+                for (var i in mongoose.connection.collections) {
+                  mongoose.connection.collections[i].remove(function() {});
+                }
+                return done();
+              }
+
+            return clearDB();
+        })
+
+
+        
 
         test('Verify that a new account can be created', (done) => {
-            console.log('TEST STARTED:');
-            User.attemptNewUser(req, email, password, function(err, user){
-                console.log('validateUser called back');
-                expect(err).toBeNull();
-                expect(user.local.firstname).toBe(req.firstName);
-                expect(user.local.lastname).toBe(req.lastName);
-                expect(user.local.phoneNumber).toBe(req.phoneNumber);
-                expect(user.local.address1).toBe(req.address1);
-                expect(user.local.address2).toBe(req.address2);
-                expect(user.local.city).toBe(req.city);
-                expect(user.local.state).toBe(req.state);
-                expect(user.local.zip).toBe(req.zip);
-                expect(user.local.day).toBe(req.day);
-                expect(user.local.month).toBe(req.month);
-                expect(user.local.year).toBe(req.year);
-                return done();
-            });
-        },3000);
+            //function callback() {
+                console.log('TEST STARTED:');
+                console.log('connection state : ' + mongoose.connection.readyState);
+
+                User.attemptNewUser(req, email, password, function(err, user){
+                    console.log('validateUser called back - checking undefined on err - ' + err);
+                    console.log('verify user');
+                    if(user != null)
+                        expect(user.local.email).toBe(email);
+                    else {
+                        expect(err).toBeNull();
+                    }
+                    console.log('test about to call done');
+                    done();
+                }).catch(() => {
+                    console.log('## RUNNING CATCH BLOCK ##');
+                    expect(false).toBe(true);
+                    expect(user).toBeNull();
+                    return done();
+                });
+           
+            
+        //    fetchData(callback);
+
+        },15000);
         
-        test('Verify that a new account can not be created if email is already in the system', (done) => {
-            User.attemptNewUser(req, email, password, function(err, user){
-                expect(err.message).toBe('Account Already Exists');
-                expect(user).toBeNull();
-                done();
-            });
-        },3000);
+        // test('Verify that a new account can not be created if email is already in the system', (done) => {
+        //     User.attemptNewUser(req, email, password, function(err, user){
+        //         expect(false).toBe(true);
+        //         done();
+        //     }).catch((err) => {
+        //         expect(err.message).toBe('Account Already Exists');
+        //         expect(user).toBeNull();
+        //         done();
+        //     });
+        // },8000);
 
 
         // test('ensure hash generation returns value', () => {
@@ -131,5 +194,5 @@ var testReqBody =  {
         // test('check invalid password', () => {
         //     expect(newUser.validPassword(testBadPassword)).toBeFalsy();
         // });
-//     })
-// })
+    })
+})

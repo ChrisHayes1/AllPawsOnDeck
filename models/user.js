@@ -89,6 +89,7 @@ exports.validateUser = function(email, password, callback){
  */
 exports.attemptNewUser = function(req, email, password, callback){
     console.log('attemptNewUser about to get user - ' + email);
+    console.log('attemptNewUser about to get user with first name - ' + req.body.firstName);
     getUserByEmail(email, function(err, user){
         console.log('got user, checking response');
         //if user is found the return flash message as part of callback
@@ -207,7 +208,8 @@ function getUserByEmail(email, callback){
 function AddNewUser(req, email, password, callback){
 
     var newUser = new User();
-
+    console.log('about to add new user with email ' + email);
+    console.log('about to add new user with First Name ' + req.body.firstName);
     // set the user's local credentials
     newUser.local.email    = email;
     console.log('about to generate hash');
@@ -226,7 +228,7 @@ function AddNewUser(req, email, password, callback){
         if (err)
             return callback(err);
         console.log('no error, running callback');
-        console.log('just saved save the user with firstName ' + newUser.local.firstName);
+        console.log('just saved  the user with firstName ' + newUser.local.firstName);
         return callback(null, newUser);
     });
 }
