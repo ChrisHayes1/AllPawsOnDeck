@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <%- include partials/head.ejs %>
+  </head>
+
+  <body>
+    <header>
+    <h2>Delete <%= user.local.firstname %>?</h2>
+    </header>
+
+    <section>
+      <nav>
+          <%- include partials/navMenu.ejs %>
+      </nav>
+
+      <article>
+        <h2>Would you like to delete your account?</h2>
+        
+        <fieldset style="width: 44vw;">
+            <br>
+            <b>Deleting your account will inhibit your ability to volunteer. All data will be lost</b>
+            <br>
+            <ul>
+              <li>If you are sure you would like to delete your account, please select 'delete' below. </li>
+              <li>If you have changed your mind please select 'cancel' </li>
+            </ul>
+            <form action="/deleteProfile" method="post">
+              <button class = "EditProfileBtnCancel" type = "submit">Delete</button>
+            </form>
+            <form>
+              <button class = "EditProfileBtn" type = "submit" formaction="/profile">Cancel</button>
+          </form>
+        </fieldset>
+
+        
+        
+        
+
+       
+
+      </article>
+    </section>
+
+    <footer>
+      <%- include partials/footer.ejs %>
+    </footer>
+
+  </body>
+</html>

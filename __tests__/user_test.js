@@ -4,16 +4,14 @@
  * Author:   Todd Hayes-Birchler
  * Date:     11/11/2018
  ****************************/
-// jest.resetModules();
-// jest.unmock('mongoose');
-// jest.unmock('../models/user.js');
-// jest.dontMock('../models/user.js');
+
 
 /****************************
  * Imports
  ****************************/
+app = require('../server');
 const User = require.requireActual('../models/user.js');
-var mongoose = require('mongoose');
+
 /****************************
  * Globals
  ****************************/
@@ -27,25 +25,6 @@ var email;
 var password;
 var request;
 var req;
-
-// var testReqBody =  {
-//     body : {
-//         firstName       : String,
-//         lastName        : String,
-//         phoneNumber     : String,
-
-//         address1        : String,
-//         address2        : String,
-//         city            : String,
-//         state           : String,
-//         zip             : Number,
-
-//         year            : Number,
-//         month           : Number,
-//         day             : Number
-//     }
-// }
-
 
 /****************************
  * Tests
@@ -72,115 +51,71 @@ var req;
  /****************************
  * Tests - Creating Accounts
  ****************************/
-describe('Testing User Model', () => {
-    describe('Testing ability to generate new accounts', () => {
 
-        /****************************
+
+/****************************
  * Setup and Teardown
  ****************************/
 
-        beforeAll((done) => {
-            console.log('#######running BEFORE ALL')
-            var options = {
-                server: { socketOptions: { keepAlive: 30000, connectTimeoutMS: 30000, reconnectTries: 30, reconnectInterval: 2000 } },
-                replset: { socketOptions: { keepAlive: 30000, connectTimeoutMS: 30000, reconnectTries: 30, reconnectInterval: 2000 } }
-              };
-            mongoose.connect('mongodb://localhost:27017/apodDBTest',  options, { useNewUrlParser: true }, err=> {
-                if(err) {
-                    console.log('connection to mongo.db threw the following error ' + err);
-                } else {
-                    console.log('Connection to mongo.db succesful')
-                }
-                return done();
-            }); // connect to our database
-            console.log('disconnect connection state prior : ' + mongoose.connection.readyState);
-            
-        });
-
-        afterAll((done) => {
-            console.log('#######running AFTER ALL')
-            console.log('disconnecting from server')
-            console.log('disconnect connection state prior : ' + mongoose.connection.readyState);
-            mongoose.disconnect(done);
-            console.log('disconnect connection post : ' + mongoose.connection.readyState);
-            return done();
-        });
+afterAll((done) => {
+    console.log('#######running AFTER ALL');
+    return app.close(done);
+});
 
 
-        beforeEach((done) => {
-            console.log('#######running BEFORE EACH')
-            email = testEmail;
-            password =  testPassword;
-            request = {
-                "body" : {
-                    "firstName" : "TestFirst",
-                    "lastName" : "TestLast",
-                    "phoneNumber" : "6085555555",
-                    "address1" : "1930 Monroe St",
-                    "address2" : "Suite 200",
-                    "city" : "Madison",
-                    "state" : "WI",
-                    "zip" : 53711,
-                    "month" : 1,
-                    "day"  : 25,
-                    "year" : 1983
-                }
-            }
-            
-            //request = "[" + request + "]";
-            //req = JSON.stringify(request);
-            req = request;
-            //jest.setTimeout(10000);
-            function clearDB() {
-                for (var i in mongoose.connection.collections) {
-                  mongoose.connection.collections[i].remove(function() {});
-                }
-                return done();
-              }
 
-            return clearDB();
-        })
+beforeEach((done) => {
+    console.log('#######running BEFORE EACH')
+    email = testEmail;
+    password =  testPassword;
+    request = {
+        "body" : {
+            "firstName" : "TestFirst",
+            "lastName" : "TestLast",
+            "phoneNumber" : "6085555555",
+            "address1" : "1930 Monroe St",
+            "address2" : "Suite 200",
+            "city" : "Madison",
+            "state" : "WI",
+            "zip" : 53711,
+            "month" : 1,
+            "day"  : 25,
+            "year" : 1983
+        }
+    };
+    console.log('#######returning DONE on BEFORE EACH');
+    req = request;
+    
+    return done();
+});
 
-
-        
+//Test functions exported as part of user buisiness logic        
+describe('Testing User Model', () => {
+    describe('Testing ability to generate new accounts', () => {
 
         test('Verify that a new account can be created', (done) => {
-            //function callback() {
-                console.log('TEST STARTED:');
-                console.log('connection state : ' + mongoose.connection.readyState);
-
-                User.attemptNewUser(req, email, password, function(err, user){
-                    console.log('validateUser called back - checking undefined on err - ' + err);
-                    console.log('verify user');
-                    if(user != null)
-                        expect(user.local.email).toBe(email);
-                    else {
-                        expect(err).toBeNull();
-                    }
-                    console.log('test about to call done');
-                    done();
-                }).catch(() => {
-                    console.log('## RUNNING CATCH BLOCK ##');
-                    expect(false).toBe(true);
-                    expect(user).toBeNull();
+            //
+            User.attemptNewUser(req, email, password, function(err, user){
+                if(user != null){
+                    console.log('user not null');
+                    expect(user.local.email).toBe(email);
                     return done();
-                });
-           
-            
-        //    fetchData(callback);
-
-        },15000);
+                } 
+                expect(false).toBe(true);
+                return done();
+            });
+        },5000);
         
-        // test('Verify that a new account can not be created if email is already in the system', (done) => {
-        //     User.attemptNewUser(req, email, password, function(err, user){
-        //         expect(false).toBe(true);
-        //         done();
-        //     }).catch((err) => {
-        //         expect(err.message).toBe('Account Already Exists');
-        //         expect(user).toBeNull();
-        //         done();
-        //     });
-        // },8000);
+        test('Verify that a new account can not be created if email is already in the system', (done) => {
+            User.attemptNewUser(req, email, password, function(err, user){
+                if(err.message === 'Account Already Exists'){
+                    expect(true).toBe(true);    
+                }else {
+                    expect(false).toBe(true);
+                }
+                done();
+            });
+        },8000);
 
 
         // test('ensure hash generation returns value', () => {
@@ -194,5 +129,8 @@ describe('Testing User Model', () => {
         // test('check invalid password', () => {
         //     expect(newUser.validPassword(testBadPassword)).toBeFalsy();
         // });
-    })
-})
+
+    });
+
+});
+
