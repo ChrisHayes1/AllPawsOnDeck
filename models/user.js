@@ -66,12 +66,11 @@ exports.validateUser = function(email, password, callback){
     //get user, returns error if user not found
     console.log('validateUser about to get user - ' + email);
     getUserByEmail(email, function(err, user){
-        console.log('validateUser user returned with name  - ' + user.local.firstName);
         if (err){
             console.log('error thrown on validateUser = ' + err);
             return callback(err);
         }
-
+        console.log('validateUser user returned with name  - ' + user.local.firstName);
         //User found, validate password
         // if the user is found but the password is wrong
         if (!user.validPassword(password)){
