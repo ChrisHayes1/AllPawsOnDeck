@@ -174,6 +174,13 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+
+    app.get('/calendar', isLoggedIn, function(req, res) {
+        res.render('calendar.ejs', {
+            user : req.user, // get the user out of session and pass to template
+            page : "calendar"
+        });
+    });
 };
 
 // route middleware to make sure a user is logged in
