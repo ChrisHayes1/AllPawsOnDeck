@@ -66,12 +66,11 @@ exports.validateUser = function(email, password, callback){
     //get user, returns error if user not found
     console.log('validateUser about to get user - ' + email);
     getUserByEmail(email, function(err, user){
-        console.log('validateUser user returned with name  - ' + user.local.firstName);
         if (err){
             console.log('error thrown on validateUser = ' + err);
             return callback(err);
         }
-
+        console.log('validateUser user returned with name  - ' + user.local.firstName);
         //User found, validate password
         // if the user is found but the password is wrong
         if (!user.validPassword(password)){
@@ -89,6 +88,7 @@ exports.validateUser = function(email, password, callback){
  */
 exports.attemptNewUser = function(req, email, password, callback){
     console.log('attemptNewUser about to get user - ' + email);
+    console.log('attemptNewUser about to get user with first name - ' + req.body.firstName);
     getUserByEmail(email, function(err, user){
         console.log('got user, checking response');
         //if user is found the return flash message as part of callback
@@ -98,7 +98,7 @@ exports.attemptNewUser = function(req, email, password, callback){
                 //User not found, go ahead and create
                 AddNewUser(req, email, password, function(err, newUser){
                     if (err) return callback(err);
-                    return callback(null, newUser)
+                    return callback(null, newUser);
                 });
             }else { //else just return the error to done
                 console.log('error thrown on attemptNewUser = ' + err);
@@ -107,7 +107,7 @@ exports.attemptNewUser = function(req, email, password, callback){
         } else {
             //no error so user already exists
             console.log('User Already Existed');
-            return callback(new error('Account Already Exists')); // req.flash is the way to set flashdata using connect-flash
+            return callback(new Error('Account Already Exists')); 
         }
 
 
@@ -207,12 +207,10 @@ function getUserByEmail(email, callback){
 function AddNewUser(req, email, password, callback){
 
     var newUser = new User();
-
+    
     // set the user's local credentials
     newUser.local.email    = email;
-    console.log('about to generate hash');
     newUser.local.password = newUser.generateHash(password);
-    console.log('has generate');
     newUser.local.firstname = req.body.firstName;
     newUser.local.lastname = req.body.lastName;
     newUser.local.completedTraining = false;
@@ -222,11 +220,8 @@ function AddNewUser(req, email, password, callback){
     // save the user
     console.log('abuot to save the user');
     newUser.save(function(err) {
-        console.log('saved, checking error');
         if (err)
             return callback(err);
-        console.log('no error, running callback');
-        console.log('just saved save the user with firstName ' + newUser.local.firstName);
         return callback(null, newUser);
     });
 }

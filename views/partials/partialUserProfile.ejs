@@ -57,7 +57,7 @@
 
 <script>
     function editUserProfile(){
-        console.log('Attempting to edit user profile ' + <%= user.local.phoneNumber %>);
+        console.log('Attempting to edit user profile ' + '<%= user.local.phoneNumber %>');
         swapVisible("viewUP");
         swapVisible("editUP");
     };
