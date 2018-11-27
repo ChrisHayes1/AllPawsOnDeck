@@ -26,6 +26,32 @@
     <h2>Training List</h2>
     <%-include partials/partialDisplayTrainingList.ejs %>
 
+	<body class = "text-center" style="border: 1px solid #000000;"></body>
+
+    <form class = "EditProfile" action="/coorDash" method="post" id = "frmEditProfile">
+        <table class = "EditProfileHeader">
+            <tr>
+                <th class = "EditProfileLabel">Training Name:</th>
+                <th>
+                    <input class = "EditProfileInput" 
+                        name="trainingName"
+                        type="text" >
+                        
+                </th>
+            </tr>
+            <tr>
+                <th class = "EditProfileLabel">Training Description:</th>
+                <th>
+                    <input class = "EditProfileInput" 
+                        name="TrainingDescription"
+                        type="text" >          
+                </th>
+            </tr>
+        </table>      
+    </form>
+
+	<button class = "EditProfileBtn" onclick = "submitChanges()" >ADD</button>
+
     <h2>Position List</h2>
 	<%- include partials/partialDisplayPositionList.ejs %>
     </article>
@@ -36,4 +62,11 @@
     </footer>
 
   </body>
+  <script>
+    function submitChanges(){
+        console.log("about to post");
+        document.getElementById("frmEditProfile").submit();
+        console.log("done with post");
+    }
+</script>
 </html>

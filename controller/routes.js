@@ -108,16 +108,17 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/coorDash', function(req, res) {
+    app.post('/coorDash', function (req, res) {
         //Add code for successful post
-        if (isLoggedIn)
-        {
-            mUser.editUserProfile(req, res, function(err, mBool){
+        if (isLoggedIn) {
+            mUser.editUserProfile(req, res, function (err, mBool) {
+                Training.addvp(req, res, function (err, mBool) {
                 //TODO Deal with error instead of just loging
-                if (err)  console.log("error response was " + err);
-                
+                if (err) console.log("error response was " + err);
+
                 res.redirect('/coorDash');
 
+                });
             });
         } else {
             res.redirect('/');
