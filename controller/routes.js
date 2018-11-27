@@ -77,7 +77,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/profile', function(req, res) {
+    app.post('/profile', isLoggedIn, function(req, res) {
         //Add code for successful post
         if (isLoggedIn)
         {
@@ -89,6 +89,23 @@ module.exports = function(app, passport) {
         } else {
             res.redirect('/');
         }
+    });
+
+    // **********************************
+    // DELETE PROFILE
+    // **********************************
+    // we will want this protected so you have to be logged in to visit
+    // we will use route middleware to verify this (the isLoggedIn function)
+    app.get('/deleteProfile', isLoggedIn, function(req, res) {
+        console.log('route found for deleteProfile');
+        res.render('deleteProfile.ejs', {
+            user : req.user,
+            page : "profile"
+        });
+    });
+
+    app.post('/deleteProfile', isLoggedIn, function(req, res) {
+        console.log('ATTEMPTING POST FOR ');
     });
 
     // **********************************
