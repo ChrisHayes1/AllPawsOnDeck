@@ -54,7 +54,7 @@ userSchema.methods.validPassword = function(password) {
 };
 
 /****************************
- * Exposed buisiness logic
+ * Exposed interface
  ***************************/
 var User = mongoose.model('User', userSchema);
 
@@ -163,6 +163,20 @@ exports.getUserByID = function(id, callback){
 
     User.findById(id, function(err, user) {
        return  callback(err, user);
+    });
+}
+
+
+
+exports.isCoordinator = function(req, callback){
+    this.getUserByID(req.user.id, function(err, result){
+        if (err){
+            console.log('error thrown on isCoordinator = ' + err);
+            return callback(err);
+        }
+
+        //user returned
+        return callback(null, result.local.isCoordinator);
     });
 }
 

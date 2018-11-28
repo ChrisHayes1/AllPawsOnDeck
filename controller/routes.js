@@ -68,12 +68,21 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        Training.GetTrainingList(function(mTraining) {
-            res.render('profile.ejs', {
-                user : req.user, // get the user out of session and pass to template
-                trainings : mTraining,
-                page : "profile"
-            });
+        mUser.isCoordinator(req, function(err, isCoord){
+            if (err)  console.log("error response was " + err);
+            //if coord redirect to coord dashboard
+            if (isCoord){
+                res.redirect('/coorDash');
+            } else {
+                Training.GetTrainingList(function(mTraining) {
+                    res.render('profile.ejs', {
+                        user : req.user, // get the user out of session and pass to template
+                        trainings : mTraining,
+                        page : "profile"
+                    });
+                });
+            }
+                
         });
     });
 
