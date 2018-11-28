@@ -56,8 +56,8 @@ userSchema.methods.validPassword = function(password) {
 /****************************
  * Exposed interface
  ***************************/
+//provide inderect internal access to model
 var User = mongoose.model('User', userSchema);
-
 
 /**
  * Validates user.  Returns user if valid email and password
@@ -159,6 +159,9 @@ exports.editUserProfile = function(req, res, callback){
     });
 }
 
+/**
+ *  Returns an instance of the user matching the ID or error if not found
+ */
 exports.getUserByID = function(id, callback){
 
     User.findById(id, function(err, user) {
@@ -167,7 +170,9 @@ exports.getUserByID = function(id, callback){
 }
 
 
-
+/**
+ * returns true if user is coordinator false if volunteer
+ */
 exports.isCoordinator = function(req, callback){
     this.getUserByID(req.user.id, function(err, result){
         if (err){
@@ -180,6 +185,10 @@ exports.isCoordinator = function(req, callback){
     });
 }
 
+/**
+ * Deletes the user sent in if user exists. 
+ * TODO: Test to see what gets returned with invalid ID
+ */
 exports.deleteUserByID = function(req, callback){
     console.log("About to delete user with id " + req.user.id);
     User.findByIdAndRemove({ _id: req.user.id }, function(err) {
@@ -194,6 +203,9 @@ exports.deleteUserByID = function(req, callback){
         }
     });
 }
+
+
+
 /****************************
  * Associated helper functions
  ***************************/
@@ -246,6 +258,7 @@ function AddNewUser(req, email, password, callback){
 
 
 /****************************
- * export as needed
+ * export model as needed.  
+ * TODO: Try to clear out using this export.  All data manipulation should be handled internally
  ***************************/
 exports.userData = mongoose.model('User', userSchema);

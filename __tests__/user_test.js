@@ -93,6 +93,9 @@ beforeEach((done) => {
 describe('Testing User Model', () => {
     describe('Testing ability to generate new accounts', () => {
 
+        /**
+         * Test that a new account can be created with a valid email address.  
+         */
         test('Verify that a new account can be created', (done) => {
             //
             User.attemptNewUser(req, email, password, function(err, user){
@@ -106,6 +109,10 @@ describe('Testing User Model', () => {
             });
         },5000);
         
+        /**
+         * Test that if you attempt to create a new account with an existing email that the correct 
+         * error is returned
+         */
         test('Verify that a new account can not be created if email is already in the system', (done) => {
             User.attemptNewUser(req, email, password, function(err, user){
                 if(err.message === 'Account Already Exists'){
