@@ -1,25 +1,13 @@
-<link rel='stylesheet' type='text/css' href='stylesheets/fullcalendar.css' />
+<head>
+    <link rel='stylesheet' type='text/css' href='stylesheets/fullcalendar.css' />
     <script src='moment.js'></script>
     <script type='text/javascript' src='jquery.min.js'></script>
     <script type='text/javascript' src='stylesheets/fullcalendar.js'></script>
-    <script>
-    $(function() {
-
-        // page is now ready, initialize the calendar...
-      
-        $('#cal').fullCalendar({
-            height: 'parent'
-          // put your options and callbacks here
-        })
-      
-      });
-    </script>
+    <script src='events.js'></script>
+    <script src='calendar.js'></script>
+</head>
 
 <body style="border: 1px solid #000000;">
     <h2> My Calendar</h2>
-    <fieldset class = "Calendar">
-        <div>
-            <div id="cal"></div>
-        </div>
-    </fieldset>
+    <fieldset class = "cal"></fieldset>
 </body>

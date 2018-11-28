@@ -7,43 +7,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/primarySiteTheme.css">
-    <link rel='stylesheet' type='text/css' href='stylesheets/fullcalendar.css' />
-    <script src='moment.js'></script>
-    <script type='text/javascript' src='jquery.min.js'></script>
-    <script type='text/javascript' src='stylesheets/fullcalendar.js'></script>
-    <script>
-    $(function() {
-
-        // page is now ready, initialize the calendar...
-      
-        $('#cal').fullCalendar({
-          // put your options and callbacks here
-        })
-      
-      });
-    </script>
   </head>
 
   <body>
     <header>
     <h2>Welcome <%= user.local.firstname %></h2>
     </header>
-
-    
     <nav>
         <%- include partials/navMenu.ejs %>
     </nav>
-    
-    
-        
         <%- include partials/partialCalendar.ejs %>
-        
-
-    
-    
-    
-    
-
   </body>
   <footer>
       <%- include partials/footer.ejs %>
