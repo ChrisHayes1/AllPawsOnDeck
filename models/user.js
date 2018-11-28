@@ -167,12 +167,16 @@ exports.getUserByID = function(id, callback){
 }
 
 exports.deleteUserByID = function(req, callback){
-    User.remove({ _id: req.body.id }, function(err) {
-        if (!err) {
-                message.type = 'notification!';
+    console.log("About to delete user with id " + req.user.id);
+    User.findByIdAndRemove({ _id: req.user.id }, function(err) {
+        console.log("Remove created call back ");
+        if (!err) { //return true if user is deleted
+            console.log("Callback returned true, user was deleted?");
+                return callback(true)
         }
-        else {
-                message.type = 'error';
+        else { //return false if we get an error
+            console.log("Callback returned error " + err.message);
+            return callback(false)
         }
     });
 }

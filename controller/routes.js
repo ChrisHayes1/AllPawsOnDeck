@@ -105,7 +105,13 @@ module.exports = function(app, passport) {
     });
 
     app.post('/deleteProfile', isLoggedIn, function(req, res) {
-        console.log('ATTEMPTING POST FOR ');
+        console.log('ATTEMPTING POST FOR');
+        mUser.deleteUserByID(req, function(err, mBool){
+            //TODO Deal with error instead of just loging
+            if (err)  console.log("error response was " + err);
+            req.logout();
+            res.redirect('/');
+        });
     });
 
     // **********************************
@@ -162,7 +168,7 @@ module.exports = function(app, passport) {
             res.render('volunteerposition.ejs', {
                 user : req.user, // get the user out of session and pass to template
                 positions: mPositions,
-                page : "volunteer"
+                page : "volunteerpositions"
             });
         });
     });
@@ -171,7 +177,6 @@ module.exports = function(app, passport) {
         //Add code for successful post
         if (isLoggedIn)
         {
-            console.log("HERE!!!!")
             Position.addvp(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
