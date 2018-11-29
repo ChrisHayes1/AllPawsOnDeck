@@ -30,7 +30,8 @@
     <body class = "text-center" style="border: 1px solid #000000;"></body>
 
     <form class = "EditProfile" action="/volunteerpositions" method="post" id = "frmEditProfile">
-        <table class = "EditProfileHeader">
+        
+		<table class = "EditProfileHeader">
             <tr>
                 <th class = "EditProfileLabel">Position Name:</th>
                 <th>
@@ -47,6 +48,22 @@
                         name="roleDescription"
                         type="text" >          
                 </th>
+            </tr>
+			<tr>
+                <th class = "EditProfileLabel">Required Trainings:</th>
+                
+			</tr>
+			<tr>
+				<td><ul>
+					<% trainings.forEach((training)=>{ %>
+						
+							<p><%=training%>
+							<input type="checkbox" name= "training" id="training" data-id="<%=training%>" value="<%=training%>" onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();" /></button>
+							</p>
+					<%})%>
+					</ul>
+                </td>
+				
             </tr>
         </table>      
     </form>
@@ -69,6 +86,21 @@
         console.log("done with post");
     }
 </script>
+<script>
+    function addTraining(){
+		var ul = document.getElementById("dynamic-list");
+		var training = document.getElementById("training");
+		var li = document.createElement("li");
+		li.setAttribute('id', training);
+		ul.appendChild(li);	
+    }
+</script>
+function removeTraining(){
+    var ul = document.getElementById("dynamic-list");
+    var training = document.getElementById("training");
+    var item = document.getElementById(training);
+    ul.removeChild(item);
+}
 
 </html>
 
