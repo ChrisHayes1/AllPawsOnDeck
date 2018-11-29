@@ -174,11 +174,14 @@ module.exports = function(app, passport) {
     // **********************************
     //This page needs to be different for user and cordinator
     app.get('/volunteerpositions', isLoggedIn, function (req, res) {
-        Position.GetPositionList(function (mPositions) {
-            res.render('volunteerposition.ejs', {
-                user : req.user, // get the user out of session and pass to template
-                positions: mPositions,
-                page : "volunteerpositions"
+        Training.GetTrainingList(function (mTraining) {
+            Position.GetPositionList(function (mPositions) {
+                res.render('volunteerposition.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    positions: mPositions,
+                    trainings: mTraining,
+                    page: "volunteerpositions"
+                });
             });
         });
     });
