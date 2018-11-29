@@ -50,7 +50,7 @@
                 </th>
             </tr>
 			<tr>
-                <th class = "EditProfileLabel">Trainings:</th>
+                <th class = "EditProfileLabel">Required Trainings:</th>
                 <td>
                     <ul id="dynamic-list"></ul>
 				</td>
@@ -60,7 +60,7 @@
 					<% trainings.forEach((training)=>{ %>
 						
 							<p><%=training%>
-							<input type="checkbox" name="training" value="false" onchange= addTraining() />Add</button>
+							<input type="checkbox" name= "training" id="training" data-id="<%=training%>" value="<%=training%>" onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();" /></button>
 							</p>
 					<%})%>
 					</ul>
@@ -91,13 +91,19 @@
 <script>
     function addTraining(){
 		var ul = document.getElementById("dynamic-list");
-		var candidate = document.getElementById("training");
+		var training = document.getElementById("training");
 		var li = document.createElement("li");
-		li.setAttribute('id',candidate.value);
-		li.appendChild(document.createTextNode(candidate.value));
-		ul.appendChild(li);
+		li.setAttribute('id', training);
+		li.appendChild(document.createTextNode(training.dataset.id));
+		ul.appendChild(li);	
     }
 </script>
+function removeTraining(){
+    var ul = document.getElementById("dynamic-list");
+    var training = document.getElementById("training");
+    var item = document.getElementById(training);
+    ul.removeChild(item);
+}
 
 </html>
 
