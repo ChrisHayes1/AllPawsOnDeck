@@ -68,12 +68,21 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        Training.GetTrainingList(function(mTraining) {
-            res.render('profile.ejs', {
-                user : req.user, // get the user out of session and pass to template
-                trainings : mTraining,
-                page : "profile"
-            });
+        mUser.isCoordinator(req, function(err, isCoord){
+            if (err)  console.log("error response was " + err);
+            //if coord redirect to coord dashboard
+            if (isCoord){
+                res.redirect('/coorDash');
+            } else {
+                Training.GetTrainingList(function(mTraining) {
+                    res.render('profile.ejs', {
+                        user : req.user, // get the user out of session and pass to template
+                        trainings : mTraining,
+                        page : "profile"
+                    });
+                });
+            }
+                
         });
     });
 
@@ -105,7 +114,13 @@ module.exports = function(app, passport) {
     });
 
     app.post('/deleteProfile', isLoggedIn, function(req, res) {
-        console.log('ATTEMPTING POST FOR ');
+        console.log('ATTEMPTING POST FOR');
+        mUser.deleteUserByID(req, function(err, mBool){
+            //TODO Deal with error instead of just loging
+            if (err)  console.log("error response was " + err);
+            req.logout();
+            res.redirect('/');
+        });
     });
 
     // **********************************
@@ -163,7 +178,7 @@ module.exports = function(app, passport) {
             res.render('volunteerposition.ejs', {
                 user : req.user, // get the user out of session and pass to template
                 positions: mPositions,
-                page : "volunteer"
+                page : "volunteerpositions"
             });
         });
     });
@@ -172,7 +187,6 @@ module.exports = function(app, passport) {
         //Add code for successful post
         if (isLoggedIn)
         {
-            console.log("HERE!!!!")
             Position.addvp(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
@@ -191,6 +205,13 @@ module.exports = function(app, passport) {
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('/calendar', isLoggedIn, function(req, res) {
+        res.render('calendar.ejs', {
+            user : req.user, // get the user out of session and pass to template
+            page : "calendar"
+        });
     });
 };
 
