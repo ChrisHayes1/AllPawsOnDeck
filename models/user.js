@@ -65,7 +65,7 @@ var User = mongoose.model('User', userSchema);
 exports.validateUser = function(email, password, callback){
     //get user, returns error if user not found
     console.log('validateUser about to get user - ' + email);
-    getUserByEmail(email, function(err, user){
+    this.getUserByEmail(email, function(err, user){
         if (err){
             console.log('error thrown on validateUser = ' + err);
             return callback(err);
@@ -89,7 +89,7 @@ exports.validateUser = function(email, password, callback){
 exports.attemptNewUser = function(req, email, password, callback){
     console.log('attemptNewUser about to get user - ' + email);
     console.log('attemptNewUser about to get user with first name - ' + req.body.firstName);
-    getUserByEmail(email, function(err, user){
+    this.getUserByEmail(email, function(err, user){
         console.log('got user, checking response');
         //if user is found the return flash message as part of callback
         if (err){
@@ -121,7 +121,7 @@ exports.attemptNewUser = function(req, email, password, callback){
  */
 exports.editUserProfile = function(req, res, callback){
     //var currentUser = getUserByEmail(req.user.local.email, function(err, result){
-    getUserByEmail(req.user.local.email, function(err, result){
+    this.getUserByEmail(req.user.local.email, function(err, result){
         if(err){
             console.log('error thrown = ' + err);
             return callback(err);
@@ -169,6 +169,26 @@ exports.getUserByID = function(id, callback){
     });
 }
 
+/**
+ * Returns requested user if they exist other returns error
+ */
+exports.getUserByEmail = function(email, callback){
+    console.log('running getUserByEmail');
+    User.findOne({ 'local.email' :  email }, function(err, user) {
+        console.log('getUserByEmail checking err');
+        // if there are any errors, return the error before anything else
+        if (err)
+            return callback(err);
+
+        // if no user is found, return the message
+        console.log('getUserByEmail if user not found return error');
+        if (!user) return callback(new Error('User Not Found'));
+
+        // all is well, return successful user
+        console.log('getUserByEmail user found');
+        return callback(null, user);
+    });
+}
 
 /**
  * returns true if user is coordinator false if volunteer
@@ -210,26 +230,7 @@ exports.deleteUserByID = function(req, callback){
  * Associated helper functions
  ***************************/
 
- /**
- * Returns requested user if they exist other returns error
- */
-function getUserByEmail(email, callback){
-    console.log('running getUserByEmail');
-    User.findOne({ 'local.email' :  email }, function(err, user) {
-        console.log('getUserByEmail checking err');
-        // if there are any errors, return the error before anything else
-        if (err)
-            return callback(err);
-
-        // if no user is found, return the message
-        console.log('getUserByEmail if user not found return error');
-        if (!user) return callback(new Error('User Not Found'));
-
-        // all is well, return successful user
-        console.log('getUserByEmail user found');
-        return callback(null, user);
-    });
-}
+ 
 
 /**
  * Inserts new user into DB

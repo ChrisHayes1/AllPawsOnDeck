@@ -11,6 +11,7 @@
  ****************************/
 app = require('../server');
 const User = require.requireActual('../models/user.js');
+const UserModel = User.userData;
 
 /****************************
  * Globals
@@ -41,11 +42,14 @@ var req;
  * - Verify that invalid email address returns error
  * - Verify that an obsolete account can be deleted
  * - Verify that you can access a user by ID
+ * - Verify that you can access a user by email addy
  * Editing Account
  * - Verify that you can edit fields in an account and that they update appropriatly
  * Deleting Account
- * - Verify that you can delete account by ID
+ * - Verify that you can delete account
  * - Verify that you can delete an account by email addy?
+ * - Verify that you get valid error if trying to delete account that does not exist
+ * - Verify that you can not access a deleted account by ID or Email
  */
 
  /****************************
@@ -64,8 +68,8 @@ afterAll((done) => {
 
 
 
-beforeEach((done) => {
-    console.log('#######running BEFORE EACH')
+beforeAll((done) => {
+    console.log('#######running BEFORE ALL')
     email = testEmail;
     password =  testPassword;
     request = {
@@ -81,11 +85,12 @@ beforeEach((done) => {
             "month" : 1,
             "day"  : 25,
             "year" : 1983
+        },
+        "user" : {
+            "id" : ""
         }
     };
-    console.log('#######returning DONE on BEFORE EACH');
     req = request;
-    
     return done();
 });
 
@@ -101,6 +106,8 @@ describe('Testing User Model', () => {
             User.attemptNewUser(req, email, password, function(err, user){
                 if(user != null){
                     console.log('user not null');
+                    console.log('#$#$#$#$ setting req.user.id to ' + user.id);
+                    req.user.id = user.id;
                     expect(user.local.email).toBe(email);
                     return done();
                 } 
@@ -124,10 +131,27 @@ describe('Testing User Model', () => {
             });
         },8000);
 
-
-        // test('ensure hash generation returns value', () => {
-        //     expect(newUser.local.password = newUser.generateHash(testPassword)).not.toBeNull();
+        /**
+         * Test that hash generates a hashed password
+         */
+        // test('ensure hash generation returns correct value', () => {
+        //     expect(UserModel.local.password = UserModel.generateHash(testPassword)).not.toBeNull();
         // });
+
+
+        /**
+         * Test that an account can be accessed by Email
+         */
+
+        /**
+         * Test that an account can be accessed by ID
+         */
+
+        /**
+         * Test that a new account can be created with a valid email address.  
+         */
+
+        
         
         // test('check valid password', () => {
         //     expect(newUser.validPassword(testPassword)).toBeTruthy();
@@ -139,5 +163,15 @@ describe('Testing User Model', () => {
 
     });
 
+    describe('Testing ability to delete accounts', () => {
+
+        test('Test ability to delete an existing account', (done) => {
+            console.log("TESTING DELETE with user ID " + req.user.id);
+            User.deleteUserByID(req, function(mResp) {
+                expect(mResp).toBeTruthy();
+                return done();
+            });
+        });
+    });
 });
 
