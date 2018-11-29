@@ -51,9 +51,7 @@
             </tr>
 			<tr>
                 <th class = "EditProfileLabel">Required Trainings:</th>
-                <td>
-                    <ul id="dynamic-list"></ul>
-				</td>
+                
 			</tr>
 			<tr>
 				<td><ul>
@@ -94,7 +92,6 @@
 		var training = document.getElementById("training");
 		var li = document.createElement("li");
 		li.setAttribute('id', training);
-		li.appendChild(document.createTextNode(training.dataset.id));
 		ul.appendChild(li);	
     }
 </script>
