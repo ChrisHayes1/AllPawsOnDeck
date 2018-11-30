@@ -11,14 +11,20 @@
 
   <body>
     <header>
-    <h2>Welcome <%= user.local.firstname %></h2>
+      <h2>Welcome <%= user.local.firstname %></h2>
     </header>
-    <nav>
-        <%- include partials/navMenu.ejs %>
-    </nav>
-        <%- include partials/partialCalendar.ejs %>
-  </body>
-  <footer>
-      <%- include partials/footer.ejs %>
+    <section>
+      <nav>
+          <%- include partials/navMenu.ejs %>
+      </nav>
+      <article>
+            <%- include partials/partialCalendar.ejs %>
+      </article>
+      
+    </section>
+    <footer>
+        <%- include partials/footer.ejs %>
     </footer>
+  </body>
+  
 </html>
