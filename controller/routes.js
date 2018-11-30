@@ -235,11 +235,21 @@ module.exports = function(app, passport) {
     //Only visible to coordinator
     app.get('/volunteermanagement', isLoggedIn, function (req, res) {
         mUser.GetUserList(function(usersList) {
-            res.render('volunteermanagement.ejs', {
-                user : req.user, 
-                users : usersList,
-                page : "volunteermanagement"
+            Training.GetTrainingList(function (mTraining) {
+                res.render('volunteermanagement.ejs', {
+                    user : req.user, 
+                    users : usersList,
+                    trainings: mTraining,
+                    page : "volunteermanagement"
+                });
             });
+            
+        });
+    });
+
+    app.post('/volunteermanagement', isLoggedIn, function (req, res) {
+        mUser.AddUserTraining(req,function(){
+
         });
     });
 
