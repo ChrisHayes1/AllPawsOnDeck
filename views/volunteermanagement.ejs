@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+ 
+<head>
+    <title>All Paws On Deck</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/primarySiteTheme.css">
+</head>
+
+<body>
+
+<header>
+<h2>Volunteer Management</h2>
+</header>
+
+<section>
+<nav>
+    <%- include partials/navMenu.ejs %>
+</nav>
+
+<article>
+
+    <body class = "text-center" style="border: 1px solid #000000;"></body>
+
+    <form class = "ManagementTable" action="/volunteermanagement" method="post">
+        <table class = "ManagementTable" id = "management">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User Type</th>
+                    <th>Is Active?</th>
+                    <th>Application Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(function(curr) { %>
+                    <%= console.log(curr) %>
+                    <tr>
+                        <td><%= curr.local.firstname %> <%= curr.local.lastname %></td>
+                        <td><%= curr.local.userType %></td>
+                        <td><%= curr.local.isActive %></td>
+                        <td><%= curr.local.appStatus %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+        <script src="tablefilter/tablefilter.js"></script>
+
+        <script>
+            var tf = new TableFilter('management');
+            tf.init();
+        </script>
+
+    </form>
+        
+</article>
+</section>
+
+<footer>
+All Paws on Deck!
+</footer>
+
+</body>
+
+</html>
+
+

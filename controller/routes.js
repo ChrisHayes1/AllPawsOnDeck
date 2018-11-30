@@ -230,6 +230,20 @@ module.exports = function(app, passport) {
     });
 
     // **********************************
+    // Volunteer management
+    // **********************************
+    //Only visible to coordinator
+    app.get('/volunteermanagement', isLoggedIn, function (req, res) {
+        mUser.GetUserList(function(usersList) {
+            res.render('volunteermanagement.ejs', {
+                user : req.user, 
+                users : usersList,
+                page : "volunteermanagement"
+            });
+        });
+    });
+
+    // **********************************
     // LOGOUT 
     // **********************************
     app.get('/logout', function(req, res) {
@@ -255,3 +269,8 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
+
+
+// **********************************
+// LOGOUT 
+// **********************************
