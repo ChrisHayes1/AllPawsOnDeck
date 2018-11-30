@@ -58,8 +58,10 @@ exports.addvp = function(req, res, callback){
 
 			newVP.positionName = req.body.positionName;
             newVP.roleDescription = req.body.roleDescription;
-			newVP.trainings.push(req.body.training);
-
+            //var str = req.body.training;
+           // str.split(",").forEach(function (item) {
+             newVP.trainings.push(req.body.training);
+            //});
 			var y_m_d   = req.body.date + "T";
 			var start_t  = req.body.startTime + ":00Z";
 			var end_t  = req.body.endTime + ":00Z";
