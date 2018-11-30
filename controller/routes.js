@@ -144,14 +144,13 @@ module.exports = function(app, passport) {
         //Add code for successful post
         if (isLoggedIn) {
             mUser.editUserProfile(req, res, function (err, mBool) {
-                Training.addvp(req, res, function (err, mBool) {
+                
                 //TODO Deal with error instead of just loging
                 if (err) console.log("error response was " + err);
 
                 res.redirect('/coorDash');
 
                 });
-            });
         } else {
             res.redirect('/');
         }
@@ -202,6 +201,34 @@ module.exports = function(app, passport) {
         }
     });
 
+    app.get('/trainings', isLoggedIn, function (req, res) {
+        Training.GetTrainingList(function (mTraining) {
+            Position.GetPositionList(function (mPositions) {
+                res.render('trainings.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    positions: mPositions,
+                    trainings: mTraining,
+                    page: "trainings"
+                });
+            });
+        });
+    });
+
+    app.post('/trainings', function (req, res) {
+        //Add code for successful post
+        if (isLoggedIn) {
+            Training.addvp(req, res, function (err, mBool) {
+                //TODO Deal with error instead of just loging
+                if (err) console.log("error response was " + err);
+
+                res.redirect('/trainings');
+
+            });
+        } else {
+            res.redirect('/');
+        }
+    });
+
     // **********************************
     // Volunteer management
     // **********************************
@@ -211,7 +238,7 @@ module.exports = function(app, passport) {
             res.render('volunteermanagement.ejs', {
                 user : req.user, 
                 users : usersList,
-                page : "management"
+                page : "volunteermanagement"
             });
         });
     });
@@ -244,3 +271,6 @@ function isLoggedIn(req, res, next) {
 }
 
 
+// **********************************
+// LOGOUT 
+// **********************************

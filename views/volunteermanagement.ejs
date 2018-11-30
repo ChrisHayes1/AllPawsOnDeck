@@ -33,28 +33,27 @@
                     <th>User Type</th>
                     <th>Is Active?</th>
                     <th>Application Status</th>
+                    <th>Training List</th>
                 </tr>
             </thead>
             <tbody>
-                <% users.forEach(function(curr) { %>
-                    <%= console.log(curr) %>
+                <% for(var i = 0; i < users.length; i++) { %>
                     <tr>
-                        <td><%= curr.local.firstname %> <%= curr.local.lastname %></td>
-                        <td><%= curr.local.userType %></td>
-                        <td><%= curr.local.isActive %></td>
-                        <td><%= curr.local.appStatus %></td>
+                        <td><%= users[i].local.firstname %> <%= users[i].local.lastname %></td>
+                        <td><%= users[i].local.userType %></td>
+                        <td><%= users[i].local.isActive %></td>
+                        <td><%= users[i].local.appStatus %></td>
+                        <td><%= users[i].local.completedTrainings %> <button id = "<%= i %>" onclick="">Add</button></td>
                     </tr>
-                <% }); %>
+                <% }; %>
             </tbody>
         </table>
 
-        <script src="../node_modules/tablefilter/src/tablefilter.js"></script>
+        <script src="tablefilter/tablefilter.js"></script>
 
         <script>
-        var tf = new TableFilter(document.querySelector('management'), {
-            base_path: './node_modules/tablefilter'
-        });
-        tf.init();
+            var tf = new TableFilter('management');
+            tf.init();
         </script>
 
     </form>
