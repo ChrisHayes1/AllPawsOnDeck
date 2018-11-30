@@ -3,11 +3,17 @@
     <script src='moment.js'></script>
     <script type='text/javascript' src='jquery.min.js'></script>
     <script type='text/javascript' src='stylesheets/fullcalendar.js'></script>
-    <script src='events.js'></script>
+
     <script src='calendar.js'></script>
 </head>
+<style>
+    .hide {
+        display: none;
+    }
+</style>
 
 <body style="border: 1px solid #000000;">
+    <a id="theevents" class="hide" display="none"><%= JSON.stringify(events) %></a>
     <h2> My Calendar</h2>
-    <fieldset class = "cal"></fieldset>
+    <fieldset id = "calendar" class = "cal"></fieldset>
 </body>

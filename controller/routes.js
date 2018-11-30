@@ -262,10 +262,13 @@ module.exports = function(app, passport) {
     });
 
     app.get('/calendar', isLoggedIn, function(req, res) {
-        res.render('calendar.ejs', {
-            user : req.user, // get the user out of session and pass to template
-            page : "calendar"
-        });
+        Position.GetEvents(function (mEvents) {
+            res.render('calendar.ejs', {
+                user: req.user,
+                events: mEvents,
+                page: "calendar"
+            })
+        })
     });
 };
 

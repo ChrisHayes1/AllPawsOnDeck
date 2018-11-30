@@ -1,8 +1,9 @@
 $(function() {
-    loadEvents();
+    document.getElementById("theevents").style.display = "none";
     //showTodaysDate();
     initializeCalendar();
     getCalendars();
+    
     //initializeRightCalendar();
     //initializeLeftCalendar();
     //disableEnter();
@@ -15,7 +16,7 @@ $(function() {
         eventLimit: true, // allow "more" link when too many events
         // create events
         slotEventOverlap: false,
-        events: events(),
+        events: JSON.parse(document.getElementById('theevents').innerHTML),
         eventBackgroundColor: '#337ab7',
         editable: false,
         height: screen.height - 160,
@@ -27,10 +28,6 @@ $(function() {
   }
   var getCalendars = function() {
     $cal = $('.cal');
-  }
-  var loadEvents = function() {
-    $.getScript("events.js", function(){
-    });
   }
   var signUpForEvent = function(calEvent) {
     //query event to see if

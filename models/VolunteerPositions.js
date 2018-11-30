@@ -27,12 +27,31 @@ exports.GetPositionList = function (callback) {
 
 		return callback(positionList);
 	});
-
-
-
 }
 
+exports.GetEvents = function (callback) {
+	positions.find({}, function (err, positions) {
+		var events = []
+		var count = 0;
+		positions.forEach(function (position) {
+			var event = {
+				"id": count,
+				"title": position.positionName,
+				"start": position.startTime,
+				"end": position.endTime
+			}
+			events.push(event);
+			count++;
+			//var manager = "Jane Doe";
+			//sitePersonel.employees[0].manager = manager;
+			//console.log(sitePersonel);
 
+			//console.log(JSON.stringify(sitePersonel));
+		});
+		console.log(events);
+		return callback(events);
+	});
+}
 
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
