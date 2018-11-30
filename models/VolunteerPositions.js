@@ -39,7 +39,7 @@ exports.addvp = function(req, res, callback){
 		// if there are any errors, return the error
 		console.log('findOne started');
 		if (err) {
-			console.log("err when find vlunteer position " + err);
+			console.log("err when find volunteer position " + err);
 			return callback(err);
 		}
 

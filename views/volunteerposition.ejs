@@ -51,14 +51,13 @@
             </tr>
 			<tr>
                 <th class = "EditProfileLabel">Required Trainings:</th>
-                
 			</tr>
 			<tr>
 				<td><ul>
 					<% trainings.forEach((training)=>{ %>
 						
 							<p><%=training%>
-							<input type="checkbox" name= "training" id="training" data-id="<%=training%>" value="<%=training%>" onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();" /></button>
+							<input type="checkbox" name= "training" id="<%=training%>" data-id="<%=training%>" value="<%=training%>" onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();" /></button>
 							</p>
 					<%})%>
 					</ul>
@@ -95,12 +94,14 @@
 		ul.appendChild(li);	
     }
 </script>
+<script>
 function removeTraining(){
     var ul = document.getElementById("dynamic-list");
     var training = document.getElementById("training");
     var item = document.getElementById(training);
     ul.removeChild(item);
 }
+</script>
 
 </html>
 
