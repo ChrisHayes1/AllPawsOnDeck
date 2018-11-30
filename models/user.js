@@ -273,6 +273,17 @@ exports.GetUserList = function(callback){
     
 }
 
+exports.AddUserTraining = function(req, callback){
+
+    for(var key in req.body) {
+        if(req.body.hasOwnProperty(key)){
+          console.log("key = " + key);
+        } 
+    }
+      console.log("email = " + req.body.email);
+      return callback();
+
+}
 
 /****************************
  * export model as needed.  

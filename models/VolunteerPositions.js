@@ -25,19 +25,38 @@ exports.GetPositionList = function (callback) {
             positionList.push(position.positionName);
         });
 
-        return callback(positionList);
-    });
-
-
-
+		return callback(positionList);
+	});
 }
 
+exports.GetEvents = function (callback) {
+	positions.find({}, function (err, positions) {
+		var events = []
+		var count = 0;
+		positions.forEach(function (position) {
+			var event = {
+				"id": count,
+				"title": position.positionName,
+				"start": position.startTime,
+				"end": position.endTime
+			}
+			events.push(event);
+			count++;
+			//var manager = "Jane Doe";
+			//sitePersonel.employees[0].manager = manager;
+			//console.log(sitePersonel);
 
+			//console.log(JSON.stringify(sitePersonel));
+		});
+		console.log(events);
+		return callback(events);
+	});
+}
 
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
 exports.addvp = function(req, res, callback){
-	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
+	VPData.findOne({'positionName': req.body.positionName, 'startTime' : req.body.start_t, 'endTime' : req.body.end_t}, function(err, vp) {
 		// if there are any errors, return the error
 		console.log('findOne started');
 		if (err) {
@@ -76,3 +95,5 @@ exports.addvp = function(req, res, callback){
 	});
 } 
 //exports.vpdata = mongoose.model('VolunteerPosition', vpSchema);
+
+

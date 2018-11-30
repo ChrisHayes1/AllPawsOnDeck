@@ -55,7 +55,6 @@
 			<tr>
 				<td><ul>
 					<% trainings.forEach((training)=>{ %>
-						
 							<p class="EditProfileLabel"><%=training%>
 							<input type="checkbox" name= "training" id="<%=training%>" data-id="<%=training%>" value="<%=training%>" onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();" /></button>
 							</p>
