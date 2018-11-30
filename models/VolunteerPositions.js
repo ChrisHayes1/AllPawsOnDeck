@@ -55,7 +55,8 @@ exports.addvp = function(req, res, callback){
 			var newVP            = new VPData();
 
 			newVP.positionName = req.body.positionName;
-			newVP.roleDescription = req.body.roleDescription;
+            newVP.roleDescription = req.body.roleDescription;
+            newVP.trainings.push(req.body.training);
 
 			// save the vp
 			newVP.save(function(err) {

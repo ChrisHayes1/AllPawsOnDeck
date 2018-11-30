@@ -54,10 +54,10 @@ userSchema.methods.validPassword = function(password) {
 };
 
 /****************************
- * Exposed buisiness logic
+ * Exposed interface
  ***************************/
+//provide inderect internal access to model
 var User = mongoose.model('User', userSchema);
-
 
 /**
  * Validates user.  Returns user if valid email and password
@@ -65,7 +65,7 @@ var User = mongoose.model('User', userSchema);
 exports.validateUser = function(email, password, callback){
     //get user, returns error if user not found
     console.log('validateUser about to get user - ' + email);
-    getUserByEmail(email, function(err, user){
+    this.getUserByEmail(email, function(err, user){
         if (err){
             console.log('error thrown on validateUser = ' + err);
             return callback(err);
@@ -89,7 +89,7 @@ exports.validateUser = function(email, password, callback){
 exports.attemptNewUser = function(req, email, password, callback){
     console.log('attemptNewUser about to get user - ' + email);
     console.log('attemptNewUser about to get user with first name - ' + req.body.firstName);
-    getUserByEmail(email, function(err, user){
+    this.getUserByEmail(email, function(err, user){
         console.log('got user, checking response');
         //if user is found the return flash message as part of callback
         if (err){
@@ -121,7 +121,7 @@ exports.attemptNewUser = function(req, email, password, callback){
  */
 exports.editUserProfile = function(req, res, callback){
     //var currentUser = getUserByEmail(req.user.local.email, function(err, result){
-    getUserByEmail(req.user.local.email, function(err, result){
+    this.getUserByEmail(req.user.local.email, function(err, result){
         if(err){
             console.log('error thrown = ' + err);
             return callback(err);
@@ -159,6 +159,9 @@ exports.editUserProfile = function(req, res, callback){
     });
 }
 
+/**
+ *  Returns an instance of the user matching the ID or error if not found
+ */
 exports.getUserByID = function(id, callback){
 
     User.findById(id, function(err, user) {
@@ -166,24 +169,10 @@ exports.getUserByID = function(id, callback){
     });
 }
 
-exports.deleteUserByID = function(req, callback){
-    User.remove({ _id: req.body.id }, function(err) {
-        if (!err) {
-                message.type = 'notification!';
-        }
-        else {
-                message.type = 'error';
-        }
-    });
-}
-/****************************
- * Associated helper functions
- ***************************/
-
- /**
+/**
  * Returns requested user if they exist other returns error
  */
-function getUserByEmail(email, callback){
+exports.getUserByEmail = function(email, callback){
     console.log('running getUserByEmail');
     User.findOne({ 'local.email' :  email }, function(err, user) {
         console.log('getUserByEmail checking err');
@@ -200,6 +189,48 @@ function getUserByEmail(email, callback){
         return callback(null, user);
     });
 }
+
+/**
+ * returns true if user is coordinator false if volunteer
+ */
+exports.isCoordinator = function(req, callback){
+    this.getUserByID(req.user.id, function(err, result){
+        if (err){
+            console.log('error thrown on isCoordinator = ' + err);
+            return callback(err);
+        }
+
+        //user returned
+        return callback(null, result.local.isCoordinator);
+    });
+}
+
+/**
+ * Deletes the user sent in if user exists. 
+ * TODO: Test to see what gets returned with invalid ID
+ */
+exports.deleteUserByID = function(req, callback){
+    console.log("About to delete user with id " + req.user.id);
+    User.findByIdAndRemove({ _id: req.user.id }, function(err) {
+        console.log("Remove created call back ");
+        if (!err) { //return true if user is deleted
+            console.log("Callback returned true, user was deleted?");
+                return callback(true)
+        }
+        else { //return false if we get an error
+            console.log("Callback returned error " + err.message);
+            return callback(false)
+        }
+    });
+}
+
+
+
+/****************************
+ * Associated helper functions
+ ***************************/
+
+ 
 
 /**
  * Inserts new user into DB
@@ -244,6 +275,7 @@ exports.GetUserList = function(callback){
 
 
 /****************************
- * export as needed
+ * export model as needed.  
+ * TODO: Try to clear out using this export.  All data manipulation should be handled internally
  ***************************/
 exports.userData = mongoose.model('User', userSchema);
