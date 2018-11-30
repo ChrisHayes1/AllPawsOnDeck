@@ -48,13 +48,11 @@
             </tbody>
         </table>
 
-        <script src="../node_modules/tablefilter/src/tablefilter.js"></script>
+        <script src="tablefilter/tablefilter.js"></script>
 
         <script>
-        var tf = new TableFilter(document.querySelector('management'), {
-            base_path: './node_modules/tablefilter'
-        });
-        tf.init();
+            var tf = new TableFilter('management');
+            tf.init();
         </script>
 
     </form>

@@ -3,7 +3,9 @@ var mongoose = require('mongoose');
 var vpSchema = mongoose.Schema({
 	positionName     : String,
 	roleDescription : String,
-    trainings       : [String]
+	trainings       : [String],
+	startTime: 		Date,
+	endTime:		Date
 });
 
 var positions = mongoose.model('VolunteerPosition', vpSchema);
@@ -39,7 +41,7 @@ exports.addvp = function(req, res, callback){
 		// if there are any errors, return the error
 		console.log('findOne started');
 		if (err) {
-			console.log("err when find vlunteer position " + err);
+			console.log("err when find volunteer position " + err);
 			return callback(err);
 		}
 
@@ -56,7 +58,13 @@ exports.addvp = function(req, res, callback){
 
 			newVP.positionName = req.body.positionName;
             newVP.roleDescription = req.body.roleDescription;
-            newVP.trainings.push(req.body.training);
+			newVP.trainings.push(req.body.training);
+
+			var y_m_d   = req.body.date + "T";
+			var start_t  = req.body.startTime + ":00Z";
+			var end_t  = req.body.endTime + ":00Z";
+			newVP.startTime = new Date(y_m_d + start_t);
+			newVP.endTime = new Date(y_m_d + end_t);
 
 			// save the vp
 			newVP.save(function(err) {
