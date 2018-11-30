@@ -27,9 +27,6 @@ exports.GetPositionList = function (callback) {
 
 		return callback(positionList);
 	});
-
-
-
 }
 
 
@@ -73,6 +70,27 @@ exports.GetQualifiedPositions = function (trainingList, callback) {
 }
 
 
+exports.GetEvents = function (callback) {
+	positions.find({}, function (err, positions) {
+		var events = []
+		positions.forEach(function (position) {
+			var event = {
+				"id": position._id,
+				"title": position.positionName,
+				"start": position.startTime,
+				"end": position.endTime
+			}
+			events.push(event);
+			//var manager = "Jane Doe";
+			//sitePersonel.employees[0].manager = manager;
+			//console.log(sitePersonel);
+
+			//console.log(JSON.stringify(sitePersonel));
+		});
+		console.log(events);
+		return callback(events);
+	});
+}
 
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
