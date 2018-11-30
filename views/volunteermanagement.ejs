@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/primarySiteTheme.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/managementStyle.css">
 </head>
 
 <body>
@@ -31,8 +32,8 @@
                     <th>Name</th>
                     <th>User Type</th>
                     <th>Application Status</th>
+                    <th>Qualified Positions</th>
                     <th>Training List</th>
-                    <th>Is Active?</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,10 +42,20 @@
                         <td><%= users[i].local.firstname %> <%= users[i].local.lastname %></td>
                         <td><%= users[i].local.userType %></td>
                         <td><%= users[i].local.appStatus %></td>
-                        <td><%= users[i].local.completedTrainings %> 
-                            <button id = "<%= i %>" onclick="setBtn('<%= users[i].local.email %>')">Add</button>
+                        <td>
+                            <% for(var c = 0; c < users[i].qualifiedPositions.length; c++) { %>
+                                <%= users[i].qualifiedPositions[c] %> 
+                                <br>
+                            <% }; %>
                         </td>
-                        <td><%= users[i].local.isActive %></td>
+                        <td>
+                            <button class = "EditProfileBtn"  id = "<%= i %>" onclick="setBtn('<%= users[i].local.email %>')">Add</button>
+                            <% for(var c = 0; c < users[i].completedTrainings.length; c++) { %>
+                                <%= users[i].completedTrainings[c] %> 
+                                <br>
+                            <% }; %>
+                            
+                        </td>
                     </tr>
                 <% }; %>
             </tbody>

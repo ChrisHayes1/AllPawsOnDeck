@@ -52,9 +52,7 @@ mongoose.connect('mongodb://localhost:27017/apodDB', { useNewUrlParser: true }, 
 //mongoose.connect('mongodb://localhost:27017/apodDB');
 
 app.use(cookieParser()); // read cookies (needed for auth)
-//app.use(require('connect').bodyParser());
 app.use(bodyParser()); // get information from html forms
-//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -62,19 +60,14 @@ require('./config/passport')(passport); // pass passport for configuration
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 
-//app.use(bodyParser.urlencoded({ extended: false }));
-
 
 //Added by todd for static distribution of public items
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.static(path.join(__dirname,  'node_modules/tablefilter/src')));
 app.use('/css', express.static(path.join(__dirname,  path.join('public', 'stylesheets'))));
 app.use('/js', express.static(path.join(__dirname,  path.join('public', 'tablefilter'))));
-//app.use('/js', express.static(path.join(__dirname, path.join('node_modules', path.join('tablefilter', path.join('dist', 'tablefilter'))))));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
-//app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 app.use(session({ secret: 'allpawsondeckbestpawsondeck' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions

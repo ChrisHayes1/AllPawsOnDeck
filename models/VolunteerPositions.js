@@ -33,6 +33,46 @@ exports.GetPositionList = function (callback) {
 }
 
 
+/**
+ * Get a list of trainings necessary for a given position
+ */
+
+exports.GetQualifiedPositions = function (trainingList, callback) {
+	console.log("#*#*#*#*#*#*#*# running GetQualifiedPositions with training list of length " + trainingList.length);
+	//Grab all positions
+    positions.find({}, function (err, positions) {
+		console.log("#*#*#*#* All positions shoudl have been returned here");
+		if (err)
+			return callback(err);
+			
+        var qualifiedPositions = new Array(); //List of positions training qualifies user for
+		
+		//Loop through all positions to see if user is qualified
+        positions.forEach(function (position) {
+			console.log("#*#*#*#* looping through positions, on " + position.positionName);
+			var isQualified = true;
+			//Verify that user has completed all trainings necessary for the current position
+			position.trainings.forEach(function (training){
+				console.log("#*#*#*#* Position " + position.positionName + " needs " + training);
+				if (!trainingList.includes(training)){
+					console.log("#*#*#*#* User does not have the training " + training);
+					isQualified = false;
+				}
+			});
+			if (isQualified) {
+				console.log("#*#*#*#* User is qualified for " + position.positionName);
+				qualifiedPositions.push(position.positionName);
+			} 
+        });
+
+		return callback(null, qualifiedPositions);
+	});
+
+
+
+}
+
+
 
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
@@ -57,8 +97,21 @@ exports.addvp = function(req, res, callback){
 			var newVP            = new VPData();
 
 			newVP.positionName = req.body.positionName;
-            newVP.roleDescription = req.body.roleDescription;
-			newVP.trainings.push(req.body.training);
+			newVP.roleDescription = req.body.roleDescription;
+			
+			for(var key in req.body) {
+				if(req.body.hasOwnProperty(key)){
+					console.log("vp key = " + key);
+					var pos = key.indexOf("training:")
+					if (pos > -1) {
+						var addTraining = key.substring(9, key.length)
+						console.log("adding = " + addTraining);
+						newVP.trainings.push(addTraining);
+					}
+				  
+				} 
+			}
+			
 
 			var y_m_d   = req.body.date + "T";
 			var start_t  = req.body.startTime + ":00Z";

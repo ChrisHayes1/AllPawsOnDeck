@@ -201,6 +201,10 @@ module.exports = function(app, passport) {
         }
     });
 
+    // **********************************
+    // Trainings
+    // **********************************
+
     app.get('/trainings', isLoggedIn, function (req, res) {
         Training.GetTrainingList(function (mTraining) {
             Position.GetPositionList(function (mPositions) {
@@ -248,8 +252,8 @@ module.exports = function(app, passport) {
     });
 
     app.post('/volunteermanagement', isLoggedIn, function (req, res) {
-        mUser.AddUserTraining(req,function(){
-
+        mUser.AddUserTraining(req,function(err){
+            res.redirect('/volunteermanagement');
         });
     });
 

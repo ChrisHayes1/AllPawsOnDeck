@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 var bodyParser   = require('body-parser');
+var VolPos =  require('../models/VolunteerPositions');
 
 const USER_TYPE_STANDARD = "standard";
 const USER_TYPE_COORDINATOR = "coordinator";
@@ -23,7 +24,7 @@ var userSchema = mongoose.Schema({
         appStatus       : String,
         isOrientationComplete: Boolean,
         //completedTraining : Boolean,
-        userType     : String,
+        userType     : String, //please use isCoordinator not userType, this needs to be removed but exists in certain locations right now
         isCoordinator   : Boolean
     },
     address : {
@@ -224,13 +225,96 @@ exports.deleteUserByID = function(req, callback){
     });
 }
 
+/**
+ * Return a list of users
+ */
+exports.GetUserList = function(callback){
 
+    User.find({}, function(err, users) {
+        var userList = [];
+    
+        users.forEach(function(curr) {
+            userList.push(curr);
+        });
+    
+        return callback(userList);
+      });
+
+
+    
+}
+
+
+/**
+ * Add trainings and then positions to the user
+ */
+exports.AddUserTraining = function(req, callback){
+    console.log("#_#_#_#_# AddUserTraining looking for " + req.body.email)
+    this.getUserByEmail(req.body.email, function(err, result){
+        console.log("#_#_#_#_# runnning AddUserTraining for " + result.local.email)
+        if(err){
+            return callback(err);
+        } else {
+            for(var key in req.body) {
+                if(req.body.hasOwnProperty(key)){
+                    console.log("key = " + key);
+                    //Add positions
+                    if (!result.completedTrainings.includes(key) && key !== "email"){
+                        console.log('Adding the training ' + key + ' to the user ' + result.local.email );
+                        result.completedTrainings.push(key);
+                    } else {
+                        console.log('The user ' + req.body.email + ' already contains the training ' + key)
+                    }
+                } 
+            }
+            // save the user - return true in callback
+            result.save(function(err) {
+                if (err)
+                    return callback(err);
+
+                SetUserPositions(req.body.email, function(err){
+                    if (err)
+                        return callback(err);
+                    return callback(null);
+                });
+                
+            });
+        }
+    });
+}
 
 /****************************
  * Associated helper functions
  ***************************/
 
- 
+ /**
+ * Searches through user trainings and checks to see if they qualify for any positions based on the trainings
+ */
+function SetUserPositions (email, callback){
+    console.log("#%#%#%#%# Running Set User Positions");
+    module.exports.getUserByEmail(email, function(err, result){
+        console.log("#%#%#%#%# Found User " + result.local.firstname + " " + result.local.lastname);
+        VolPos.GetQualifiedPositions(result.completedTrainings, function(err, QualifiedPostions) {
+            console.log("#%#%#%#%# Get Qualified Positions returned with length of " + QualifiedPostions.length);
+            if (err)
+                return callback(err);
+            QualifiedPostions.forEach(function (position) {
+                console.log("#%#%#%#%# Checking position " + position);
+                if (!result.qualifiedPositions.includes(position)) {
+                    console.log("#%#%#%#%# Adding Postion " + position);
+                    result.qualifiedPositions.push(position);
+                }
+            });
+            result.save(function(err) {
+                if (err)
+                    return callback(err);
+                
+                return callback(null);
+            });
+        });
+    });
+}
+
 
 /**
  * Inserts new user into DB
@@ -257,33 +341,7 @@ function AddNewUser(req, email, password, callback){
     });
 }
 
-exports.GetUserList = function(callback){
 
-    User.find({}, function(err, users) {
-        var userList = [];
-    
-        users.forEach(function(curr) {
-            userList.push(curr);
-        });
-    
-        return callback(userList);
-      });
-
-
-    
-}
-
-exports.AddUserTraining = function(req, callback){
-
-    for(var key in req.body) {
-        if(req.body.hasOwnProperty(key)){
-          console.log("key = " + key);
-        } 
-    }
-      console.log("email = " + req.body.email);
-      return callback();
-
-}
 
 /****************************
  * export model as needed.  

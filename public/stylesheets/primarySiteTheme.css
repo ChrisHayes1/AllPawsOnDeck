@@ -158,25 +158,7 @@
   padding-bottom: 0px;
 }
 
-.ManagementTable {
-  background-color: #e79541;
-  border-collapse: collapse;
-  width: 100%;
-}
 
-.ManagementTable th {
-  background-color: #e06326;
-  text-align: left;
-}
-
-.ManagementTable td, th {
-  padding: 10px;
-  border-bottom: 1px solid #632600;
-}
-
-.ManagementTable tr:hover {
-  background-color: #f7a176;
-}
 
 /*Styles reldated to editing the profile*/
 
