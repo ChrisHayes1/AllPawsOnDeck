@@ -67,8 +67,10 @@ app.use(morgan('dev')); // log every request to the console
 
 //Added by todd for static distribution of public items
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname,  'node_modules/tablefilter/src')));
 app.use('/css', express.static(path.join(__dirname,  path.join('public', 'stylesheets'))));
-
+app.use('/js', express.static(path.join(__dirname,  path.join('public', 'tablefilter'))));
+//app.use('/js', express.static(path.join(__dirname, path.join('node_modules', path.join('tablefilter', path.join('dist', 'tablefilter'))))));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport

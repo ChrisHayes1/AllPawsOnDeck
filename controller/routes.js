@@ -211,7 +211,7 @@ module.exports = function(app, passport) {
             res.render('volunteermanagement.ejs', {
                 user : req.user, 
                 users : usersList,
-                page : "management"
+                page : "volunteermanagement"
             });
         });
     });
@@ -244,3 +244,6 @@ function isLoggedIn(req, res, next) {
 }
 
 
+// **********************************
+// LOGOUT 
+// **********************************

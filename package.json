@@ -18,13 +18,13 @@
     "mysql-model": "^0.0.3",
     "objection": "^1.4.0",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "tablefilter": "^0.6.67"
   },
   "devDependencies": {
     "chromedriver": "^2.43.1",
     "selenium-webdriver": "^4.0.0-alpha.1",
-    "supertest": "^3.3.0",
-    "tablefilter": "^0.6.67"
+    "supertest": "^3.3.0"
   },
   "scripts": {
     "test": "jest",
