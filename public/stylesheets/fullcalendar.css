@@ -329,6 +329,7 @@ temporary rendered events).
 /* Global Event Styles
 --------------------------------------------------------------------------------------------------*/
 .fc-event {
+  width: 95%;
   position: relative;
   /* for resize handle and other inner positioning */
   display: block;
