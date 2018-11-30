@@ -61,8 +61,8 @@ exports.addvp = function(req, res, callback){
 			newVP.trainings.push(req.body.training);
 
 			var y_m_d   = req.body.date + "T";
-			var start_t  = req.body.startTime + ":00";
-			var end_t  = req.body.endTime + ":00";
+			var start_t  = req.body.startTime + ":00Z";
+			var end_t  = req.body.endTime + ":00Z";
 			newVP.startTime = new Date(y_m_d + start_t);
 			newVP.endTime = new Date(y_m_d + end_t);
 
