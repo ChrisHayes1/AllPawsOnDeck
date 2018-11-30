@@ -58,7 +58,7 @@
                                 id="<%=trainings[i]%>" 
                                 data-id="<%=trainings[i]%>" 
                                 value="<%=trainings[i]%>" 
-                                onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();" />
+                                 />
 							</p>
 					<%}%>
 					</ul>
@@ -111,23 +111,7 @@
         console.log("done with post");
     }
 </script>
-<script>
-    function addTraining(){
-		var ul = document.getElementById("dynamic-list");
-		var training = document.getElementById("training");
-		var li = document.createElement("li");
-		li.setAttribute('id', training);
-		ul.appendChild(li);	
-    }
-</script>
-<script>
-function removeTraining(){
-    var ul = document.getElementById("dynamic-list");
-    var training = document.getElementById("training");
-    var item = document.getElementById(training);
-    ul.removeChild(item);
-}
-</script>
+
 
 </html>
 
