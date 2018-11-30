@@ -26,6 +26,10 @@
     <h2>Training List</h2>
     <%-include partials/partialDisplayTrainingList.ejs %>
 
+	<body class = "text-center" style="border: 1px solid #000000;"></body>
+
+    
+
     <h2>Position List</h2>
 	<%- include partials/partialDisplayPositionList.ejs %>
     </article>
@@ -36,4 +40,11 @@
     </footer>
 
   </body>
+  <script>
+    function submitChanges(){
+        console.log("about to post");
+        document.getElementById("frmEditProfile").submit();
+        console.log("done with post");
+    }
+</script>
 </html>

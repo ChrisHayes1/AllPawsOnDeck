@@ -5,9 +5,6 @@
     <h2>My Profile</h2>
     <fieldset class = "ViewProfile">
         <div id="viewUP" class = "ViewProfileHeader"  style = "display:block">
-                <div>
-                    <button class = "EditProfileBtn" onclick="editUserProfile()">Edit Profile</button>
-                </div>
                 <table >
                     <tr>
                         <th class = "ViewProfileLabel">Email: </th>
@@ -47,6 +44,9 @@
                         </th>
                     </tr>
                 </table>
+          <div>
+            <button class = "EditProfileBtn" onclick="editUserProfile()">Edit Profile</button>
+          </div>
 
         </div>
         <div id="editUP" style="display:none">
@@ -57,7 +57,7 @@
 
 <script>
     function editUserProfile(){
-        console.log('Attempting to edit user profile ' + <%= user.local.phoneNumber %>);
+        console.log('Attempting to edit user profile ' + '<%= user.local.phoneNumber %>');
         swapVisible("viewUP");
         swapVisible("editUP");
     };

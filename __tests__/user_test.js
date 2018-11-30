@@ -4,15 +4,14 @@
  * Author:   Todd Hayes-Birchler
  * Date:     11/11/2018
  ****************************/
-// jest.resetModules();
-// jest.unmock('mongoose');
-// jest.unmock('../models/user.js');
-// jest.dontMock('../models/user.js');
+
 
 /****************************
  * Imports
  ****************************/
+app = require('../server');
 const User = require.requireActual('../models/user.js');
+const UserModel = User.userData;
 
 /****************************
  * Globals
@@ -25,43 +24,8 @@ var testEmail = "testTestNameThatWillNeverBeAccidentlyUsed@gmail.faketest.com";
 
 var email;
 var password;
-var testReqBody =  {
-    body : {
-        firstName       : String,
-        lastName        : String,
-        phoneNumber     : String,
-
-        address1        : String,
-        address2        : String,
-        city            : String,
-        state           : String,
-        zip             : Number,
-
-        year            : Number,
-        month           : Number,
-        day             : Number,
-    }
-}
-/****************************
- * Setup and Teardown
- ****************************/
-
- beforeEach(() => {
-    email = testEmail;
-    password =  testPassword;
-    req = testReqBody;
-    req.firstName = "TestFirst";
-    req.lastName = "TestLast";
-    req.phoneNumber = "6085555555";
-    req.address1 = "Address 1";
-    req.address2 = "Address 2";
-    req.city = "City";
-    req.state = "State";
-    req.zip = 53711;
-    req.month = 1;
-    req.day  = 25;
-    req.year = 1983;
- })
+var request;
+var req;
 
 /****************************
  * Tests
@@ -78,51 +42,116 @@ var testReqBody =  {
  * - Verify that invalid email address returns error
  * - Verify that an obsolete account can be deleted
  * - Verify that you can access a user by ID
+ * - Verify that you can access a user by email addy
  * Editing Account
  * - Verify that you can edit fields in an account and that they update appropriatly
  * Deleting Account
- * - Verify that you can delete account by ID
+ * - Verify that you can delete account
  * - Verify that you can delete an account by email addy?
+ * - Verify that you get valid error if trying to delete account that does not exist
+ * - Verify that you can not access a deleted account by ID or Email
  */
 
  /****************************
  * Tests - Creating Accounts
  ****************************/
-// describe('Testing User Model', () => {
-//     describe('Testing ability to generate new accounts', () => {
 
+
+/****************************
+ * Setup and Teardown
+ ****************************/
+
+afterAll((done) => {
+    console.log('#######running AFTER ALL');
+    return app.close(done);
+});
+
+
+
+beforeAll((done) => {
+    console.log('#######running BEFORE ALL')
+    email = testEmail;
+    password =  testPassword;
+    request = {
+        "body" : {
+            "firstName" : "TestFirst",
+            "lastName" : "TestLast",
+            "phoneNumber" : "6085555555",
+            "address1" : "1930 Monroe St",
+            "address2" : "Suite 200",
+            "city" : "Madison",
+            "state" : "WI",
+            "zip" : 53711,
+            "month" : 1,
+            "day"  : 25,
+            "year" : 1983
+        },
+        "user" : {
+            "id" : ""
+        }
+    };
+    req = request;
+    return done();
+});
+
+//Test functions exported as part of user buisiness logic        
+describe('Testing User Model', () => {
+    describe('Testing ability to generate new accounts', () => {
+
+        /**
+         * Test that a new account can be created with a valid email address.  
+         */
         test('Verify that a new account can be created', (done) => {
-            console.log('TEST STARTED:');
+            //
             User.attemptNewUser(req, email, password, function(err, user){
-                console.log('validateUser called back');
-                expect(err).toBeNull();
-                expect(user.local.firstname).toBe(req.firstName);
-                expect(user.local.lastname).toBe(req.lastName);
-                expect(user.local.phoneNumber).toBe(req.phoneNumber);
-                expect(user.local.address1).toBe(req.address1);
-                expect(user.local.address2).toBe(req.address2);
-                expect(user.local.city).toBe(req.city);
-                expect(user.local.state).toBe(req.state);
-                expect(user.local.zip).toBe(req.zip);
-                expect(user.local.day).toBe(req.day);
-                expect(user.local.month).toBe(req.month);
-                expect(user.local.year).toBe(req.year);
+                if(user != null){
+                    console.log('user not null');
+                    console.log('#$#$#$#$ setting req.user.id to ' + user.id);
+                    req.user.id = user.id;
+                    expect(user.local.email).toBe(email);
+                    return done();
+                } 
+                expect(false).toBe(true);
                 return done();
             });
-        },3000);
+        },5000);
         
+        /**
+         * Test that if you attempt to create a new account with an existing email that the correct 
+         * error is returned
+         */
         test('Verify that a new account can not be created if email is already in the system', (done) => {
             User.attemptNewUser(req, email, password, function(err, user){
-                expect(err.message).toBe('Account Already Exists');
-                expect(user).toBeNull();
+                if(err.message === 'Account Already Exists'){
+                    expect(true).toBe(true);    
+                }else {
+                    expect(false).toBe(true);
+                }
                 done();
             });
-        },3000);
+        },8000);
 
-
-        // test('ensure hash generation returns value', () => {
-        //     expect(newUser.local.password = newUser.generateHash(testPassword)).not.toBeNull();
+        /**
+         * Test that hash generates a hashed password
+         */
+        // test('ensure hash generation returns correct value', () => {
+        //     expect(UserModel.local.password = UserModel.generateHash(testPassword)).not.toBeNull();
         // });
+
+
+        /**
+         * Test that an account can be accessed by Email
+         */
+
+        /**
+         * Test that an account can be accessed by ID
+         */
+
+        /**
+         * Test that a new account can be created with a valid email address.  
+         */
+
+        
         
         // test('check valid password', () => {
         //     expect(newUser.validPassword(testPassword)).toBeTruthy();
@@ -131,5 +160,18 @@ var testReqBody =  {
         // test('check invalid password', () => {
         //     expect(newUser.validPassword(testBadPassword)).toBeFalsy();
         // });
-//     })
-// })
+
+    });
+
+    describe('Testing ability to delete accounts', () => {
+
+        test('Test ability to delete an existing account', (done) => {
+            console.log("TESTING DELETE with user ID " + req.user.id);
+            User.deleteUserByID(req, function(mResp) {
+                expect(mResp).toBeTruthy();
+                return done();
+            });
+        });
+    });
+});
+

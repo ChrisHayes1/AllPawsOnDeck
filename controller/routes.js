@@ -68,16 +68,25 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        Training.GetTrainingList(function(mTraining) {
-            res.render('profile.ejs', {
-                user : req.user, // get the user out of session and pass to template
-                trainings : mTraining,
-                page : "profile"
-            });
+        mUser.isCoordinator(req, function(err, isCoord){
+            if (err)  console.log("error response was " + err);
+            //if coord redirect to coord dashboard
+            if (isCoord){
+                res.redirect('/coorDash');
+            } else {
+                Training.GetTrainingList(function(mTraining) {
+                    res.render('profile.ejs', {
+                        user : req.user, // get the user out of session and pass to template
+                        trainings : mTraining,
+                        page : "profile"
+                    });
+                });
+            }
+                
         });
     });
 
-    app.post('/profile', function(req, res) {
+    app.post('/profile', isLoggedIn, function(req, res) {
         //Add code for successful post
         if (isLoggedIn)
         {
@@ -89,6 +98,29 @@ module.exports = function(app, passport) {
         } else {
             res.redirect('/');
         }
+    });
+
+    // **********************************
+    // DELETE PROFILE
+    // **********************************
+    // we will want this protected so you have to be logged in to visit
+    // we will use route middleware to verify this (the isLoggedIn function)
+    app.get('/deleteProfile', isLoggedIn, function(req, res) {
+        console.log('route found for deleteProfile');
+        res.render('deleteProfile.ejs', {
+            user : req.user,
+            page : "profile"
+        });
+    });
+
+    app.post('/deleteProfile', isLoggedIn, function(req, res) {
+        console.log('ATTEMPTING POST FOR');
+        mUser.deleteUserByID(req, function(err, mBool){
+            //TODO Deal with error instead of just loging
+            if (err)  console.log("error response was " + err);
+            req.logout();
+            res.redirect('/');
+        });
     });
 
     // **********************************
@@ -108,17 +140,17 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/coorDash', function(req, res) {
+    app.post('/coorDash', function (req, res) {
         //Add code for successful post
-        if (isLoggedIn)
-        {
-            mUser.editUserProfile(req, res, function(err, mBool){
-                //TODO Deal with error instead of just loging
-                if (err)  console.log("error response was " + err);
+        if (isLoggedIn) {
+            mUser.editUserProfile(req, res, function (err, mBool) {
                 
+                //TODO Deal with error instead of just loging
+                if (err) console.log("error response was " + err);
+
                 res.redirect('/coorDash');
 
-            });
+                });
         } else {
             res.redirect('/');
         }
@@ -141,11 +173,14 @@ module.exports = function(app, passport) {
     // **********************************
     //This page needs to be different for user and cordinator
     app.get('/volunteerpositions', isLoggedIn, function (req, res) {
-        Position.GetPositionList(function (mPositions) {
-            res.render('volunteerposition.ejs', {
-                user : req.user, // get the user out of session and pass to template
-                positions: mPositions,
-                page : "volunteer"
+        Training.GetTrainingList(function (mTraining) {
+            Position.GetPositionList(function (mPositions) {
+                res.render('volunteerposition.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    positions: mPositions,
+                    trainings: mTraining,
+                    page: "volunteerpositions"
+                });
             });
         });
     });
@@ -154,7 +189,6 @@ module.exports = function(app, passport) {
         //Add code for successful post
         if (isLoggedIn)
         {
-            console.log("HERE!!!!")
             Position.addvp(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
@@ -167,12 +201,71 @@ module.exports = function(app, passport) {
         }
     });
 
+    app.get('/trainings', isLoggedIn, function (req, res) {
+        Training.GetTrainingList(function (mTraining) {
+            Position.GetPositionList(function (mPositions) {
+                res.render('trainings.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    positions: mPositions,
+                    trainings: mTraining,
+                    page: "trainings"
+                });
+            });
+        });
+    });
+
+    app.post('/trainings', function (req, res) {
+        //Add code for successful post
+        if (isLoggedIn) {
+            Training.addvp(req, res, function (err, mBool) {
+                //TODO Deal with error instead of just loging
+                if (err) console.log("error response was " + err);
+
+                res.redirect('/trainings');
+
+            });
+        } else {
+            res.redirect('/');
+        }
+    });
+
+    // **********************************
+    // Volunteer management
+    // **********************************
+    //Only visible to coordinator
+    app.get('/volunteermanagement', isLoggedIn, function (req, res) {
+        mUser.GetUserList(function(usersList) {
+            Training.GetTrainingList(function (mTraining) {
+                res.render('volunteermanagement.ejs', {
+                    user : req.user, 
+                    users : usersList,
+                    trainings: mTraining,
+                    page : "volunteermanagement"
+                });
+            });
+            
+        });
+    });
+
+    app.post('/volunteermanagement', isLoggedIn, function (req, res) {
+        mUser.AddUserTraining(req,function(){
+
+        });
+    });
+
     // **********************************
     // LOGOUT 
     // **********************************
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('/calendar', isLoggedIn, function(req, res) {
+        res.render('calendar.ejs', {
+            user : req.user, // get the user out of session and pass to template
+            page : "calendar"
+        });
     });
 };
 
@@ -186,3 +279,8 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
+
+
+// **********************************
+// LOGOUT 
+// **********************************

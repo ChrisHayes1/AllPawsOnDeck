@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+ 
+<head>
+    <title>All Paws On Deck</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/primarySiteTheme.css">
+</head>
+
+<body>
+
+<header>
+<h2>Volunteer Management</h2>
+</header>
+
+<section>
+<nav>
+    <%- include partials/navMenu.ejs %>
+</nav>
+
+<article>
+
+    <body class = "text-center" style="border: 1px solid #000000;"></body>
+
+        <table class = "ManagementTable" id = "management">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User Type</th>
+                    <th>Application Status</th>
+                    <th>Training List</th>
+                    <th>Is Active?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i < users.length; i++) { %>
+                    <tr>
+                        <td><%= users[i].local.firstname %> <%= users[i].local.lastname %></td>
+                        <td><%= users[i].local.userType %></td>
+                        <td><%= users[i].local.appStatus %></td>
+                        <td><%= users[i].local.completedTrainings %> 
+                            <button id = "<%= i %>" onclick="setBtn('<%= users[i].local.email %>')">Add</button>
+                        </td>
+                        <td><%= users[i].local.isActive %></td>
+                    </tr>
+                <% }; %>
+            </tbody>
+        </table>
+
+        <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Select the trainings you would like to add to the user</p>
+            <div>
+                <form action="/volunteermanagement" method="post" id = "frmEditProfile">
+                    <ul>
+                        <% trainings.forEach((training)=>{ %>
+                                <p><%=training%>
+                                <input type="checkbox" name= "<%=training%>" id="<%=training%>" data-id="<%=training%>" /></button>
+                                <!-- value="<%=training%>" onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();-->
+                                </p>
+                        <%})%>
+                    </ul>
+                    <div id = "setEmail"></div>
+                </form>
+                <div><button class = "EditProfileBtn" onclick="submitTrainings()">Add Trainings</button></div>
+                <br>
+            </div>    
+        </div>
+    
+    </div>
+
+        <script src="tablefilter/tablefilter.js"></script>
+
+        <script>
+            var tf = new TableFilter('management');
+            tf.init();
+        </script>
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+            
+            // Get the button that opens the modal
+            //var btn = document.getElementById("myBtn");
+            
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            var UserEmail = '';
+
+            // When the user clicks the button, open the modal 
+            function setBtn(mUserEmail) {
+                UserEmail = mUserEmail;
+                modal.style.display = "block";
+            }
+            
+            function submitTrainings(){
+                console.log('Submitting training for user ' + UserEmail);
+                document.getElementById("setEmail").innerHTML = "<input name='email' type='text' value= '" + UserEmail + "'/>";
+                console.log("about to post with setEmail = " + document.getElementById("setEmail").innerHTML);
+                document.getElementById("frmEditProfile").submit();
+                console.log("done with post");
+                modal.style.display = "none";
+            }
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+        
+</article>
+</section>
+
+<footer>
+All Paws on Deck!
+</footer>
+
+</body>
+
+</html>
+
+
