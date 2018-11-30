@@ -7,6 +7,7 @@
 var mUser = require('../models/user');
 var Training = require('../models/training');
 var Position = require('../models/VolunteerPositions');
+var ScheduledShifts = require('../models/scheduledShifts');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -201,6 +202,10 @@ module.exports = function(app, passport) {
         }
     });
 
+    // **********************************
+    // Trainings
+    // **********************************
+
     app.get('/trainings', isLoggedIn, function (req, res) {
         Training.GetTrainingList(function (mTraining) {
             Position.GetPositionList(function (mPositions) {
@@ -235,14 +240,30 @@ module.exports = function(app, passport) {
     //Only visible to coordinator
     app.get('/volunteermanagement', isLoggedIn, function (req, res) {
         mUser.GetUserList(function(usersList) {
-            res.render('volunteermanagement.ejs', {
-                user : req.user, 
-                users : usersList,
-                page : "volunteermanagement"
+            Training.GetTrainingList(function (mTraining) {
+                res.render('volunteermanagement.ejs', {
+                    user : req.user, 
+                    users : usersList,
+                    trainings: mTraining,
+                    page : "volunteermanagement"
+                });
             });
+            
         });
     });
 
+    app.post('/volunteermanagement', isLoggedIn, function (req, res) {
+        mUser.AddUserTraining(req,function(err){
+            res.redirect('/volunteermanagement');
+        });
+    });
+
+    app.post('/signupuserforevent', isLoggedIn, function (req, res) {
+        console.log(req.body)
+        ScheduledShifts.addss(req, res, function() {
+            res.redirect('/calendar');
+        });
+    });
     // **********************************
     // LOGOUT 
     // **********************************
@@ -252,10 +273,13 @@ module.exports = function(app, passport) {
     });
 
     app.get('/calendar', isLoggedIn, function(req, res) {
-        res.render('calendar.ejs', {
-            user : req.user, // get the user out of session and pass to template
-            page : "calendar"
-        });
+        Position.GetEvents(function (mEvents) {
+            res.render('calendar.ejs', {
+                user: req.user,
+                events: mEvents,
+                page: "calendar"
+            })
+        })
     });
 };
 

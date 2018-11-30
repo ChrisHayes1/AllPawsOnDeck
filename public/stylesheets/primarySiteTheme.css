@@ -12,9 +12,14 @@
     padding: 1px;
     text-align: center;
     vertical-align: top;
-    font-size: 25px;
+    font-size: 3vh;
     color: white;
     height: 15vh;
+  }
+
+  h2 img {
+    float: left;
+    max-width: 11vh;
   }
 
   /*  two columns/boxes that floats next to each other */
@@ -158,25 +163,7 @@
   padding-bottom: 0px;
 }
 
-.ManagementTable {
-  background-color: #e79541;
-  border-collapse: collapse;
-  width: 100%;
-}
 
-.ManagementTable th {
-  background-color: #e06326;
-  text-align: left;
-}
-
-.ManagementTable td, th {
-  padding: 10px;
-  border-bottom: 1px solid #632600;
-}
-
-.ManagementTable tr:hover {
-  background-color: #f7a176;
-}
 
 /*Styles reldated to editing the profile*/
 
@@ -279,3 +266,44 @@ legend {
         height: auto;
     }
   }
+
+
+
+ /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -51,16 +51,19 @@
             </tr>
 			<tr>
                 <th class = "EditProfileLabel">Required Trainings:</th>
-				<td><ul class="EditProfileLabel" id ="dynamic-list"></ul>
 			</tr>
 			<tr>
 				<td><ul>
-					<% trainings.forEach((training)=>{ %>
-						
-							<p class="EditProfileLabel"><%=training%>
-							<input type="checkbox" name= "training" id="<%=training%>" data-id="<%=training%>" value="<%=training%>"  /></button>
+                    <% for(var i = 0; i < trainings.length; i++) { %>
+							<p class="EditProfileLabel"><%= trainings[i] %>
+                            <input type="checkbox" 
+                                name= "<%='training:' +  trainings[i] %>" 
+                                id="<%=trainings[i]%>" 
+                                data-id="<%=trainings[i]%>" 
+                                value="<%=trainings[i]%>" 
+                                onchange="if(this.checked == true) addTraining(); else if(this.checked == false) removeTraining();" />
 							</p>
-					<%})%>
+					<%}%>
 					</ul>
                 </td>
 				
@@ -117,7 +120,6 @@
 		var training = document.getElementById("training");
 		var li = document.createElement("li");
 		li.setAttribute('id', training);
-		li.appendChild(document.createTextNode(training.value));
 		ul.appendChild(li);	
     }
 </script>
@@ -125,7 +127,7 @@
 function removeTraining(){
     var ul = document.getElementById("dynamic-list");
     var training = document.getElementById("training");
-	var item = document.getElementById(training.value);
+    var item = document.getElementById(training);
     ul.removeChild(item);
 }
 </script>
