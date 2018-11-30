@@ -10,7 +10,9 @@ var scheduledShiftsSchema = mongoose.Schema({
 var SSData=mongoose.model('scheduledShifts',scheduledShiftsSchema);
 
 exports.addss=function(req,res,callback){
-    SSData.findOne({'user_id':req.body.user_id,'pos_id':req.body.positions_id},function(err,vp){
+    console.log(req.body.event);
+    console.log(req.user.id);
+    SSData.findOne({'user_id':req.user.id,'positions_id':req.body.event},function(err,vp){
     // if there are any errors, return the error
 		console.log('findOne started');
 		if (err) {
@@ -25,8 +27,8 @@ exports.addss=function(req,res,callback){
             //if the user has not signed the selected positions
             //add the record 
             var newSS=new SSData();
-            newSS.user_id=req.body.user_id;
-            newSS.positions_id=req.body.user_id;
+            newSS.user_id=req.user.id;
+            newSS.positions_id=req.body.event;
 
             // save the ss
 			newSS.save(function(err) {

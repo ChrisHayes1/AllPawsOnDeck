@@ -32,16 +32,14 @@ exports.GetPositionList = function (callback) {
 exports.GetEvents = function (callback) {
 	positions.find({}, function (err, positions) {
 		var events = []
-		var count = 0;
 		positions.forEach(function (position) {
 			var event = {
-				"id": count,
+				"id": position._id,
 				"title": position.positionName,
 				"start": position.startTime,
 				"end": position.endTime
 			}
 			events.push(event);
-			count++;
 			//var manager = "Jane Doe";
 			//sitePersonel.employees[0].manager = manager;
 			//console.log(sitePersonel);
