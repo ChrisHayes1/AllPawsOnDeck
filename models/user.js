@@ -226,6 +226,22 @@ function AddNewUser(req, email, password, callback){
     });
 }
 
+exports.GetUserList = function(callback){
+
+    User.find({}, function(err, users) {
+        var userList = [];
+    
+        users.forEach(function(curr) {
+            userList.push(curr);
+        });
+    
+        return callback(userList);
+      });
+
+
+    
+}
+
 
 /****************************
  * export as needed
