@@ -3,11 +3,17 @@
 
   <head>
     <%- include partials/head.ejs %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+     <link rel="stylesheet" href="css/normalize.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
   </head>
 
   <body>
     <header>
-    <h2>Welcome <%= user.local.firstname %></h2>
+    <h2><img src = "/assets/apod_logo.png" alt = "apod_logo" height="110" width="110" style="float:left"/></h2>
+    <h1>Welcome <%= user.local.firstname %></h1>
     </header>
 
     <section>
@@ -19,8 +25,8 @@
       <div id = "userProfile"
         <%- include partials/partialUserProfile.ejs %>
       </div>
-      
-      <h2>Application Status</h2>
+
+      <h2>Change Application Status</h2>
       <p><b>Not yet submitted</b></p>
       <p>Pending</p>
       <p>Approved</p>
