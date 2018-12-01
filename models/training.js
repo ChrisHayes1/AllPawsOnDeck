@@ -12,12 +12,7 @@ var Trainings = mongoose.model('Training', trainingSchema);
 
 
 exports.GetTrainingList = function(callback){
-    // var mTraining = [
-    //     { name: 'Bloody Mary'},
-    //     { name: 'Martini' },
-    //     { name: 'Scotch' }
-    // ];
-
+    console.log('Running GetTrainingList');
     Trainings.find({}, function(err, trainings) {
         var trainingList = [];
     
@@ -27,9 +22,35 @@ exports.GetTrainingList = function(callback){
     
         return callback(trainingList);
       });
+}
 
-
+exports.GetTrainingListCount = function(callback){
+    console.log('Running GetTrainingList');
+    Trainings.find({}, function(err, trainings) {
+        var count = 0;
     
+        trainings.forEach(function(training) {
+            count++;
+        });
+    
+        return callback(count);
+      });
+}
+
+exports.GetTrainingListWithDesc = function(callback){
+    console.log('Running GetTrainingListWIthDesc');
+    Trainings.find({}, function(err, trainings) {
+        var trainingList = [];
+        console.log('Running GetTrainingListWIthDesc, trainings found');
+        trainings.forEach(function(training) {
+            var mList = [training.trainingName, training.TrainingDescription];
+            console.log('adding ' + mList[0])
+            console.log(' : desc = ' + mList[1]);
+            trainingList.push(mList);
+        });
+    
+        return callback(trainingList);
+      });
 }
 
 

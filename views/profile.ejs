@@ -28,44 +28,59 @@
       <p>Approved</p>
       <p>Denied</p>
 
-		<h2>Training Status</h2>
-    <p>Completed Training:
-    <% if ((user.completedTrainings).length===0) {%>
-          No training has been done
-    <%}  else{%>
-      <% for(var i=0;i<(user.completedTrainings).length;i++){%>
-        <%=user.completedTrainings[i]%><br>
-      <%}%>
-    <%}%>
-      </p>
-
-    <p> Training list</p>
-    <% trainings.forEach(function(training) { %>
-      <li><%= training %> </li>
-    <% }); %>
-
+    <h2>Training Status</h2>
+    
     <div id="Application_Status_Bar">
-      <div id="progressBar">1%</div>
+        <div id="progressBar">1%</div>
     </div>
-
     <br>
-    <button onclick="update()">Check Status</button>
+    <button onclick="update()">Check Training Completion</button>
+    
+    <p><b>Completed Training:</b> </p>
+    <ul>
+      <% if ((user.completedTrainings).length===0) {%>
+            <li>No training has been done</li>
+      <%}  else{%>
+        <% for(var i=0;i<(user.completedTrainings).length;i++){%>
+          <li><%=user.completedTrainings[i]%></li>
+        <%}%>
+      <%}%>
+    </ul>
+      
+
+    <p> <b>Full Training list</b></p>
+
+    <ul>
+      <% trainings.forEach(function(training) { %>
+        <li><%= training %> </li>
+      <% }); %>
+    </ul>
+
+    
+
+    
 
     <script>
-    function update() {
-    var element = document.getElementById("progressBar");
-    var width = 1;
-    var identity = setInterval(scene, 10);
-    function scene() {
-     if (width >= 100) {
-       clearInterval(identity);
-     } else {
-       width++;
-       element.style.width = width + '%';
-       element.innerHTML = width * 1  + '%';
-     }
-    }
-    }
+      function update() {
+        var element = document.getElementById("progressBar");
+        var width = 1;
+        var userTrainings = <%= user.completedTrainings.length %>;
+        var totTrainings = <%= trainings.length %>;
+        var trainPrcnt =  (userTrainings/totTrainings)*100;
+        console.log('trainPrcnt = ' + trainPrcnt);
+        var identity = setInterval(scene, 10);
+
+        function scene() {
+          if (width >= trainPrcnt) {
+            clearInterval(identity);
+          } else {
+            width++;
+            element.style.width = width + '%';
+            element.innerHTML = width * 1  + '%';
+          }
+
+        }
+      }
     </script>
 
     </article>
