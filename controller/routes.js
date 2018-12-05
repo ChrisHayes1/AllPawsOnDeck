@@ -175,7 +175,7 @@ module.exports = function(app, passport) {
     //This page needs to be different for user and cordinator
     app.get('/volunteerpositions', isLoggedIn, function (req, res) {
         Training.GetTrainingList(function (mTraining) {
-            Position.GetPositionList(function (mPositions) {
+            Position.GetPositionListDetailed(function (mPositions) {
                 res.render('volunteerposition.ejs', {
                     user: req.user, // get the user out of session and pass to template
                     positions: mPositions,
@@ -200,6 +200,18 @@ module.exports = function(app, passport) {
         } else {
             res.redirect('/');
         }
+    });
+
+        //--------------
+    // Post to delete trainings
+    //--------------
+    app.post('/deleteVPositions', isLoggedIn, function (req, res) {
+        console.log('#$#$#$#^#^#^# Attempting delete with /deleteVPositions');
+        Position.deletePositionByName(req, function(err, mBool){
+            //TODO Deal with error instead of just loging
+            if (err)  console.log("error response was " + err);
+            res.redirect('/volunteerpositions');
+        });
     });
 
     // **********************************
@@ -232,6 +244,18 @@ module.exports = function(app, passport) {
         } else {
             res.redirect('/');
         }
+    });
+
+    //--------------
+    // Post to delete trainings
+    //--------------
+    app.post('/deleteTrainings', isLoggedIn, function (req, res) {
+        console.log('#$#$#$#^#^#^# Attempting delete with /trainings');
+        Training.deleteTrainingByName(req, function(err, mBool){
+            //TODO Deal with error instead of just loging
+            if (err)  console.log("error response was " + err);
+            res.redirect('/trainings');
+        });
     });
 
     // **********************************

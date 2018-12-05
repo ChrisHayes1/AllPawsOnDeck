@@ -1,11 +1,11 @@
 .ManagementTable {
-    background-color: #e79541;
+    background-color: blanchedalmond;
     border-collapse: collapse;
     width: 100%;
   }
   
   .ManagementTable th {
-    background-color: #e06326;
+    background-color: blanchedalmond;
     text-align: left;
   }
   
@@ -15,5 +15,6 @@
   }
   
   .ManagementTable tr:hover {
-    background-color: #f7a176;
+  
+    background-color: #f7e68a;
   }

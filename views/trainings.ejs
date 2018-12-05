@@ -20,35 +20,36 @@
 </nav>
 
 <article>
-    <h2>Training List</h2>
-	<%- include partials/partialDisplayTrainingList.ejs %>
+    <h2>Add A New Training</h2>
+    <fieldset class = "EditProfileSmall">
+        <form action="/trainings" method="post" id = "frmPostTrainings">
+            <table class = "EditProfileHeader">
+                <tr>
+                    <th class = "EditProfileLabel">Training Name:</th>
+                    <th>
+                        <input class = "EditProfileInput" 
+                            name="trainingName"
+                            type="text" >
+                            
+                    </th>
+                </tr>
+                <tr>
+                    <th class = "EditProfileLabel">Training Description:</th>
+                    <th>
+                        <input class = "EditProfileInput" 
+                            name="TrainingDescription"
+                            type="text" >          
+                    </th>
+                </tr>
+            </table>      
+        </form>
+        <button class = "EditProfileBtn" onclick = "submitChanges()" >ADD</button>
+    </fieldset>
 
-
-    <body class = "text-center" style="border: 1px solid #000000;"></body>
-
-	<form class = "EditProfile" action="/trainings" method="post" id = "frmEditProfile">
-        <table class = "EditProfileHeader">
-            <tr>
-                <th class = "EditProfileLabel">Training Name:</th>
-                <th>
-                    <input class = "EditProfileInput" 
-                        name="trainingName"
-                        type="text" >
-                        
-                </th>
-            </tr>
-            <tr>
-                <th class = "EditProfileLabel">Training Description:</th>
-                <th>
-                    <input class = "EditProfileInput" 
-                        name="TrainingDescription"
-                        type="text" >          
-                </th>
-            </tr>
-        </table>      
-    </form>
-
-	<button class = "EditProfileBtn" onclick = "submitChanges()" >ADD</button>
+	
+    
+    <h2>Available Trainings</h2>
+    <%- include partials/partialDisplayTrainingList.ejs %>
     
 </article>
 </section>
@@ -62,7 +63,7 @@
 <script>
     function submitChanges(){
         console.log("about to post");
-        document.getElementById("frmEditProfile").submit();
+        document.getElementById("frmPostTrainings").submit();
         console.log("done with post");
     }
 </script>

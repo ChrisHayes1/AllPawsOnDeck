@@ -12,25 +12,15 @@
     </header>
 
     <section>
-    <nav>
-        <%- include partials/navMenu.ejs %>
-    </nav>
+      <nav>
+          <%- include partials/navMenu.ejs %>
+      </nav>
 
-    <article>
-      <div id = "userProfile"
-        <%- include partials/partialUserProfile.ejs %>
-      </div>
-    
-    <h2>Training List</h2>
-    <%-include partials/partialDisplayTrainingList.ejs %>
-
-	<body class = "text-center" style="border: 1px solid #000000;"></body>
-
-    
-
-    <h2>Position List</h2>
-	<%- include partials/partialDisplayPositionList.ejs %>
-    </article>
+      <article>
+        <div id = "userProfile"
+          <%- include partials/partialUserProfile.ejs %>
+        </div>
+      </article>
     </section>
 
     <footer>
@@ -44,5 +34,5 @@
         document.getElementById("frmEditProfile").submit();
         console.log("done with post");
     }
-</script>
+  </script>
 </html>

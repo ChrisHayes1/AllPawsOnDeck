@@ -1,8 +1,36 @@
 <% trainings.forEach(function(training) { %>
+  <form action="/deleteTrainings" method="POST" id = "frmRemoveTrainings">
+    <div id = "setTraining"></div>
+  </form>
+  <fieldset class = "ViewProfile">
       <li> 
+        <button class = "EditProfileBtnCancel"  onclick="submitTrainings('<%= training[0]%>')">Delete</button>
         <b><%= training[0] %></b>
         <br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <i><%=training[1] %> </i>
+        <i><% if (training[1].length > 0) { %>
+          <%=training[1] %> 
+          <%} else { %> 
+            No Description Provided
+          <% } %>
+        </i>
       </li>
-    <% }); %>
+      
+  </fieldset>
+  <br>
+<% }); %>
+
+
+
+
+<script>
+  
+  function submitTrainings(SelectedTraining){
+      console.log('Submitting training for user ' + SelectedTraining);
+      document.getElementById("setTraining").innerHTML = "<input name='trainingName' type='text' value= '" + SelectedTraining + "'/>";
+      console.log("about to post with setTraining = " + document.getElementById("setTraining").innerHTML);
+      document.getElementById("frmRemoveTrainings").submit();
+      console.log("done with delete");
+  }
+
+</script>

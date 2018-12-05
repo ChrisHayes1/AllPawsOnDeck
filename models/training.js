@@ -10,6 +10,23 @@ var trainingSchema = mongoose.Schema({
  ***************************/
 var Trainings = mongoose.model('Training', trainingSchema);
 
+/**
+ * Deletes the training sent in if it exists. 
+ */
+exports.deleteTrainingByName = function(req, callback){
+    console.log("About to delete user with id " + req.body.trainingName);
+    Trainings.remove({ trainingName: req.body.trainingName }, function(err) {
+        console.log("Remove created call back ");
+        if (!err) { //return true if user is deleted
+            console.log("Callback returned true, training was deleted");
+                return callback(true)
+        }
+        else { //return false if we get an error
+            console.log("Callback returned error " + err.message);
+            return callback(false)
+        }
+    });
+}
 
 exports.GetTrainingList = function(callback){
     console.log('Running GetTrainingList');
@@ -44,8 +61,6 @@ exports.GetTrainingListWithDesc = function(callback){
         console.log('Running GetTrainingListWIthDesc, trainings found');
         trainings.forEach(function(training) {
             var mList = [training.trainingName, training.TrainingDescription];
-            console.log('adding ' + mList[0])
-            console.log(' : desc = ' + mList[1]);
             trainingList.push(mList);
         });
     

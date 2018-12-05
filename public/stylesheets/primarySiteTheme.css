@@ -171,6 +171,16 @@
   background-color: #e79541;
 }
 
+.EditProfileSmall {
+  background-color: #e79541;
+  width: 50%;
+}
+
+.EditProfileMed {
+  background-color: #e79541;
+  width: 80%;
+}
+
 .EditProfileBtn {
   position: relative;
   float: right;
@@ -208,6 +218,11 @@
   width: 10vw;
 }
 
+.TrainingListTable {
+  position: relative;
+  float: right;
+}
+
 .EditProfileHeader {
   padding-top: 10px;
   padding-bottom: 5px;
@@ -241,6 +256,7 @@
   color: black;
   font-size: 18px;
 }
+
 
 .EditProfileInputSub {
   position: relative;

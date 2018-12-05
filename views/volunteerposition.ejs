@@ -20,80 +20,99 @@
 </nav>
 
 <article>
-    <h2>Open Job List</h2>
-	<%- include partials/partialDisplayPositionList.ejs %>
-
-
-    <body class = "text-center" style="border: 1px solid #000000;"></body>
-
-    <form class = "EditProfile" action="/volunteerpositions" method="post" id = "frmEditProfile">
-        
-		<table class = "EditProfileHeader">
-            <tr>
-                <th class = "EditProfileLabel">Position Name:</th>
-                <th>
-                    <input class = "EditProfileInput" 
-                        name="positionName"
-                        type="text" >
-                        
-                </th>
-            </tr>
-            <tr>
-                <th class = "EditProfileLabel">Role Description:</th>
-                <th>
-                    <input class = "EditProfileInput" 
-                        name="roleDescription"
-                        type="text" >          
-                </th>
-            </tr>
-			<tr>
-                <th class = "EditProfileLabel">Required Trainings:</th>
-			</tr>
-			<tr>
-				<td><ul>
-                    <% for(var i = 0; i < trainings.length; i++) { %>
-							<p class="EditProfileLabel"><%= trainings[i] %>
-                            <input type="checkbox" 
-                                name= "<%='training:' +  trainings[i] %>" 
-                                id="<%=trainings[i]%>" 
-                                data-id="<%=trainings[i]%>" 
-                                value="<%=trainings[i]%>" 
-                                 />
-							</p>
-					<%}%>
-					</ul>
-                </td>
-				
-            </tr>
-            <tr>
-                <th class = "EditProfileLabel">Date in Year-Month-Day :</th>
-                <th>
-                    <input class = "EditProfileInput" 
-                        name="date"
-                        type="text" >          
-                </th>
-            </tr>
-            <tr>
-                <th class = "EditProfileLabel">Start Time in hh:mm :</th>
-                <th>
-                    <input class = "EditProfileInput" 
-                        name="startTime"
-                        type="text" >          
-                </th>
-            </tr>
-            <tr>
-                <th class = "EditProfileLabel">End Time in hh:mm :</th>
-                <th>
-                    <input class = "EditProfileInput" 
-                        name="endTime"
-                        type="text" >          
-                </th>
-            </tr>
-            
-        </table>      
-    </form>
+    <h2>Add A New Position</h2>
+    <fieldset class = "EditProfileMed">
+        <div>
+            <form  action="/volunteerpositions" method="post" id = "frmAddPositions">
+                
+                <table class = "EditProfileHeader">
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <th class = "EditProfileLabel">Position Name:</th>
+                                    <th>
+                                        <input class = "EditProfileInput" 
+                                            name="positionName"
+                                            type="text" >
+                                            
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class = "EditProfileLabel">Role Description:</th>
+                                    <th>
+                                        <input class = "EditProfileInput" 
+                                            name="roleDescription"
+                                            type="text" >          
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class = "EditProfileLabel">Date in Year-Month-Day :</th>
+                                    <th>
+                                        <input class = "EditProfileInput" 
+                                            name="date"
+                                            type="text" >          
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class = "EditProfileLabel">Start Time in hh:mm :</th>
+                                    <th>
+                                        <input class = "EditProfileInput" 
+                                            name="startTime"
+                                            type="text" >          
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class = "EditProfileLabel">End Time in hh:mm :</th>
+                                    <th>
+                                        <input class = "EditProfileInput" 
+                                            name="endTime"
+                                            type="text" >          
+                                    </th>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr><tr>
+                        <td colspan="3">
+                            <table>
+                                <tr>
+                                    <th class = "EditProfileLabel"><br>Required Trainings:</th>
+                                </tr>
+                                <tr>
+                                    <table class = "TrainingListTable">
+                                        <tr>
+                                            <% for(var i = 0; i < trainings.length; i++) { %>
+                                                <% if (i>0 && i%2 === 0) { %>
+                                                </tr><tr>
+                                                <% } %>
+                                                    <td class="EditProfileLabel" style = "text-align: left;">
+                                                        <input type="checkbox" 
+                                                            name= "<%='training:' +  trainings[i] %>" 
+                                                            id="<%=trainings[i]%>" 
+                                                            data-id="<%=trainings[i]%>" 
+                                                            value="<%=trainings[i]%>" 
+                                                            />
+                                                        <%= trainings[i] %>
+                                                    </td>
+                                                    <th></th>
+                                            <%}%>
+                                        </tr>
+                                    </table>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>      
+            </form>
+        </div>
+        <div>
+            <button class = "EditProfileBtn" onclick = "submitChanges()" >ADD</button>
+        </div>
+    </fieldset>
     
-    <button class = "EditProfileBtn" onclick = "submitChanges()" >ADD</button>
+    
+    <h2>Available Volunteer Positions</h2>
+    <%- include partials/partialDisplayPositionList.ejs %>
     
 </article>
 </section>
@@ -107,7 +126,7 @@
 <script>
     function submitChanges(){
         console.log("about to post");
-        document.getElementById("frmEditProfile").submit();
+        document.getElementById("frmAddPositions").submit();
         console.log("done with post");
     }
 </script>

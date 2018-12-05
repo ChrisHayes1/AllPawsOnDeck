@@ -1,3 +1,43 @@
+
+
+
 <% positions.forEach(function(position) { %>
-      <li><%= position %> </li>
-    <% }); %>
+  <form action="/deleteVPositions" method="POST" id = "frmDeletePositions">
+    <div id = "setPosition"></div>
+  </form>
+  <fieldset class = "ViewProfile">
+    <li>
+      <button class = "EditProfileBtnCancel"  onclick="submitPositions('<%= position[0]%>')">Delete</button>
+      <b><%= position[0] %></b>
+      <i>
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if (position[1].length > 0) { %>
+          <%=position[1] %> 
+        <%} else { %> 
+          No Description Provided
+        <% } %>
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if (position[2].length > 0) { %>
+          <b>Required Trainings: </b>
+          <%=position[2] %> 
+        <%} else { %> 
+          No trainings required
+        <% } %>
+      </i>
+    </li>
+  </fieldset>
+  <br>
+<% }); %>
+ 
+
+<script>
+  
+    function submitPositions(SelectedPosition){
+        console.log('Submitting training for user ' + SelectedPosition);
+        document.getElementById("setPosition").innerHTML = "<input name='positionName' type='text' value= '" + SelectedPosition + "'/>";
+        console.log("about to post with setPosition = " + document.getElementById("setPosition").innerHTML);
+        document.getElementById("frmDeletePositions").submit();
+        console.log("done with delete");
+    }
+  
+  </script>

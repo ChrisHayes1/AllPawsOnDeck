@@ -11,6 +11,24 @@ var vpSchema = mongoose.Schema({
 var positions = mongoose.model('VolunteerPosition', vpSchema);
 
 
+/**
+ * Deletes the training sent in if it exists. 
+ */
+exports.deletePositionByName = function(req, callback){
+    console.log("About to delete position with name " + req.body.positionName);
+    positions.remove({ positionName: req.body.positionName }, function(err) {
+        console.log("Remove created call back ");
+        if (!err) { //return true if user is deleted
+            console.log("Callback returned true, position was deleted");
+                return callback(true)
+        }
+        else { //return false if we get an error
+            console.log("Callback returned error " + err.message);
+            return callback(false)
+        }
+    });
+}
+
 exports.GetPositionList = function (callback) {
     // var mTraining = [
     //     { name: 'Bloody Mary'},
@@ -29,7 +47,19 @@ exports.GetPositionList = function (callback) {
 	});
 }
 
+exports.GetPositionListDetailed = function (callback) {
+    positions.find({}, function (err, positions) {
+        var positionList = [];
 
+        positions.forEach(function (position) {
+			var mList = [position.positionName, position.roleDescription, position.trainings];
+			positionList.push(mList);
+            //positionList.push(position.positionName);
+        });
+
+		return callback(positionList);
+	});
+}
 /**
  * Get a list of trainings necessary for a given position
  */
