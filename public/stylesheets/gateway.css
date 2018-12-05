@@ -69,8 +69,9 @@ body {
 
 .form-signin .btn-link:hover{
   background-color: white;
-  color: #336600;
+  color: #638650;
   text-decoration: none;
   font-weight: bold;
   background-position: left bottom;
+  cursor: pointer;
 }
