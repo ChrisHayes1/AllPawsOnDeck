@@ -4,8 +4,12 @@ var vpSchema = mongoose.Schema({
 	positionName     : String,
 	roleDescription : String,
 	trainings       : [String],
-	startTime: 		Date,
-	endTime:		Date
+
+	shifts      : [ {
+		startTime: 		Date,
+		endTime:		Date,
+		isTaken:  Boolean
+	} ]	
 });
 
 var positions = mongoose.model('VolunteerPosition', vpSchema);
@@ -125,7 +129,7 @@ exports.GetEvents = function (callback) {
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
 exports.addvp = function(req, res, callback){
-	VPData.findOne({'positionName': req.body.positionName, 'startTime' : req.body.start_t, 'endTime' : req.body.end_t}, function(err, vp) {
+	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
 		// if there are any errors, return the error
 		console.log('findOne started');
 		if (err) {
@@ -159,13 +163,6 @@ exports.addvp = function(req, res, callback){
 				  
 				} 
 			}
-			
-
-			var y_m_d   = req.body.date + "T";
-			var start_t  = req.body.startTime + ":00Z";
-			var end_t  = req.body.endTime + ":00Z";
-			newVP.startTime = new Date(y_m_d + start_t);
-			newVP.endTime = new Date(y_m_d + end_t);
 
 			// save the vp
 			newVP.save(function(err) {
@@ -175,7 +172,42 @@ exports.addvp = function(req, res, callback){
 			});
 		}
 	});
-} 
+}
+
+exports.addShift = function(req, callback){
+	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
+		console.log('findOne started');
+		if (err) {
+			console.log("err when find volunteer position " + err);
+			return callback(err);
+		}
+
+		// check to see if theres already a vp with that name
+		if (!vp) {
+			//return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+			console.log("Position not found!");
+			return callback(null, false);
+		} else {
+
+			var y_m_d   = req.body.date + "T";
+			var start_t  = req.body.startTime + ":00Z";
+			var end_t  = req.body.endTime + ":00Z";
+
+			var shift = {startTime: new Date(y_m_d + start_t), 
+						 endTime: new Date(y_m_d + end_t), 
+						 isTaken: false};
+
+			vp.shifts.push(shift);
+			// save the vp
+			vp.save(function(err) {
+				if (err)
+					throw(err);
+				return callback(null, vp);
+			});
+		}
+	});
+
+}
 //exports.vpdata = mongoose.model('VolunteerPosition', vpSchema);
 
 

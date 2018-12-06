@@ -7,6 +7,7 @@
   </form>
   <fieldset class = "ViewProfile">
     <li>
+      <button class = "EditProfileBtn"   onclick="setBtn('<%= position[0]%>')">Add shift</button>
       <button class = "EditProfileBtnCancel"  onclick="submitPositions('<%= position[0]%>')">Delete</button>
       <b><%= position[0] %></b>
       <i>
@@ -27,6 +28,48 @@
     </li>
   </fieldset>
   <br>
+
+  <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Add a shift to this postion:</p>
+          <div>
+              <form action="/addpositionshift" method="post" id = "frmEditProfile">
+                  <table>
+                    <tr>
+                        <th>Date in Year-Month-Day :</th>
+                        <th>
+                            <input class = "EditProfileInput" 
+                                name="date"
+                                type="text" >          
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Start Time in hh:mm :</th>
+                        <th>
+                            <input class = "EditProfileInput" 
+                                name="startTime"
+                                type="text" >          
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>End Time in hh:mm :</th>
+                        <th>
+                            <input class = "EditProfileInput" 
+                                name="endTime"
+                                type="text" >          
+                        </th>
+                    </tr>
+                  </table>
+                  <div id = "setPos"></div>
+              </form>
+              <div><button class = "EditProfileBtn" onclick="submitShift()">Submit</button></div>
+              <br>
+          </div>    
+      </div>
+  </div>
+
 <% }); %>
  
 
@@ -38,6 +81,42 @@
         console.log("about to post with setPosition = " + document.getElementById("setPosition").innerHTML);
         document.getElementById("frmDeletePositions").submit();
         console.log("done with delete");
+    }
+
+
+
+
+
+    var modal = document.getElementById('myModal');
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    var PositionName = '';
+
+    // When the user clicks the button, open the modal 
+    function setBtn(SelectedPosition) {
+        PositionName = SelectedPosition;
+        modal.style.display = "block";
+    }
+            
+    function submitShift(){
+        console.log('Submitting shift for position ' + PositionName);
+        document.getElementById("setPos").innerHTML = "<input name='positionName' type='text' value= '" + PositionName + "'/>";
+        console.log("about to post with setPosition = " + document.getElementById("setPos").innerHTML);
+        document.getElementById("frmEditProfile").submit();
+        console.log("done with post");
+        modal.style.display = "none";
+    }
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
   
   </script>

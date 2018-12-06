@@ -214,6 +214,12 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/addpositionshift', isLoggedIn, function (req, res) {
+        Position.addShift(req,function(err){
+            res.redirect('/volunteerpositions');
+        });
+    });
+
     // **********************************
     // Trainings
     // **********************************
