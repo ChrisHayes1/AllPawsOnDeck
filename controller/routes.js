@@ -296,12 +296,28 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
+
+    // **********************************
+    // Calendar 
+    // **********************************
+
+
     app.get('/calendar', isLoggedIn, function(req, res) {
         Position.GetEvents(function (mEvents) {
             res.render('calendar.ejs', {
                 user: req.user,
                 events: mEvents,
                 page: "calendar"
+            })
+        })
+    });
+
+    app.get('/manageCalendar', isLoggedIn, function(req, res) {
+        Position.GetEvents(function (mEvents) {
+            res.render('calendar.ejs', {
+                user: req.user,
+                events: mEvents,
+                page: "managecalendar"
             })
         })
     });

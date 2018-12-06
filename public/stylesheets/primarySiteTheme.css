@@ -28,7 +28,7 @@
     width: 15%;
     height: 80vh; /* filler until we have a real side bar with info */
     background: #99b27f;
-    padding: 10px;
+    padding: 5px;
   }
 
   /* Style the list inside the menu */
@@ -100,7 +100,7 @@
     text-align: center;
     height: 35px;
     line-height: 30px;
-    width: 90%;
+    width: 100%;
   }
 
   .NavMenuSelection{
