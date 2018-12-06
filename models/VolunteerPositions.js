@@ -108,13 +108,17 @@ exports.GetEvents = function (callback) {
 	positions.find({}, function (err, positions) {
 		var events = []
 		positions.forEach(function (position) {
-			var event = {
-				"id": position._id,
-				"title": position.positionName,
-				"start": position.startTime,
-				"end": position.endTime
-			}
-			events.push(event);
+			position.shifts.forEach(function (shift) {
+				if (shift.isTaken == false) {
+					var event = {
+						"id": position._id,
+						"title": position.positionName,
+						"start": shift.startTime,
+						"end": shift.endTime
+					}
+					events.push(event);
+				}
+			});
 			//var manager = "Jane Doe";
 			//sitePersonel.employees[0].manager = manager;
 			//console.log(sitePersonel);
