@@ -133,6 +133,9 @@ exports.GetEvents = function (callback) {
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
 exports.addvp = function(req, res, callback){
+	if (req.body.positionName.length == 0) {
+		return callback(null, false, req.flash('vpMessage', 'Position name can not be empty'));
+	}
 	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
 		// if there are any errors, return the error
 		console.log('findOne started');
@@ -143,9 +146,9 @@ exports.addvp = function(req, res, callback){
 
 		// check to see if theres already a vp with that name
 		if (vp) {
-			//return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-			console.log("positionName exists");
-			return callback(null, false);
+			return callback(null, req.flash('vpMessage', 'That position name is already taken.'));
+			//console.log("positionName exists");
+			//return callback(null, false);
 		} else {
 
 			// if there is no user with that email
@@ -172,7 +175,7 @@ exports.addvp = function(req, res, callback){
 			newVP.save(function(err) {
 				if (err)
 					throw(err);
-				return callback(null, newVP);
+				return callback(null, false);
 			});
 		}
 	});

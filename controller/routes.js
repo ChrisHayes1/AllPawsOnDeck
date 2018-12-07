@@ -180,7 +180,8 @@ module.exports = function(app, passport) {
                     user: req.user, // get the user out of session and pass to template
                     positions: mPositions,
                     trainings: mTraining,
-                    page: "volunteerpositions"
+                    page: "volunteerpositions",
+                    message: req.flash('vpMessage')
                 });
             });
         });
@@ -193,6 +194,10 @@ module.exports = function(app, passport) {
             Position.addvp(req, res, function(err, mBool){
                 //TODO Deal with error instead of just loging
                 if (err)  console.log("error response was " + err);
+
+                if (mBool) {
+                    console.log("try to add duplicate position");
+                }
                 
                 res.redirect('/volunteerpositions');
 

@@ -24,7 +24,9 @@
     <fieldset class = "EditProfileMed">
         <div>
             <form  action="/volunteerpositions" method="post" id = "frmAddPositions">
-                
+                <% if (message.length > 0) { %>
+                    <div class="alert alert-danger"><%= message %></div>
+                <% } %>
                 <table class = "EditProfileHeader">
                     <tr>
                         <td>
@@ -103,6 +105,7 @@
 <script>
     function submitChanges(){
         console.log("about to post");
+        //alert("about to post");
         document.getElementById("frmAddPositions").submit();
         console.log("done with post");
     }
