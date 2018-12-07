@@ -6,85 +6,87 @@
   </head>
 
   <body>
-    <!-- responsive header -->
+    <!-- setup -->
     <header>
       <%- include partials/header.ejs %>
       <h1>Welcome <%= user.local.firstname %></h1>
     </header>
 
     <section>
-    <nav>
-        <%- include partials/navMenu.ejs %>
-    </nav>
+      <nav>
+          <%- include partials/navMenu.ejs %>
+      </nav>
 
-    <article>
-      <div id = "userProfile"
-        <%- include partials/partialUserProfile.ejs %>
-      </div>
+      <article>
+        <!--User Profile-->
+        <div id = "userProfile"
+          <%- include partials/partialUserProfile.ejs %>
+        </div>
 
-      <h2>Application Status</h2>
-      <p><b>Not yet submitted</b></p>
-      <p>Pending</p>
-      <p>Approved</p>
-      <p>Denied</p>
+        <!--Application Status-->
+        <h2>Application Status</h2>
+        <p><b>Not yet submitted</b></p>
+        <p>Pending</p>
+        <p>Approved</p>
+        <p>Denied</p>
 
-    <h2>Training Status</h2>
-    
-    <div id="Application_Status_Bar">
-        <div id="progressBar">1%</div>
-    </div>
-    <br>
-    <button onclick="update()">Check Training Completion</button>
-    
-    <p><b>Completed Training:</b> </p>
-    <ul>
-      <% if ((user.completedTrainings).length===0) {%>
-            <li>No training has been done</li>
-      <%}  else{%>
-        <% for(var i=0;i<(user.completedTrainings).length;i++){%>
-          <li><%=user.completedTrainings[i]%></li>
-        <%}%>
-      <%}%>
-    </ul>
-      
+        <!--Qualified Positions-->
+        <h2>Positions</h2>
+        <p><b>Qualified For:</b> </p>
+        <ul>
+          <% if ((user.qualifiedPositions).length===0) {%>
+                <li>No positions available</li>
+          <%}  else{%>
+            <% for(var i=0;i<(user.qualifiedPositions).length;i++){%>
+              <li><%=user.qualifiedPositions[i]%></li>
+            <%}%>
+          <%}%>
+        </ul>
+          
 
-    <p> <b>Full Training list</b></p>
+        <p><b>Remaining Positions:</b> </p>
 
-    <ul>
-      <% trainings.forEach(function(training) { %>
-        <li><%= training %> </li>
-      <% }); %>
-    </ul>
+        <ul>
+          <% positions.forEach(function(position) { %>
+            <% if (!user.qualifiedPositions.includes(position)) { %>
+              <li><%= position %> </li>
+              <% } %>
+          <% }); %>
+        </ul>
+        
+        <!--Completed Trainings-->
+        <h2>Training Status</h2>
+        
+        <div id="Application_Status_Bar">
+            <div id="progressBar">1%</div>
+        </div>
+        <br>
+        <button onclick="update()">Check Training Completion</button>
+        
+        <p><b>Completed Trainings:</b> </p>
+        <ul>
+          <% if ((user.completedTrainings).length===0) {%>
+                <li>No training has been done</li>
+          <%}  else{%>
+            <% for(var i=0;i<(user.completedTrainings).length;i++){%>
+              <li><%=user.completedTrainings[i]%></li>
+            <%}%>
+          <%}%>
+        </ul>
+          
 
-    
+        <p> <b>Remaining list</b></p>
 
-    
-
-    <script>
-      function update() {
-        var element = document.getElementById("progressBar");
-        var width = 1;
-        var userTrainings = <%= user.completedTrainings.length %>;
-        var totTrainings = <%= trainings.length %>;
-        var trainPrcnt =  (userTrainings/totTrainings)*100;
-        console.log('trainPrcnt = ' + trainPrcnt);
-        var identity = setInterval(scene, 10);
-
-        function scene() {
-          if (width >= trainPrcnt) {
-            clearInterval(identity);
-          } else {
-            width++;
-            element.style.width = width + '%';
-            element.innerHTML = width * 1  + '%';
-          }
-
-        }
-      }
-    </script>
-
-    </article>
-    </section>
+        <ul>
+          <% trainings.forEach(function(training) { %>
+            <% if (!user.completedTrainings.includes(training)) { %>
+              <li><%= training %> </li>
+            <% } %>
+            
+          <% }); %>
+        </ul>
+      </article>
+    </section>  
 
     <footer>
       <%- include partials/footer.ejs %>
@@ -92,3 +94,27 @@
 
   </body>
 </html>
+
+
+<script>
+    function update() {
+      var element = document.getElementById("progressBar");
+      var width = 1;
+      var userTrainings = <%= user.completedTrainings.length %>;
+      var totTrainings = <%= trainings.length %>;
+      var trainPrcnt =  (userTrainings/totTrainings)*100;
+      console.log('trainPrcnt = ' + trainPrcnt);
+      var identity = setInterval(scene, 10);
+
+      function scene() {
+        if (width >= trainPrcnt) {
+          clearInterval(identity);
+        } else {
+          width++;
+          element.style.width = width + '%';
+          element.innerHTML = width * 1  + '%';
+        }
+
+      }
+    }
+  </script>

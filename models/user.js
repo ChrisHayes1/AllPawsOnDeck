@@ -57,8 +57,49 @@ userSchema.methods.validPassword = function(password) {
 /****************************
  * Exposed interface
  ***************************/
+
 //provide inderect internal access to model
 var User = mongoose.model('User', userSchema);
+
+
+exports.removeTraining = function(training, callback){
+    console.log("About to attempt to remove trainning from completedTrainings = " + "{$elemMatch:"  + "'" +  training + "'}");
+    //TODO: this is returning all, not just the ones expected
+    //{'completedTrainings' : "{$elemMatch:"  + "'" +  training + "'}"
+    User.find({}, function(err, users) {
+        // if there are any errors, return the error before anything else
+        if (err){
+            console.log("error on user.find : " + err);
+            return callback(err);
+        }
+            
+        
+        console.log("users found : " + users.length);
+
+        users.forEach(function(mUser) {
+            console.log("users name : " + mUser.local.firstname);
+            console.log("users training : " + mUser.completedTrainings);
+            // var index = mUser.qualifiedPositions.indexOf(training);
+            // if (index > -1) {
+            if (mUser.completedTrainings.includes(training)){
+                mUser.completedTrainings.remove(training);
+                // save the user
+                console.log("about to save this user");
+                mUser.save(function(err) {
+                    if (err){
+                        console.log("mUser.save returned error " + err);
+                        return callback(err);
+                    } 
+                    console.log("Just saved users new training");
+                });
+                console.log("!!!!! I think i just exited user save");
+            }
+                
+        });
+
+        return callback(null, true);
+    });
+};
 
 /**
  * Validates user.  Returns user if valid email and password

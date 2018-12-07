@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var User = require('../models/user');
+
 
 var trainingSchema = mongoose.Schema({
     trainingName : String,
@@ -10,22 +12,31 @@ var trainingSchema = mongoose.Schema({
  ***************************/
 var Trainings = mongoose.model('Training', trainingSchema);
 
+
 /**
  * Deletes the training sent in if it exists. 
  */
 exports.deleteTrainingByName = function(req, callback){
-    console.log("About to delete user with id " + req.body.trainingName);
-    Trainings.remove({ trainingName: req.body.trainingName }, function(err) {
-        console.log("Remove created call back ");
-        if (!err) { //return true if user is deleted
-            console.log("Callback returned true, training was deleted");
-                return callback(true)
-        }
-        else { //return false if we get an error
-            console.log("Callback returned error " + err.message);
-            return callback(false)
+    console.log("About to delete training with name " + req.body.trainingName);
+    //need to remove the training from the user first
+    User.removeTraining(req.body.trainingName, function(err, result) {
+        if (err) return callback(err);
+        if (result){
+            console.log("deleteTrainingByName removeTraingin returned a result");
+            Trainings.remove({ trainingName: req.body.trainingName }, function(err) {
+                console.log("just removed the training");
+                if (!err) { //return true if user is deleted
+                    console.log("Callback returned true, training was deleted");
+                        return callback(true)
+                }
+                else { //return false if we get an error
+                    console.log("Callback returned error " + err.message);
+                    return callback(false)
+                }
+            });
         }
     });
+    
 }
 
 exports.GetTrainingList = function(callback){
@@ -72,7 +83,9 @@ exports.GetTrainingListWithDesc = function(callback){
 
 var trainingData = mongoose.model('Training', trainingSchema);
 
-exports.addvp = function (req, res, callback) {
+exports.addTraining = function (req, res, callback) {
+    if(req.body.trainingName.length <=0)
+        return callback(new Error('Training is blank'));
     trainingData.findOne({ 'trainingName': req.body.trainingName }, function (err, training) {
         // if there are any errors, return the error
         console.log('findOne started');

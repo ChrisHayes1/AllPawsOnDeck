@@ -125,6 +125,8 @@ exports.GetEvents = function (callback) {
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
 exports.addvp = function(req, res, callback){
+	if(req.body.positionName.length <=0)
+        return callback(new Error('Position is blank'));
 	VPData.findOne({'positionName': req.body.positionName, 'startTime' : req.body.start_t, 'endTime' : req.body.end_t}, function(err, vp) {
 		// if there are any errors, return the error
 		console.log('findOne started');

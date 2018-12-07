@@ -76,10 +76,13 @@ module.exports = function(app, passport) {
                 res.redirect('/coorDash');
             } else {
                 Training.GetTrainingList(function(mTraining) {
-                    res.render('profile.ejs', {
-                        user : req.user, // get the user out of session and pass to template
-                        trainings : mTraining,
-                        page : "profile"
+                    Position.GetPositionList(function(mPositions) {
+                        res.render('profile.ejs', {
+                            user : req.user, // get the user out of session and pass to template
+                            trainings : mTraining,
+                            positions : mPositions,
+                            page : "profile"
+                        });
                     });
                 });
             }
@@ -234,7 +237,7 @@ module.exports = function(app, passport) {
     app.post('/trainings', function (req, res) {
         //Add code for successful post
         if (isLoggedIn) {
-            Training.addvp(req, res, function (err, mBool) {
+            Training.addTraining(req, res, function (err, mBool) {
                 //TODO Deal with error instead of just loging
                 if (err) console.log("error response was " + err);
 
