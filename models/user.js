@@ -61,11 +61,10 @@ userSchema.methods.validPassword = function(password) {
 //provide inderect internal access to model
 var User = mongoose.model('User', userSchema);
 
-
+/**
+ * Removes a training from the users CompletedTraining list
+ */
 exports.removeTraining = function(training, callback){
-    console.log("About to attempt to remove trainning from completedTrainings = " + "{$elemMatch:"  + "'" +  training + "'}");
-    //TODO: this is returning all, not just the ones expected
-    //{'completedTrainings' : "{$elemMatch:"  + "'" +  training + "'}"
     User.find({}, function(err, users) {
         // if there are any errors, return the error before anything else
         if (err){
@@ -73,16 +72,42 @@ exports.removeTraining = function(training, callback){
             return callback(err);
         }
             
-        
+        users.forEach(function(mUser) {
+            if (mUser.completedTrainings.includes(training)){
+                mUser.completedTrainings.remove(training);
+                // save the user
+                mUser.save(function(err) {
+                    if (err){
+                        console.log("mUser.save returned error " + err);
+                        return callback(err);
+                    } 
+                });
+            }
+        });
+        return callback(null, true);
+    });
+};
+
+/**
+ * Removes a position from the users QualifiedPositions list
+ */
+exports.removePosition = function(position, callback){
+    User.find({}, function(err, users) {
+        // if there are any errors, return the error before anything else
+        if (err){
+            console.log("error on user.find : " + err);
+            return callback(err);
+        }
+            
         console.log("users found : " + users.length);
 
         users.forEach(function(mUser) {
             console.log("users name : " + mUser.local.firstname);
-            console.log("users training : " + mUser.completedTrainings);
+            console.log("users training : " + mUser.qualifiedPositions);
             // var index = mUser.qualifiedPositions.indexOf(training);
             // if (index > -1) {
-            if (mUser.completedTrainings.includes(training)){
-                mUser.completedTrainings.remove(training);
+            if (mUser.qualifiedPositions.includes(position)){
+                mUser.qualifiedPositions.remove(position);
                 // save the user
                 console.log("about to save this user");
                 mUser.save(function(err) {

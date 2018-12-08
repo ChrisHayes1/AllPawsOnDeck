@@ -1,11 +1,16 @@
 var mongoose = require('mongoose');
+var User = require('../models/user');
 
 var vpSchema = mongoose.Schema({
 	positionName     : String,
 	roleDescription : String,
 	trainings       : [String],
-	startTime: 		Date,
-	endTime:		Date
+
+	shifts      : [ {
+		startTime: 		Date,
+		endTime:		Date,
+		isTaken:  Boolean
+	} ]	
 });
 
 var positions = mongoose.model('VolunteerPosition', vpSchema);
@@ -16,18 +21,50 @@ var positions = mongoose.model('VolunteerPosition', vpSchema);
  */
 exports.deletePositionByName = function(req, callback){
     console.log("About to delete position with name " + req.body.positionName);
-    positions.remove({ positionName: req.body.positionName }, function(err) {
-        console.log("Remove created call back ");
-        if (!err) { //return true if user is deleted
-            console.log("Callback returned true, position was deleted");
-                return callback(true)
-        }
-        else { //return false if we get an error
-            console.log("Callback returned error " + err.message);
-            return callback(false)
-        }
-    });
+	User.removePosition(req.body.positionName, function(err, result) {
+        if (err) return callback(err);
+        if (result){	
+			positions.remove({ positionName: req.body.positionName }, function(err) {
+				console.log("Remove created call back ");
+				if (!err) { //return true if user is deleted
+					console.log("Callback returned true, position was deleted");
+						return callback(true)
+				}
+				else { //return false if we get an error
+					console.log("Callback returned error " + err.message);
+					return callback(false)
+				}
+			});
+		}
+	});
 }
+
+/**
+ * Removes a training from the positions trainings list
+ */
+exports.removeTraining = function(training, callback){
+    positions.find({}, function(err, position) {
+        // if there are any errors, return the error before anything else
+        if (err){
+            console.log("error on positions.find : " + err);
+            return callback(err);
+        }
+            
+        position.forEach(function(mPosition) {
+            if (mPosition.trainings.includes(training)){
+                mPosition.trainings.remove(training);
+                // save the user
+                mPosition.save(function(err) {
+                    if (err){
+                        console.log("mPosition.save returned error " + err);
+                        return callback(err);
+                    } 
+                });
+            }
+        });
+        return callback(null, true);
+    });
+};
 
 exports.GetPositionList = function (callback) {
     // var mTraining = [
@@ -104,13 +141,17 @@ exports.GetEvents = function (callback) {
 	positions.find({}, function (err, positions) {
 		var events = []
 		positions.forEach(function (position) {
-			var event = {
-				"id": position._id,
-				"title": position.positionName,
-				"start": position.startTime,
-				"end": position.endTime
-			}
-			events.push(event);
+			position.shifts.forEach(function (shift) {
+				if (shift.isTaken == false) {
+					var event = {
+						"id": position._id,
+						"title": position.positionName,
+						"start": shift.startTime,
+						"end": shift.endTime
+					}
+					events.push(event);
+				}
+			});
 			//var manager = "Jane Doe";
 			//sitePersonel.employees[0].manager = manager;
 			//console.log(sitePersonel);
@@ -125,9 +166,13 @@ exports.GetEvents = function (callback) {
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
 exports.addvp = function(req, res, callback){
-	if(req.body.positionName.length <=0)
-        return callback(new Error('Position is blank'));
-	VPData.findOne({'positionName': req.body.positionName, 'startTime' : req.body.start_t, 'endTime' : req.body.end_t}, function(err, vp) {
+	// if(req.body.positionName.length <=0)
+    //     return callback(new Error('Position is blank'));
+	// VPData.findOne({'positionName': req.body.positionName, 'startTime' : req.body.start_t, 'endTime' : req.body.end_t}, function(err, vp) {
+	if (req.body.positionName.length == 0) {
+		return callback(null, false, req.flash('vpMessage', 'Position name can not be empty'));
+	}
+	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
 		// if there are any errors, return the error
 		console.log('findOne started');
 		if (err) {
@@ -137,9 +182,9 @@ exports.addvp = function(req, res, callback){
 
 		// check to see if theres already a vp with that name
 		if (vp) {
-			//return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-			console.log("positionName exists");
-			return callback(null, false);
+			return callback(null, req.flash('vpMessage', 'That position name is already taken.'));
+			//console.log("positionName exists");
+			//return callback(null, false);
 		} else {
 
 			// if there is no user with that email
@@ -161,23 +206,51 @@ exports.addvp = function(req, res, callback){
 				  
 				} 
 			}
-			
-
-			var y_m_d   = req.body.date + "T";
-			var start_t  = req.body.startTime + ":00Z";
-			var end_t  = req.body.endTime + ":00Z";
-			newVP.startTime = new Date(y_m_d + start_t);
-			newVP.endTime = new Date(y_m_d + end_t);
 
 			// save the vp
 			newVP.save(function(err) {
 				if (err)
 					throw(err);
-				return callback(null, newVP);
+				return callback(null, false);
 			});
 		}
 	});
-} 
+}
+
+exports.addShift = function(req, callback){
+	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
+		console.log('findOne started');
+		if (err) {
+			console.log("err when find volunteer position " + err);
+			return callback(err);
+		}
+
+		// check to see if theres already a vp with that name
+		if (!vp) {
+			//return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+			console.log("Position not found!");
+			return callback(null, false);
+		} else {
+
+			var y_m_d   = req.body.date + "T";
+			var start_t  = req.body.startTime + ":00Z";
+			var end_t  = req.body.endTime + ":00Z";
+
+			var shift = {startTime: new Date(y_m_d + start_t), 
+						 endTime: new Date(y_m_d + end_t), 
+						 isTaken: false};
+
+			vp.shifts.push(shift);
+			// save the vp
+			vp.save(function(err) {
+				if (err)
+					throw(err);
+				return callback(null, vp);
+			});
+		}
+	});
+
+}
 //exports.vpdata = mongoose.model('VolunteerPosition', vpSchema);
 
 
