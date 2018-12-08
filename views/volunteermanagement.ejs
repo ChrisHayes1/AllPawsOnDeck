@@ -42,18 +42,16 @@
                         <td>
                             <!-- TODO I feel like there is a better way to do this. Cant you just post within the function?-->
                             <form action="/updateStatus" method="post" id = "frmEditProfile">
-                                <div id = "setNewAppStatus"></div>
+                                <div id = "setNewAppStatus" hidden></div>
                             </form>
 
                             <div class="dropdown">
                                 <%= users[i].local.appStatus %>
                                 <button onclick="toggleDropdown('myDropdown-<%= i %>')" class="dropbtn">V</button>
                                 <div id="myDropdown-<%= i %>"  class="dropdown-content">
-                                    <button onclick="updateAppStatus('Pending', '<%= users[i].local.email %>')">Pending</button>
-                                    </br>
-                                    <button onclick="updateAppStatus('Approved', '<%= users[i].local.email %>')">Approved</button>
-                                    </br>
-                                    <button onclick="updateAppStatus('Denied', '<%= users[i].local.email %>')">Denied</button>
+                                    <button class = "EditDropdownButton" onclick="updateAppStatus('Pending', '<%= users[i].local.email %>')">Pending</button>
+                                    <button class = "EditDropdownButton" onclick="updateAppStatus('Approved', '<%= users[i].local.email %>')">Approved</button>
+                                    <button class = "EditDropdownButton" onclick="updateAppStatus('Denied', '<%= users[i].local.email %>')">Denied</button>
                                 </div>
                             </div>
                         </td>
@@ -93,7 +91,7 @@
                                 </p>
                         <%})%>
                     </ul>
-                    <div id = "setEmail"></div>
+                    <div id = "setEmail" hidden></div>
                 </form>
                 <div><button class = "EditProfileBtn" onclick="submitTrainings()">Add Trainings</button></div>
                 <br>
