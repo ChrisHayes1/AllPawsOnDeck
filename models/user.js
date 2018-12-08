@@ -62,6 +62,29 @@ userSchema.methods.validPassword = function(password) {
 var User = mongoose.model('User', userSchema);
 
 /**
+ * Updates app status
+ */
+exports.updateAppStatus = function(req, callback){
+    console.log("#_#_#_#_# Updating app status looking for " + req.body.email)
+    console.log("#_#_#_#_# New App Status =  " + req.body.newStatus)
+    this.getUserByEmail(req.body.email, function(err, user){
+        console.log("#_#_#_#_# runnning updateAppStatus with email found for " + user.local.email)
+        if(err){
+            return callback(err);
+        } else {
+            user.local.appStatus = req.body.newStatus;
+            // save the user - return true in callback
+            user.save(function(err) {
+                if (err)
+                    return callback(err);
+
+                return callback(null);                
+            });
+        }
+    });
+}
+
+/**
  * Removes a training from the users CompletedTraining list
  */
 exports.removeTraining = function(training, callback){
@@ -268,6 +291,7 @@ exports.isCoordinator = function(req, callback){
         }
 
         //user returned
+        console.log('isCoordinator about to return ' + result.local.isCoordinator)
         return callback(null, result.local.isCoordinator);
     });
 }
@@ -397,6 +421,7 @@ function AddNewUser(req, email, password, callback){
     newUser.local.completedTraining = false;
     newUser.local.userType = USER_TYPE_STANDARD;
     newUser.local.isCoordinator = false;
+    newUser.local.appStatus = 'Pending'
 
     // save the user
     console.log('abuot to save the user');

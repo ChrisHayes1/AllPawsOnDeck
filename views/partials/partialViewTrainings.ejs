@@ -1,0 +1,24 @@
+<% trainings.forEach(function(training) { %>
+  <form action="/deleteTrainings" method="POST" id = "frmRemoveTrainings">
+    <div id = "setTraining"></div>
+  </form>
+  <fieldset class = "ViewProfile">
+      <li> 
+        <b><%= training[0] %></b>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <i><% if (training[1].length > 0) { %>
+          <%=training[1] %> 
+          <%} else { %> 
+            No Description Provided
+          <% } %>
+        </i>
+      </li>
+      
+  </fieldset>
+  <br>
+<% }); %>
+
+
+
+

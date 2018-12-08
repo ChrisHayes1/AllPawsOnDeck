@@ -39,7 +39,24 @@
                     <tr>
                         <td><%= users[i].local.firstname %> <%= users[i].local.lastname %></td>
                         <td><%= users[i].local.userType %></td>
-                        <td><%= users[i].local.appStatus %></td>
+                        <td>
+                            <!-- TODO I feel like there is a better way to do this. Cant you just post within the function?-->
+                            <form action="/updateStatus" method="post" id = "frmEditProfile">
+                                <div id = "setNewAppStatus"></div>
+                            </form>
+
+                            <div class="dropdown">
+                                <%= users[i].local.appStatus %>
+                                <button onclick="toggleDropdown('myDropdown-<%= i %>')" class="dropbtn">V</button>
+                                <div id="myDropdown-<%= i %>"  class="dropdown-content">
+                                    <button onclick="updateAppStatus('Pending', '<%= users[i].local.email %>')">Pending</button>
+                                    </br>
+                                    <button onclick="updateAppStatus('Approved', '<%= users[i].local.email %>')">Approved</button>
+                                    </br>
+                                    <button onclick="updateAppStatus('Denied', '<%= users[i].local.email %>')">Denied</button>
+                                </div>
+                            </div>
+                        </td>
                         <td>
                             <% for(var c = 0; c < users[i].qualifiedPositions.length; c++) { %>
                                 <%= users[i].qualifiedPositions[c] %> 
@@ -127,8 +144,32 @@
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
             }
-        </script>
+
+            /* When the user clicks on the button, 
+            toggle between hiding and showing the dropdown content */
+            function toggleDropdown(mID) {
+                document.getElementById(mID).classList.toggle("show");
+            }
+
+            function updateAppStatus(newStatus, userEm){
+                
+                console.log("about to post");
+                document.getElementById("setNewAppStatus").innerHTML = "<input name='newStatus' type='text' value= '" + newStatus + "'/>" + "<input name='email' type='text' value= '" + userEm + "'/>";
+                document.getElementById("frmEditProfile").submit();
+                console.log("done with post");
+            }
+                </script>
         
 </article>
 </section>

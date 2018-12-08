@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+ 
+<head>
+    <%- include partials/head.ejs %>
+</head>
+
+<body>
+
+<header>
+    <%- include partials/header.ejs %>
+    <h1>All Trainings</h1>
+</header>
+
+<section>
+<nav>
+    <%- include partials/navMenu.ejs %>
+</nav>
+
+<article>
+    <h2>Available Trainings</h2>
+    <%- include partials/partialViewTrainings.ejs %>
+    
+</article>
+</section>
+
+<footer>
+    <%- include partials/footer.ejs %>
+</footer>
+
+</body>
+
+<script>
+    function submitChanges(){
+        console.log("about to post");
+        document.getElementById("frmPostTrainings").submit();
+        console.log("done with post");
+    }
+</script>
+
+
+</html>

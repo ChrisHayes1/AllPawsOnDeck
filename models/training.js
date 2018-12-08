@@ -42,7 +42,6 @@ exports.deleteTrainingByName = function(req, callback){
             });
         }
     });
-    
 }
 
 exports.GetTrainingList = function(callback){

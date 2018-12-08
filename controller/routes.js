@@ -210,7 +210,7 @@ module.exports = function(app, passport) {
         }
     });
 
-        //--------------
+    //--------------
     // Post to delete trainings
     //--------------
     app.post('/deleteVPositions', isLoggedIn, function (req, res) {
@@ -225,6 +225,20 @@ module.exports = function(app, passport) {
     app.post('/addpositionshift', isLoggedIn, function (req, res) {
         Position.addShift(req,function(err){
             res.redirect('/volunteerpositions');
+        });
+    });
+
+    app.get('/viewPositions', isLoggedIn, function (req, res) {
+        Training.GetTrainingList(function (mTraining) {
+            Position.GetPositionListDetailed(function (mPositions) {
+                res.render('viewPositions.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    positions: mPositions,
+                    trainings: mTraining,
+                    page: "viewPositions",
+                    message: req.flash('vpMessage')
+                });
+            });
         });
     });
 
@@ -272,6 +286,19 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/viewTrainings', isLoggedIn, function (req, res) {
+        Training.GetTrainingListWithDesc(function (mTraining) {
+            Position.GetPositionList(function (mPositions) {
+                res.render('viewTrainings.ejs', {
+                    user: req.user, // get the user out of session and pass to template
+                    positions: mPositions,
+                    trainings: mTraining,
+                    page: "viewTrainings"
+                });
+            });
+        });
+    });
+
     // **********************************
     // Volunteer management
     // **********************************
@@ -302,6 +329,17 @@ module.exports = function(app, passport) {
             res.redirect('/calendar');
         });
     });
+
+    app.post('/updateStatus', isLoggedIn, function (req, res) {
+        console.log('post /UpdateStatus')
+        console.log(req.body)
+        mUser.updateAppStatus(req, function(err){
+            if (err) console.log('updateStatus reported error ' + err)
+            res.redirect('/volunteermanagement');
+        });
+    });
+
+    
     // **********************************
     // LOGOUT 
     // **********************************
@@ -345,6 +383,23 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+
+//getting errors on this.  Will try to come back to it later.  Took it out for now.
+function isLoggedInCoord(req, res, next){
+    if (isLoggedIn) {
+        mUser.isCoordinator(req, function(err, result) {
+            if (err){
+                console.log("error response was " + err);
+                return next(err);
+            }
+            if (result == false) res.redirect('/');
+            console.log('isLoggedInCoord is about to return ' + result );
+            return next(null, result);
+        });
+    }
     res.redirect('/');
 }
 

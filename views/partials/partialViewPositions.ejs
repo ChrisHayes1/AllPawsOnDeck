@@ -1,0 +1,120 @@
+
+
+
+<% positions.forEach(function(position) { %>
+  <form action="/deleteVPositions" method="POST" id = "frmDeletePositions">
+    <div id = "setPosition"></div>
+  </form>
+  <fieldset class = "ViewProfile">
+    <li>
+      <b><%= position[0] %></b>
+      <i>
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if (position[1].length > 0) { %>
+          <%=position[1] %> 
+        <%} else { %> 
+          No Description Provided
+        <% } %>
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if (position[2].length > 0) { %>
+          <b>Required Trainings: </b>
+          <%=position[2] %> 
+        <%} else { %> 
+          No trainings required
+        <% } %>
+      </i>
+    </li>
+  </fieldset>
+  <br>
+
+  <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Add a shift to this postion:</p>
+          <div>
+              <form action="/addpositionshift" method="post" id = "frmEditProfile">
+                  <table>
+                    <tr>
+                        <th>Date in Year-Month-Day :</th>
+                        <th>
+                            <input class = "EditProfileInput" 
+                                name="date"
+                                type="text" >          
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Start Time in hh:mm :</th>
+                        <th>
+                            <input class = "EditProfileInput" 
+                                name="startTime"
+                                type="text" >          
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>End Time in hh:mm :</th>
+                        <th>
+                            <input class = "EditProfileInput" 
+                                name="endTime"
+                                type="text" >          
+                        </th>
+                    </tr>
+                  </table>
+                  <div id = "setPos"></div>
+              </form>
+              <div><button class = "EditProfileBtn" onclick="submitShift()">Submit</button></div>
+              <br>
+          </div>    
+      </div>
+  </div>
+
+<% }); %>
+ 
+
+<script>
+  
+    function submitPositions(SelectedPosition){
+        console.log('Submitting training for user ' + SelectedPosition);
+        document.getElementById("setPosition").innerHTML = "<input name='positionName' type='text' value= '" + SelectedPosition + "'/>";
+        console.log("about to post with setPosition = " + document.getElementById("setPosition").innerHTML);
+        document.getElementById("frmDeletePositions").submit();
+        console.log("done with delete");
+    }
+
+
+
+
+
+    var modal = document.getElementById('myModal');
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    var PositionName = '';
+
+    // When the user clicks the button, open the modal 
+    function setBtn(SelectedPosition) {
+        PositionName = SelectedPosition;
+        modal.style.display = "block";
+    }
+            
+    function submitShift(){
+        console.log('Submitting shift for position ' + PositionName);
+        document.getElementById("setPos").innerHTML = "<input name='positionName' type='text' value= '" + PositionName + "'/>";
+        console.log("about to post with setPosition = " + document.getElementById("setPos").innerHTML);
+        document.getElementById("frmEditProfile").submit();
+        console.log("done with post");
+        modal.style.display = "none";
+    }
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  
+  </script>
