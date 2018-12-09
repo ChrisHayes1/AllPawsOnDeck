@@ -38,7 +38,25 @@
                 <% for(var i = 0; i < users.length; i++) { %>
                     <tr>
                         <td><%= users[i].local.firstname %> <%= users[i].local.lastname %></td>
-                        <td><%= users[i].local.userType %></td>
+                        <td>
+                            <form action="/updateUserType" method="post" id = "frmUpdateUserType">
+                                <div id = "setNewUserType" hidden></div>
+                            </form>
+
+                            <div class="dropdown">
+                                    <% if(users[i].local.isCoordinator) { %>
+                                        Coordinator
+                                    <% } else { %>
+                                        Standard
+                                    <% } %> 
+                                <button onclick="toggleUTDropdown('myUTDropdown-<%= i %>')" class="dropbtn">V</button>
+                                <div id="myUTDropdown-<%= i %>"  class="dropdown-content">
+                                    <button class = "EditDropdownButton" onclick="updateUserType('Standard', '<%= users[i].local.email %>')">Standard</button>
+                                    <button class = "EditDropdownButton" onclick="updateUserType('Coordinator', '<%= users[i].local.email %>')">Coordinator</button>
+                                </div>
+                            </div>
+
+                        </td>
                         <td>
                             <!-- TODO I feel like there is a better way to do this. Cant you just post within the function?-->
                             <form action="/updateStatus" method="post" id = "frmEditProfile">
@@ -167,7 +185,21 @@
                 document.getElementById("frmEditProfile").submit();
                 console.log("done with post");
             }
-                </script>
+
+            /* When the user clicks on the button, 
+            toggle between hiding and showing the dropdown content */
+            function toggleUTDropdown(mID) {
+                document.getElementById(mID).classList.toggle("show");
+            }
+
+            function updateUserType(newUserType, userEm){
+                
+                console.log("about to post");
+                document.getElementById("setNewUserType").innerHTML = "<input name='newUserType' type='text' value= '" + newUserType + "'/>" + "<input name='email' type='text' value= '" + userEm + "'/>";
+                document.getElementById("frmUpdateUserType").submit();
+                console.log("done with post");
+            }
+        </script>
         
 </article>
 </section>

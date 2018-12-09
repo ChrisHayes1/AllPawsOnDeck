@@ -339,6 +339,16 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/updateUserType', isLoggedIn, function (req, res) {
+        console.log('post /UpdateStatus')
+        console.log(req.body)
+        mUser.updateIsCoordinator(req, function(err){
+            if (err) console.log('updateIsCoordinator reported error ' + err)
+            res.redirect('/volunteermanagement');
+        });
+    });
+    
+
     
     // **********************************
     // LOGOUT 
