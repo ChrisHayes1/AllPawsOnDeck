@@ -74,18 +74,20 @@
                             </div>
                         </td>
                         <td>
-                            <% for(var c = 0; c < users[i].qualifiedPositions.length; c++) { %>
-                                <%= users[i].qualifiedPositions[c] %> 
-                                <br>
-                            <% }; %>
+                            <ul>
+                                <% for(var c = 0; c < users[i].qualifiedPositions.length; c++) { %>
+                                    <li><%= users[i].qualifiedPositions[c] %> </li>
+                                <% }; %>
+                            </ul>
                         </td>
                         <td>
                             <button class = "EditProfileBtn"  id = "<%= i %>" onclick="setBtn('<%= users[i].local.email %>')">Add</button>
-                            <% for(var c = 0; c < users[i].completedTrainings.length; c++) { %>
-                                <%= users[i].completedTrainings[c] %> 
-                                <br>
-                            <% }; %>
-                            
+                            <ul>
+                                <% for(var c = 0; c < users[i].completedTrainings.length; c++) { %>
+                                    <li><%= users[i].completedTrainings[c] %> </li>
+                                    
+                                <% }; %>
+                            </ul>
                         </td>
                     </tr>
                 <% }; %>

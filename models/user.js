@@ -23,8 +23,6 @@ var userSchema = mongoose.Schema({
         isActive        : Boolean,
         appStatus       : String,
         isOrientationComplete: Boolean,
-        //completedTraining : Boolean,
-        userType     : String, //please use isCoordinator not userType, this needs to be removed but exists in certain locations right now
         isCoordinator   : Boolean
     },
     address : {
@@ -445,7 +443,6 @@ function AddNewUser(req, email, password, callback){
     newUser.local.firstname = req.body.firstName;
     newUser.local.lastname = req.body.lastName;
     newUser.local.completedTraining = false;
-    newUser.local.userType = USER_TYPE_STANDARD;
     newUser.local.isCoordinator = false;
     newUser.local.appStatus = 'Pending'
 

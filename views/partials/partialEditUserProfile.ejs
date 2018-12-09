@@ -13,6 +13,7 @@
                 <th>
                     <input class = "EditProfileInput" 
                         name="firstName"
+                        pattern="[A-Za-z]"
                         required
                         type="text" 
                         value= "<%= user.local.firstname %>">
@@ -23,6 +24,7 @@
                 <th>
                     <input class = "EditProfileInput" 
                         name="lastName"
+                        pattern="[A-Za-z]"
                         required
                         type="text" 
                         value= "<%= user.local.lastname %>">
@@ -34,6 +36,7 @@
                     <input class = "EditProfileInput" 
                         name="phoneNumber"
                         type="text" 
+                        pattern="\d{3}[\-]d{3}[\-]d{4}"
                         value= "<%= user.local.phoneNumber %>">
                 </th>
             </tr>
@@ -108,7 +111,7 @@
                             <th>
                                 <input name="day"
                                     class = "EditProfileInputSub" 
-                                    type="text" 
+                                    type=”number” min=”0” max=”31”
                                     value= <%= user.dob.day %>>
                                 
                             </th>
@@ -117,7 +120,7 @@
                             <th>
                                 <input name="month"
                                     class = "EditProfileInputSub" 
-                                    type="text" 
+                                    type=”number” min=”0” max=”12”
                                     value= <%= user.dob.month %>>
                                 
                             </th>
@@ -127,7 +130,7 @@
                             <th>
                                 <input name="year"
                                     class = "EditProfileInputSub" 
-                                    type="text" 
+                                    type=”number” min=”1901” max=”2080”
                                     value= <%= user.dob.year %>>
                                 
                             </th>

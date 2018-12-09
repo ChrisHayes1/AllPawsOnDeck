@@ -1,7 +1,11 @@
 <div id = "volunteerbuttons">
     <a href="/profile" id = "profile" class="NavMenuButton"> Profile</a>
-    <a href = "/application" id = "application" class = "NavMenuButton"> Application </a>
-    <a href="/calendar" id = "calendar" class= "NavMenuButton"> Calendar </a>
+    <% if (user.local.appStatus == 'Approved') { %>
+        <a href="/calendar" id = "calendar" class= "NavMenuButton"> Calendar </a>
+    <% } else { %>
+        <a href = "/application" id = "application" class = "NavMenuButton"> Application </a>
+    <% } %>
+    
     <a href="/viewTrainings" id = "viewTrainings" class= "NavMenuButton"> View Trainings </a>
     <a href="/viewPositions" id = "viewPositions" class= "NavMenuButton"> View Positions </a>
     <br><br>
@@ -27,7 +31,6 @@
 
 <script>
 
-var userType = '<%= user.local.userType %>';
 var isCoordinator =   '<%=user.local.isCoordinator %>';
 if (isCoordinator == 'false') {
     isVolunteer = true;

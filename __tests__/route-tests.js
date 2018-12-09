@@ -109,7 +109,7 @@ function loginUser(correct) {
             newUser.local.firstname = 'Test';
             newUser.local.lastname = 'Tester';
             newUser.local.completedTraining = false;
-            newUser.local.userType = "standard";
+            newUser.local.isCoordinator = false;
 
             // save the user
             newUser.save(function(err) {
