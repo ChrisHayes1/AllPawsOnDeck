@@ -33,12 +33,12 @@
       <!-- Modal content -->
       <div class="modal-content">
           <span class="close">&times;</span>
-          <p>Add a shift to this postion:</p>
+          <p>Add a shift to this postion: <span id = "warningMeg" style="color:red"></span></p>
           <div>
               <form action="/addpositionshift" method="post" id = "frmEditProfile">
                   <table>
                     <tr>
-                        <th>Date in Year-Month-Day :</th>
+                        <th>Date in yyyy-mm-dd :</th>
                         <th>
                             <input class = "EditProfileInput" 
                                 name="date"
@@ -101,11 +101,27 @@
             
     function submitShift(){
         console.log('Submitting shift for position ' + PositionName);
-        document.getElementById("setPos").innerHTML = "<input name='positionName' type='text' value= '" + PositionName + "'/>";
-        console.log("about to post with setPosition = " + document.getElementById("setPos").innerHTML);
-        document.getElementById("frmEditProfile").submit();
-        console.log("done with post");
-        modal.style.display = "none";
+        if (document.forms["frmEditProfile"]["date"].value == '' ||
+            document.forms["frmEditProfile"]["startTime"].value == '' ||
+            document.forms["frmEditProfile"]["endTime"].value == '') {
+            document.getElementById("warningMeg").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invalid Input";
+        } else {
+            var y_m_d   = document.forms["frmEditProfile"]["date"].value + "T";
+            var start_t  = document.forms["frmEditProfile"]["startTime"].value + ":00Z";
+            var end_t  = document.forms["frmEditProfile"]["endTime"].value + ":00Z";
+            var timestamp1 = Date.parse(y_m_d + start_t);
+            var timestamp2 = Date.parse(y_m_d + end_t);
+            if (!isNaN(timestamp1) && !isNaN(timestamp2) && timestamp1 < timestamp2) {
+                document.getElementById("setPos").innerHTML = "<input name='positionName' type='text' value= '" + PositionName + "'/>";
+                console.log("about to post with setPosition = " + document.getElementById("setPos").innerHTML);
+                document.getElementById("frmEditProfile").submit();
+                console.log("done with post");
+                modal.style.display = "none"; 
+            } else {
+                document.getElementById("warningMeg").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Incorrect Date format";
+            }
+        }
+         
     }
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
