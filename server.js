@@ -28,21 +28,9 @@ var session      = require('express-session');
 //Added by Todd
 var path = require('path');
 
-//var configDB = require('./config/database.js');
 
-// // configuration ===============================================================
-// console.log("Connecting to mongose");
-// mongoose.connect('mongodb://myUserAdmin:abc123@127.0.0.1:27017', { useNewUrlParser: true }, err=> {
-//     if(err) {
-//         console.log('connection to mongo.db threw the following error ' + err);
-//     } else {
-//         console.log('Connection to mongo.db succesful')
-//     }
-
-// }); // connect to our database
-
-//Use this address for local database:   'mongodb://localhost:27017/apodDB'
-mongoose.connect('mongodb://jinglin:abc123456@ds015953.mlab.com:15953/apod', { useNewUrlParser: true }, err=> {
+//Use this address for remote database:  'mongodb://jinglin:abc123456@ds015953.mlab.com:15953/apod' 
+mongoose.connect('mongodb://localhost:27017/apodDB', { useNewUrlParser: true }, err=> {
     if(err) {
         console.log('connection to mongo.db threw the following error ' + err);
     } else {

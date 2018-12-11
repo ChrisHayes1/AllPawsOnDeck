@@ -335,7 +335,7 @@ legend {
   margin-left : 5px;
   color: black;
   background-color: white;
-  z-index: 1
+  z-index: 0
 }
 
 /* Dropdown button on hover & focus */

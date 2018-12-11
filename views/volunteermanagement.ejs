@@ -59,7 +59,7 @@
                         </td>
                         <td>
                             <!-- TODO I feel like there is a better way to do this. Cant you just post within the function?-->
-                            <form action="/updateStatus" method="post" id = "frmEditProfile">
+                            <form action="/updateStatus" method="post" id = "frmUpdateAppStatus">
                                 <div id = "setNewAppStatus" hidden></div>
                             </form>
 
@@ -102,7 +102,7 @@
             <span class="close">&times;</span>
             <p>Select the trainings you would like to add to the user</p>
             <div>
-                <form action="/volunteermanagement" method="post" id = "frmEditProfile">
+                <form action="/volunteermanagement" method="post" id = "frmAddTrainings">
                     <ul>
                         <% trainings.forEach((training)=>{ %>
                                 <p><%=training%>
@@ -148,7 +148,7 @@
                 console.log('Submitting training for user ' + UserEmail);
                 document.getElementById("setEmail").innerHTML = "<input name='email' type='text' value= '" + UserEmail + "'/>";
                 console.log("about to post with setEmail = " + document.getElementById("setEmail").innerHTML);
-                document.getElementById("frmEditProfile").submit();
+                document.getElementById("frmAddTrainings").submit();
                 console.log("done with post");
                 modal.style.display = "none";
             }
@@ -184,7 +184,7 @@
                 
                 console.log("about to post");
                 document.getElementById("setNewAppStatus").innerHTML = "<input name='newStatus' type='text' value= '" + newStatus + "'/>" + "<input name='email' type='text' value= '" + userEm + "'/>";
-                document.getElementById("frmEditProfile").submit();
+                document.getElementById("frmUpdateAppStatus").submit();
                 console.log("done with post");
             }
 

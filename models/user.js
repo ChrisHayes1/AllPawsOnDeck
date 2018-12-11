@@ -92,7 +92,7 @@ exports.updateAppStatus = function(req, callback){
     console.log("#_#_#_#_# Updating app status looking for " + req.body.email)
     console.log("#_#_#_#_# New App Status =  " + req.body.newStatus)
     this.getUserByEmail(req.body.email, function(err, user){
-        console.log("#_#_#_#_# runnning updateAppStatus with email found for " + user.local.email)
+        //console.log("#_#_#_#_# runnning updateAppStatus with email found for " + user.local.email)
         if(err){
             return callback(err);
         } else {
