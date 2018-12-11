@@ -15,7 +15,7 @@
 // get all the tools we need
 var express  = require('express');
 var app      = express();
-var port     = 3001 //process.env.PORT || 80;
+var port     = 8080 //process.env.PORT || 80;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -41,7 +41,8 @@ var path = require('path');
 
 // }); // connect to our database
 
-mongoose.connect('mongodb://localhost:27017/apodDB', { useNewUrlParser: true }, err=> {
+//Use this address for local database:   'mongodb://localhost:27017/apodDB'
+mongoose.connect('mongodb://jinglin:abc123456@ds015953.mlab.com:15953/apod', { useNewUrlParser: true }, err=> {
     if(err) {
         console.log('connection to mongo.db threw the following error ' + err);
     } else {
