@@ -54,26 +54,7 @@ exports.GetEvents = function (hasUser, callback) {
         }
 		var events = [];
 		console.log('Shifts has a length of ' + shifts.length);
-		// for (var shift in shifts){
-		// 	VolPos.getPositionNameByID(shift.positions_id, function(err, pName) {
-		// 		console.log('Checking position name');
-		// 		// if there are any errors, return the error before anything else
-		// 		if (err){
-		// 			console.log("error on shifts.forEach : " + err);
-		// 			return callback(err);
-		// 		}
-		// 		console.log('About to add id ' + shift._id);
-		// 		console.log('About to add position ' + pName);
-		// 		var event = {
-		// 			"id": shift._id,
-		// 			"title": pName,
-		// 			"start": shift.startTime,
-		// 			"end": shift.endTime
-		// 		};
-		// 		events.push(event);
-				
-		// 	});
-		// }
+
 		var eventsRun = 0;
 		shifts.forEach(function (shift) {
 			VolPos.getPositionNameByID(shift.positions_id, function(err, pName) {

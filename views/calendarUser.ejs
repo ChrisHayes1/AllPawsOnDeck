@@ -4,6 +4,33 @@
 
   <head>
     <%- include partials/head.ejs %>
+    <script>
+      <% var cleanEvents = new Array() %>
+
+      function ColorEvents() {
+
+        console.log("Calling ColorEvents");
+        <% for(var i=0; i < events.length; i++) { %>
+            <% var tempEvent = events[i] %>
+            <% if(user.qualifiedPositions.includes(events[i].title)){ %>
+              <% if(events[i].user ==  null){ %>
+                <% tempEvent.color = '#99b27f ' %>
+              <% } else if(events[i].user == user.id){ %>
+                <% tempEvent.color = '#e79541' %>
+              <% } else {%>
+                <% tempEvent.backgroundColor = 'dimgrey' %>
+                <% tempEvent.textColor = 'Maroon' %>
+                <% tempEvent.borderColor = 'darkRed' %>
+              <% } %>
+            <% } else {%>
+              <% tempEvent.backgroundColor = 'dimgrey' %>
+              <% tempEvent.textColor = 'lightgrey' %>
+              <% tempEvent.borderColor = 'lightgrey' %>
+            <% } %>
+            <% cleanEvents.push(events[i]) %>
+          <% } %>
+      }
+    </script>
   </head>
 
   <body>
@@ -29,14 +56,42 @@
                       </th>
                       <th id = "currentSel">
                         <fieldset>
-                          Show Available Events
+                          Show All Events
                         </fieldset>
                       </th>
                       <th>
-                        <button onclick="toggleDropdown()" class="dropbtn">V</button>
-                        <div id="myDropdown"  class="dropdown-content">
+                        <button onclick="toggleDropdown('myFilterDropdown')" class="dropbtn">V</button>
+                        <div id="myFilterDropdown"  class="dropdown-content">
+                            <button class = "EditDropdownButton" onclick="updateCalFilter('Show All Events')">Show All Events</button>
                             <button class = "EditDropdownButton" onclick="updateCalFilter('Show Available Events')">Show Available Events</button>
                             <button class = "EditDropdownButton" onclick="updateCalFilter('Show My Events')">Show My Events</button>
+                        </div>
+                      </th>
+                    </tr>
+                  </table>
+              </div>
+            </th>
+            <th>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div class="dropdown filterList">
+                  <table>
+                    <tr>
+                      <th>
+                        Show Positions: 
+                      </th>
+                      <th id = "currentPos">
+                        <fieldset>
+                          Show All Positions
+                        </fieldset>
+                      </th>
+                      <th>
+                        <button onclick="toggleDropdown('myPosDropdown')" class="dropbtn">V</button>
+                        <div id="myPosDropdown"  class="dropdown-content">
+                            <button class = "EditDropdownButton" onclick="updatePostFilter('Show All Positions')">Show All Positions</button>
+                            <button class = "EditDropdownButton" onclick="updatePostFilter('Show Qualified Positions')">Show Qualified Positions</button>
+                            <% for(var f = 0; f < user.qualifiedPositions.length; f++) {%>
+                              <button class = "EditDropdownButton" onclick="updatePostFilter('<%= user.qualifiedPositions[f] %>')"><%= user.qualifiedPositions[f] %></button>
+                            <% } %>
                         </div>
                       </th>
                     </tr>
@@ -58,19 +113,69 @@
 
 
 <script>
-  function toggleDropdown() {
-      document.getElementById('myDropdown').classList.toggle("show");
+
+  function toggleDropdown(mID) {
+      document.getElementById(mID).classList.toggle("show");
   }
 
   function updateCalFilter(newValue){
+    renderCal(newValue);
+  }
+
+  function renderCal(newValue) {
+    ColorEvents();
     document.getElementById("currentSel").innerHTML = '<fieldset>' + newValue + '</fieldset>';
-    <% var newEvents = new Array()%>
-    <% for(var i=0; i < events.length; i++) { %>
-        <% if(events[i].user == user.id){ %>
-          <% newEvents.push(events[i]) %>
-        <% } %>
-    <% } %>
-    document.getElementById("theevents").innerHTML = '<%= JSON.stringify(newEvents) %>';
+    console.log('New value is ' + newValue);
+    if(newValue == 'Show My Events'){
+      console.log('Running showmy events');
+      <% var newEvents = new Array()%>
+      <% for(var i=0; i < cleanEvents.length; i++) { %>
+          <% if(cleanEvents[i].user == user.id){ %>
+            <% newEvents.push(cleanEvents[i]) %>
+          <% } %>
+      <% } %>
+      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(newEvents) %>';
+    } else if(newValue == 'Show Available Events'){
+      console.log('Running showmy events');
+      <% var openEvents = new Array()%>
+      <% for(var i=0; i < cleanEvents.length; i++) { %>
+          <% if(cleanEvents[i].user == null && user.qualifiedPositions.includes(events[i].title)){ %>
+            <% openEvents.push(cleanEvents[i]) %>
+          <% } %>
+      <% } %>
+      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(openEvents) %>';
+    } else {
+      console.log('Running show all events');
+      <% var oldEvents = cleanEvents%>
+      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(oldEvents) %>';
+    }
+    reRender();
+  }
+
+
+  function updatePostFilter(newValue){
+    document.getElementById("currentPos").innerHTML = '<fieldset>' + newValue + '</fieldset>';
+    //renderCalPos(newValue);
+  }
+
+  function renderCalPos(newValue) {
+    ColorEvents();
+    console.log('New value is ' + newValue);
+    if(newValue == 'Show Qualified Positions'){
+      console.log('Running showmy pos');
+      <% var qualEvents = new Array()%>
+      <% for(var i=0; i < cleanEvents.length; i++) { %>
+          <% if(user.qualifiedPositions.includes(events[i].title)){ %>
+            <% qualEvents.push(cleanEvents[i]) %>
+          <% } %>
+      <% } %>
+      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(qualEvents) %>';
+    } else if(newValue == 'Show All Positions'){
+      console.log('Running show all events');
+      <% var oldEvents = cleanEvents%>
+      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(oldEvents) %>';
+    }
+  
     reRender();
   }
 

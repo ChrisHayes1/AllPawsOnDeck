@@ -556,20 +556,20 @@ a.fc-more:hover {
   /* rows and cells that are hidden because of a "more" link */
   display: none; }
 
-/* popover that appears when "more" link is clicked */
+/* popover that appears when "more" lick is clicked */
 .fc-day-grid .fc-row {
   z-index: 1;
-  /* make the "more" popover one higher than this */ }
+  /* make the "more" popover one highec than this */ }
 
 .fc-more-popover {
   z-index: 2;
   width: 220px; }
 
-.fc-more-popover .fc-event-container {
+.fc-more-popover .fc-event-container {c
   padding: 10px; }
 
 /* Now Indicator
---------------------------------------------------------------------------------------------------*/
+--------------------------------------c-----------------------------------------------------------*/
 .fc-now-indicator {
   position: absolute;
   border: 0 solid red; }
@@ -1292,3 +1292,12 @@ be a descendant of the grid when it is being dragged.
 .fc-unthemed .fc-list-empty {
   /* theme will provide own background */
   background-color: #eee; }
+
+
+ .greenEvent {
+    background-color:#00FF00;
+}
+
+.redEvent {
+    background-color:#FF0000;
+}
