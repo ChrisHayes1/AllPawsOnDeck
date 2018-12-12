@@ -6,16 +6,28 @@ var vpSchema = mongoose.Schema({
 	roleDescription : String,
 	trainings       : [String],
 
-	shifts      : [ {
-		startTime: 		Date,
-		endTime:		Date,
-		isTaken:  Boolean
-	} ]	
+	// shifts      : [ {
+	// 	startTime: 		Date,
+	// 	endTime:		Date,
+	// 	isTaken:  Boolean
+	// } ]	
 });
 
 var positions = mongoose.model('VolunteerPosition', vpSchema);
 
 
+exports.getPositionNameByID = function(id, callback){
+	console.log('Attempting to find pName for id ' + id );
+	positions.findOne({'id':id}, function(err, position) {
+		if (err) return callback(err);
+		if (position){
+			console.log('about to return name ' + position.positionName);
+			return  callback(err, position.positionName);
+		} else {
+			return callback('');
+		}
+	 });
+}
 /**
  * Deletes the training sent in if it exists. 
  */
@@ -67,12 +79,6 @@ exports.removeTraining = function(training, callback){
 };
 
 exports.GetPositionList = function (callback) {
-    // var mTraining = [
-    //     { name: 'Bloody Mary'},
-    //     { name: 'Martini' },
-    //     { name: 'Scotch' }
-    // ];
-
     positions.find({}, function (err, positions) {
         var positionList = [];
 
@@ -89,7 +95,7 @@ exports.GetPositionListDetailed = function (callback) {
         var positionList = [];
 
         positions.forEach(function (position) {
-			var mList = [position.positionName, position.roleDescription, position.trainings];
+			var mList = [position.positionName, position.roleDescription, position.trainings, position._id];
 			positionList.push(mList);
             //positionList.push(position.positionName);
         });
@@ -137,31 +143,7 @@ exports.GetQualifiedPositions = function (trainingList, callback) {
 }
 
 
-exports.GetEvents = function (callback) {
-	positions.find({}, function (err, positions) {
-		var events = []
-		positions.forEach(function (position) {
-			position.shifts.forEach(function (shift) {
-				if (shift.isTaken == false) {
-					var event = {
-						"id": position._id,
-						"title": position.positionName,
-						"start": shift.startTime,
-						"end": shift.endTime
-					}
-					events.push(event);
-				}
-			});
-			//var manager = "Jane Doe";
-			//sitePersonel.employees[0].manager = manager;
-			//console.log(sitePersonel);
 
-			//console.log(JSON.stringify(sitePersonel));
-		});
-		console.log(events);
-		return callback(events);
-	});
-}
 
 var VPData = mongoose.model('VolunteerPosition', vpSchema);
 
@@ -217,40 +199,7 @@ exports.addvp = function(req, res, callback){
 	});
 }
 
-exports.addShift = function(req, callback){
-	VPData.findOne({'positionName': req.body.positionName}, function(err, vp) {
-		console.log('findOne started');
-		if (err) {
-			console.log("err when find volunteer position " + err);
-			return callback(err);
-		}
 
-		// check to see if theres already a vp with that name
-		if (!vp) {
-			//return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-			console.log("Position not found!");
-			return callback(null, false);
-		} else {
-
-			var y_m_d   = req.body.date + "T";
-			var start_t  = req.body.startTime + ":00Z";
-			var end_t  = req.body.endTime + ":00Z";
-
-			var shift = {startTime: new Date(y_m_d + start_t), 
-						 endTime: new Date(y_m_d + end_t), 
-						 isTaken: false};
-
-			vp.shifts.push(shift);
-			// save the vp
-			vp.save(function(err) {
-				if (err)
-					throw(err);
-				return callback(null, vp);
-			});
-		}
-	});
-
-}
 //exports.vpdata = mongoose.model('VolunteerPosition', vpSchema);
 
 

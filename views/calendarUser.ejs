@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <%- include partials/head.ejs %>
+  </head>
+
+  <body>
+    <header>
+        <%- include partials/header.ejs %>
+      <h1>Volunteer Oppurtunities</h1>
+    </header>
+    <section>
+      <nav>
+          <%- include partials/navMenu.ejs %>
+      </nav>
+      <article>
+        <table>
+          <tr>
+            <th> <h2> My Calendar</h2></th>
+            <th>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div class="dropdown filterList">
+                  <table>
+                    <tr>
+                      <th>
+                        Filter By: 
+                      </th>
+                      <th id = "currentSel">
+                        <fieldset>
+                          Show Available Events
+                        </fieldset>
+                      </th>
+                      <th>
+                        <button onclick="toggleDropdown()" class="dropbtn">V</button>
+                        <div id="myDropdown"  class="dropdown-content">
+                            <button class = "EditDropdownButton" onclick="updateCalFilter('Show Available Events')">Show Available Events</button>
+                            <button class = "EditDropdownButton" onclick="updateCalFilter('Show My Events')">Show My Events</button>
+                        </div>
+                      </th>
+                    </tr>
+                  </table>
+              </div>
+            </th>
+          </tr>
+        </table>
+        <%- include partials/partialCalendar.ejs %>
+      </article>
+      
+    </section>
+    <footer>
+        <%- include partials/footer.ejs %>
+    </footer>
+  </body>
+  
+</html>
+
+
+<script>
+  function toggleDropdown() {
+      document.getElementById('myDropdown').classList.toggle("show");
+  }
+
+  function updateCalFilter(newValue){
+    document.getElementById("currentSel").innerHTML = '<fieldset>' + newValue + '</fieldset>';
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+  }
+</script>

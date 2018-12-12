@@ -377,7 +377,7 @@ exports.AddUserTraining = function(req, callback){
                         console.log('Adding the training ' + key + ' to the user ' + result.local.email );
                         result.completedTrainings.push(key);
                     } else {
-                        console.log('The user ' + req.body.email + ' already contains the training ' + key)
+                        console.log('The user ' + req.body.email + ' already contains the training ' + key);
                     }
                 } 
             }

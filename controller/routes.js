@@ -7,7 +7,7 @@
 var mUser = require('../models/user');
 var Training = require('../models/training');
 var Position = require('../models/VolunteerPositions');
-var ScheduledShifts = require('../models/scheduledShifts');
+var Shifts = require('../models/shifts');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -223,7 +223,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/addpositionshift', isLoggedIn, function (req, res) {
-        Position.addShift(req,function(err){
+        Shifts.addShift(req,function(err){
             res.redirect('/volunteerpositions');
         });
     });
@@ -323,12 +323,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/signupuserforevent', isLoggedIn, function (req, res) {
-        console.log(req.body)
-        ScheduledShifts.addss(req, res, function() {
-            res.redirect('/calendar');
-        });
-    });
+    
 
     app.post('/updateStatus', isLoggedIn, function (req, res) {
         console.log('post /UpdateStatus')
@@ -365,53 +360,71 @@ module.exports = function(app, passport) {
 
 
     app.get('/calendar', isLoggedIn, function(req, res) {
-        Position.GetEvents(function (mEvents) {
-            res.render('calendar.ejs', {
+        Shifts.GetEvents(null, function (err, mEvents) {
+            res.render('calendarUser.ejs', {
                 user: req.user,
                 events: mEvents,
                 page: "calendar"
-            })
-        })
+            });
+        });
     });
 
     app.get('/manageCalendar', isLoggedIn, function(req, res) {
-        Position.GetEvents(function (mEvents) {
-            res.render('calendar.ejs', {
+        Shifts.GetEvents(null, function (err, mEvents) {
+            res.render('calendarUser.ejs', {
                 user: req.user,
                 events: mEvents,
                 page: "managecalendar"
-            })
-        })
+            });
+        });
     });
+
+    app.post('/signupuserforevent', isLoggedIn, function (req, res) {
+        console.log("#_#_#_#_# running signUpForEvent");
+        console.log("Req Body = <" + req.body + ">");
+
+        Shifts.AddSchedShift(req, res, function() {
+            mUser.isCoordinator(req, function(err, result) {
+                if (err)  console.log("error response was " + err);
+                if (result) {
+                    res.redirect('/manageCalendar');
+                } else {
+                    res.redirect('/calendar');
+                }
+            });
+        });
+    });
+    
+    // route middleware to make sure a user is logged in
+    function isLoggedIn(req, res, next) {
+    
+        // if user is authenticated in the session, carry on 
+        if (req.isAuthenticated())
+            return next();
+    
+        // if they aren't redirect them to the home page
+        res.redirect('/');
+    }
+    
+    
+    //getting errors on this.  Will try to come back to it later.  Took it out for now.
+    function isLoggedInCoord(req, res, next){
+        if (isLoggedIn) {
+            mUser.isCoordinator(req, function(err, result) {
+                if (err){
+                    console.log("error response was " + err);
+                    return next(err);
+                }
+                if (result == false) res.redirect('/');
+                console.log('isLoggedInCoord is about to return ' + result );
+                return next(null, result);
+            });
+        }
+        res.redirect('/');
+    }
 };
 
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
 
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}
-
-
-//getting errors on this.  Will try to come back to it later.  Took it out for now.
-function isLoggedInCoord(req, res, next){
-    if (isLoggedIn) {
-        mUser.isCoordinator(req, function(err, result) {
-            if (err){
-                console.log("error response was " + err);
-                return next(err);
-            }
-            if (result == false) res.redirect('/');
-            console.log('isLoggedInCoord is about to return ' + result );
-            return next(null, result);
-        });
-    }
-    res.redirect('/');
-}
 
 
 // **********************************

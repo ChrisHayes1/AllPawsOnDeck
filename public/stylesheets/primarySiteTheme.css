@@ -383,3 +383,9 @@ legend {
   background-color: white;
   z-index: 1
 }
+
+/* filter list */
+.filterList{
+  display: relative;
+  float: right;
+}

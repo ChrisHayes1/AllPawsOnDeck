@@ -2,12 +2,13 @@
 
 
 <% positions.forEach(function(position) { %>
+    console.log('Position ID is ' + '<%= position[3]%>')
   <form action="/deleteVPositions" method="POST" id = "frmDeletePositions">
     <div id = "setPosition"></div>
   </form>
   <fieldset class = "ViewProfile">
     <li>
-      <button class = "EditProfileBtn"   onclick="setBtn('<%= position[0]%>')">Add shift</button>
+      <button class = "EditProfileBtn"   onclick="setBtn('<%= position[3]%>')">Add shift</button>
       <button class = "EditProfileBtnCancel"  onclick="submitPositions('<%= position[0]%>')">Delete</button>
       <b><%= position[0] %></b>
       <i>
@@ -91,16 +92,16 @@
     
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-    var PositionName = '';
+    var PositionID = '';
 
     // When the user clicks the button, open the modal 
-    function setBtn(SelectedPosition) {
-        PositionName = SelectedPosition;
+    function setBtn(SelectedPosID) {
+        PositionID = SelectedPosID;
         modal.style.display = "block";
     }
             
     function submitShift(){
-        console.log('Submitting shift for position ' + PositionName);
+        console.log('Submitting shift for position ' + PositionID);
         if (document.forms["frmEditProfile"]["date"].value == '' ||
             document.forms["frmEditProfile"]["startTime"].value == '' ||
             document.forms["frmEditProfile"]["endTime"].value == '') {
@@ -112,7 +113,7 @@
             var timestamp1 = Date.parse(y_m_d + start_t);
             var timestamp2 = Date.parse(y_m_d + end_t);
             if (!isNaN(timestamp1) && !isNaN(timestamp2) && timestamp1 < timestamp2) {
-                document.getElementById("setPos").innerHTML = "<input name='positionName' type='text' value= '" + PositionName + "'/>";
+                document.getElementById("setPos").innerHTML = "<input name='positionID' type='text' value= '" + PositionID + "'/>";
                 console.log("about to post with setPosition = " + document.getElementById("setPos").innerHTML);
                 document.getElementById("frmEditProfile").submit();
                 console.log("done with post");
