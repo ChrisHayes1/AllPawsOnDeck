@@ -383,7 +383,7 @@ module.exports = function(app, passport) {
         console.log("#_#_#_#_# running signUpForEvent");
         console.log("Req Body = <" + req.body + ">");
 
-        Shifts.AddSchedShift(req, res, function() {
+        Shifts.AddSchedShift(req, res, function(err) {
             mUser.isCoordinator(req, function(err, result) {
                 if (err)  console.log("error response was " + err);
                 if (result) {

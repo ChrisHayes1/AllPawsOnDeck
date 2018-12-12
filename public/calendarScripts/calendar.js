@@ -11,6 +11,8 @@ $(function() {
   
   /* --------------------------initialize calendar-------------------------- */
   var initializeCalendar = function() {
+    console.log('About to RENDER events ' + JSON.parse(document.getElementById('theevents').innerHTML));
+    console.log('About to RENDER events ' + document.getElementById('theevents').innerHTML);
     $('.cal').fullCalendar({
         editable: true,
         eventLimit: true, // allow "more" link when too many events
@@ -18,14 +20,22 @@ $(function() {
         slotEventOverlap: false,
         events: JSON.parse(document.getElementById('theevents').innerHTML),
         eventBackgroundColor: '#337ab7',
-        editable: false,
+        editable: true,
         height: screen.height - 160,
         timezone: 'America/Chicago',
         eventClick: function(calEvent, jsEvent, view) {
           signUpForEvent(calEvent);
-        } 
+        },
       });
   }
+
+  var reRender = function() {
+    console.log('About to RERENDER events ' + JSON.parse(document.getElementById('theevents').innerHTML));
+    console.log('About to RERENDER events ' + document.getElementById('theevents').innerHTML);
+    $('.cal').fullCalendar('removeEvents');
+    $('.cal').fullCalendar('addEventSource', JSON.parse(document.getElementById('theevents').innerHTML));
+  }
+
   var getCalendars = function() {
     $cal = $('.cal');
   }

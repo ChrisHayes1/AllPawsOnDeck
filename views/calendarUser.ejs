@@ -64,6 +64,14 @@
 
   function updateCalFilter(newValue){
     document.getElementById("currentSel").innerHTML = '<fieldset>' + newValue + '</fieldset>';
+    <% var newEvents = new Array()%>
+    <% for(var i=0; i < events.length; i++) { %>
+        <% if(events[i].user == user.id){ %>
+          <% newEvents.push(events[i]) %>
+        <% } %>
+    <% } %>
+    document.getElementById("theevents").innerHTML = '<%= JSON.stringify(newEvents) %>';
+    reRender();
   }
 
   // When the user clicks anywhere outside of the modal, close it
@@ -80,3 +88,4 @@
     }
   }
 </script>
+

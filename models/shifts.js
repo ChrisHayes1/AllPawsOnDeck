@@ -111,7 +111,7 @@ exports.GetEvents = function (hasUser, callback) {
 exports.AddSchedShift=function(req,res,callback){
     console.log(req.body.event);
     console.log(req.user.id);
-    ShiftData.findOne({'user_id':req.user.id,'positions_id':req.body.event},function(err,vp){
+    ShiftData.findOne({'_id':req.body.event},function(err,fShift){
     // if there are any errors, return the error
 		console.log('findOne started');
 		if (err) {
@@ -119,22 +119,27 @@ exports.AddSchedShift=function(req,res,callback){
 			return callback(err);
         }
         // check to see if theres already a vp with that name
-		if (vp) {
-			console.log("the position has already signed by the user");
-			return callback(null, false);
-		} else {
-            //if the user has not signed the selected positions
+		if (!fShift) {
+			console.log("shift not found");
+			return callback(new Error('Shift not found'));
+		}
+		console.log("userID = " + fShift.user_id);
+		if (fShift.user_id === undefined || fShift.user_id === null) {
+			//if the user has not signed the selected positions
             //add the record 
-            var newSS=new ShiftData();
-            newSS.user_id=req.user.id;
-            newSS.positions_id=req.body.event;
+            
+            fShift.user_id=req.user.id;
 
             // save the ss
-			newSS.save(function(err) {
+			fShift.save(function(err) {
 				if (err)
 					throw(err);
-				return callback(null, newSS);
+				return callback(null);
 			});
+		} else {
+			console.log("the position has already been signed up for");
+			return callback(null);
+            
         }
     });
 }

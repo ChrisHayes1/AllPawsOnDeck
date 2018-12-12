@@ -18,7 +18,7 @@ var positions = mongoose.model('VolunteerPosition', vpSchema);
 
 exports.getPositionNameByID = function(id, callback){
 	console.log('Attempting to find pName for id ' + id );
-	positions.findOne({'id':id}, function(err, position) {
+	positions.findOne({'_id':id}, function(err, position) {
 		if (err) return callback(err);
 		if (position){
 			console.log('about to return name ' + position.positionName);
