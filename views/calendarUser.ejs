@@ -6,7 +6,9 @@
     <%- include partials/head.ejs %>
     <script>
       <% var cleanEvents = new Array() %>
-
+      <% var currentEvents = new Array() %>
+      
+      console.log('userqp')
       function ColorEvents() {
 
         console.log("Calling ColorEvents");
@@ -29,6 +31,7 @@
             <% } %>
             <% cleanEvents.push(events[i]) %>
           <% } %>
+          <% currentEvents = cleanEvents %>
       }
     </script>
   </head>
@@ -114,66 +117,88 @@
 
 <script>
 
+  var clientEvents = <%- JSON.stringify(events) %>;
+  var userQP = <%- JSON.stringify(user.qualifiedPositions) %>;
+
   function toggleDropdown(mID) {
       document.getElementById(mID).classList.toggle("show");
   }
 
   function updateCalFilter(newValue){
+    <% currentEvents = cleanEvents %>
+    document.getElementById("currentSel").innerHTML = '<fieldset>' + newValue + '</fieldset>';
     renderCal(newValue);
+    console.log('inner text = ' + document.getElementById("currentPos").innerText)
+    renderCalPos(document.getElementById("currentPos").innerText);
   }
 
   function renderCal(newValue) {
     ColorEvents();
-    document.getElementById("currentSel").innerHTML = '<fieldset>' + newValue + '</fieldset>';
+    
     console.log('New value is ' + newValue);
     if(newValue == 'Show My Events'){
       console.log('Running showmy events');
       <% var newEvents = new Array()%>
-      <% for(var i=0; i < cleanEvents.length; i++) { %>
-          <% if(cleanEvents[i].user == user.id){ %>
-            <% newEvents.push(cleanEvents[i]) %>
+      <% for(var i=0; i < currentEvents.length; i++) { %>
+          <% if(currentEvents[i].user == user.id){ %>
+            <% newEvents.push(currentEvents[i]) %>
           <% } %>
       <% } %>
       document.getElementById("theevents").innerHTML = '<%= JSON.stringify(newEvents) %>';
     } else if(newValue == 'Show Available Events'){
       console.log('Running showmy events');
       <% var openEvents = new Array()%>
-      <% for(var i=0; i < cleanEvents.length; i++) { %>
-          <% if(cleanEvents[i].user == null && user.qualifiedPositions.includes(events[i].title)){ %>
-            <% openEvents.push(cleanEvents[i]) %>
+      <% for(var i=0; i < currentEvents.length; i++) { %>
+          <% if(currentEvents[i].user == null && user.qualifiedPositions.includes(events[i].title)){ %>
+            <% openEvents.push(currentEvents[i]) %>
           <% } %>
       <% } %>
       document.getElementById("theevents").innerHTML = '<%= JSON.stringify(openEvents) %>';
     } else {
       console.log('Running show all events');
-      <% var oldEvents = cleanEvents%>
+      <% var oldEvents = currentEvents%>
       document.getElementById("theevents").innerHTML = '<%= JSON.stringify(oldEvents) %>';
     }
     reRender();
   }
 
+  /**
+   * I am struggling to get this to work.  There are a couple of issues.
+   * 1) It is hard to communicate between the filters.  All code in <% %> is rendered prior to 
+   *    load, which means if I try to set currentPos to whatever is selected, it sets it to all
+   *    regardless of if loop, and so ends up with whatever is last selected
+   * 2) New Value is only client side, not server side.  So I can not easily create a drop down of positions
+   *    Full client side rendering would make this a lot easier, but I would need to implement angular or react
+   *    or I need a way to set a client side variable to a server side value (events) and only modify client side
+   */
+   
+
 
   function updatePostFilter(newValue){
     document.getElementById("currentPos").innerHTML = '<fieldset>' + newValue + '</fieldset>';
-    //renderCalPos(newValue);
+    renderCalPos(newValue);
+    // console.log('inner text = ' + document.getElementById("currentSel").innerText)
+    // renderCal(document.getElementById("currentSel").innerText);
   }
 
   function renderCalPos(newValue) {
-    ColorEvents();
+    //ColorEvents();
     console.log('New value is ' + newValue);
     if(newValue == 'Show Qualified Positions'){
       console.log('Running showmy pos');
-      <% var qualEvents = new Array()%>
-      <% for(var i=0; i < cleanEvents.length; i++) { %>
-          <% if(user.qualifiedPositions.includes(events[i].title)){ %>
-            <% qualEvents.push(cleanEvents[i]) %>
-          <% } %>
-      <% } %>
-      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(qualEvents) %>';
+      var qualEvents = new Array()
+      for(var i=0; i < clientEvents.length; i++) {
+          console.log('userQp - ' + userQP);
+          console.log('clientEvents[i].title - ' + clientEvents[i].title);
+          if(userQP.includes(clientEvents[i].title)){
+            qualEvents.push(clientEvents[i])
+          }
+      }
+      document.getElementById("theevents").innerHTML = JSON.stringify(qualEvents);
     } else if(newValue == 'Show All Positions'){
       console.log('Running show all events');
-      <% var oldEvents = cleanEvents%>
-      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(oldEvents) %>';
+      var oldEvents = '<%= JSON.stringify(events) %>'
+      document.getElementById("theevents").innerHTML = oldEvents;
     }
   
     reRender();
@@ -193,4 +218,5 @@
     }
   }
 </script>
+
 
