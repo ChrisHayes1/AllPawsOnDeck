@@ -6,7 +6,7 @@
     <%- include partials/head.ejs %>
     <script>
       <% var cleanEvents = new Array() %>
-      <% var currentEvents = new Array() %>
+      
       
       console.log('userqp')
       function ColorEvents() {
@@ -31,7 +31,6 @@
             <% } %>
             <% cleanEvents.push(events[i]) %>
           <% } %>
-          <% currentEvents = cleanEvents %>
       }
     </script>
   </head>
@@ -74,33 +73,7 @@
                   </table>
               </div>
             </th>
-            <th>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <div class="dropdown filterList">
-                  <table>
-                    <tr>
-                      <th>
-                        Show Positions: 
-                      </th>
-                      <th id = "currentPos">
-                        <fieldset>
-                          Show All Positions
-                        </fieldset>
-                      </th>
-                      <th>
-                        <button onclick="toggleDropdown('myPosDropdown')" class="dropbtn">V</button>
-                        <div id="myPosDropdown"  class="dropdown-content">
-                            <button class = "EditDropdownButton" onclick="updatePostFilter('Show All Positions')">Show All Positions</button>
-                            <button class = "EditDropdownButton" onclick="updatePostFilter('Show Qualified Positions')">Show Qualified Positions</button>
-                            <% for(var f = 0; f < user.qualifiedPositions.length; f++) {%>
-                              <button class = "EditDropdownButton" onclick="updatePostFilter('<%= user.qualifiedPositions[f] %>')"><%= user.qualifiedPositions[f] %></button>
-                            <% } %>
-                        </div>
-                      </th>
-                    </tr>
-                  </table>
-              </div>
-            </th>
+            
           </tr>
         </table>
         <%- include partials/partialCalendar.ejs %>
@@ -116,49 +89,59 @@
 
 
 <script>
-
-  var clientEvents = <%- JSON.stringify(events) %>;
-  var userQP = <%- JSON.stringify(user.qualifiedPositions) %>;
+  
+  var currentEvents = <%- JSON.stringify(cleanEvents) %>
+  //var clientEvents = <%- JSON.stringify(events) %>;
+  var userQP = <%- JSON.stringify(user.qualifiedPositions) %>
 
   function toggleDropdown(mID) {
-      document.getElementById(mID).classList.toggle("show");
+    document.getElementById(mID).classList.toggle("show");
   }
 
+  /**
+   * Filter by event options
+   */
+  
   function updateCalFilter(newValue){
-    <% currentEvents = cleanEvents %>
+    ColorEvents();//sets colors.  Probably not necessesary every walk through
+    var currentEvents = <%- JSON.stringify(cleanEvents) %>
+    console.log('currentEvents = ' + currentEvents);
     document.getElementById("currentSel").innerHTML = '<fieldset>' + newValue + '</fieldset>';
     renderCal(newValue);
-    console.log('inner text = ' + document.getElementById("currentPos").innerText)
-    renderCalPos(document.getElementById("currentPos").innerText);
+    //console.log('inner text = ' + document.getElementById("currentPos").innerText)
+    //renderCalPos(document.getElementById("currentPos").innerText);
   }
 
   function renderCal(newValue) {
-    ColorEvents();
-    
     console.log('New value is ' + newValue);
     if(newValue == 'Show My Events'){
+      var newEvents = new Array()
       console.log('Running showmy events');
-      <% var newEvents = new Array()%>
-      <% for(var i=0; i < currentEvents.length; i++) { %>
-          <% if(currentEvents[i].user == user.id){ %>
-            <% newEvents.push(currentEvents[i]) %>
-          <% } %>
-      <% } %>
-      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(newEvents) %>';
+      for(var i=0; i < currentEvents.length; i++) { 
+          if(currentEvents[i].user == '<%- user.id %>'){ 
+            newEvents.push(currentEvents[i]) 
+          } 
+      }
+      document.getElementById("theevents").innerHTML = JSON.stringify(newEvents);
+      //currentEvents = newEvents;
     } else if(newValue == 'Show Available Events'){
+      var availEvents = new Array()
       console.log('Running showmy events');
-      <% var openEvents = new Array()%>
-      <% for(var i=0; i < currentEvents.length; i++) { %>
-          <% if(currentEvents[i].user == null && user.qualifiedPositions.includes(events[i].title)){ %>
-            <% openEvents.push(currentEvents[i]) %>
-          <% } %>
-      <% } %>
-      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(openEvents) %>';
+      //var openEvents = new Array()
+      for(var i=0; i < currentEvents.length; i++) {
+          if(currentEvents[i].user == null && userQP.includes(currentEvents[i].title)){ 
+            availEvents.push(currentEvents[i])
+          }
+      }
+      document.getElementById("theevents").innerHTML = JSON.stringify(availEvents);
+      //currentEvents = availEvents;
     } else {
       console.log('Running show all events');
-      <% var oldEvents = currentEvents%>
-      document.getElementById("theevents").innerHTML = '<%= JSON.stringify(oldEvents) %>';
+      var oldEvents = currentEvents;
+      document.getElementById("theevents").innerHTML = JSON.stringify(oldEvents);
+      //currentEvents = oldEvents;
     }
+    
     reRender();
   }
 
@@ -172,38 +155,65 @@
    *    or I need a way to set a client side variable to a server side value (events) and only modify client side
    */
    
+  /**
+   * Filter by position options
+   */
 
+  // function updatePostFilter(newValue){
+  //   document.getElementById("currentPos").innerHTML = '<fieldset>' + newValue + '</fieldset>';
+  //   renderCalPos(newValue);
+  //   // console.log('inner text = ' + document.getElementById("currentSel").innerText)
+  //   // renderCal(document.getElementById("currentSel").innerText);
+  // }
 
-  function updatePostFilter(newValue){
-    document.getElementById("currentPos").innerHTML = '<fieldset>' + newValue + '</fieldset>';
-    renderCalPos(newValue);
-    // console.log('inner text = ' + document.getElementById("currentSel").innerText)
-    // renderCal(document.getElementById("currentSel").innerText);
-  }
-
-  function renderCalPos(newValue) {
-    //ColorEvents();
-    console.log('New value is ' + newValue);
-    if(newValue == 'Show Qualified Positions'){
-      console.log('Running showmy pos');
-      var qualEvents = new Array()
-      for(var i=0; i < clientEvents.length; i++) {
-          console.log('userQp - ' + userQP);
-          console.log('clientEvents[i].title - ' + clientEvents[i].title);
-          if(userQP.includes(clientEvents[i].title)){
-            qualEvents.push(clientEvents[i])
-          }
-      }
-      document.getElementById("theevents").innerHTML = JSON.stringify(qualEvents);
-    } else if(newValue == 'Show All Positions'){
-      console.log('Running show all events');
-      var oldEvents = '<%= JSON.stringify(events) %>'
-      document.getElementById("theevents").innerHTML = oldEvents;
-    }
-  
-    reRender();
-  }
-
+  // function renderCalPos(newValue) {
+  //   //ColorEvents();
+  //   console.log('New value is ' + newValue);
+  //   if(newValue == 'Show Qualified Positions'){
+  //     console.log('Running showmy pos');
+  //     var newEvents = new Array()
+  //     for(var i=0; i < currentEvents.length; i++) {
+  //         console.log('userQp - ' + userQP);
+  //         console.log('currentEvents[i].title - ' + currentEvents[i].title);
+  //         if(userQP.includes(currentEvents[i].title)){
+  //           newEvents.push(currentEvents[i])
+  //         }
+  //     }
+  //   } else if(newValue == 'Show All Positions'){
+  //     console.log('Running show all events');
+  //     var newEvents = currentEvents
+  //   }
+  //   document.getElementById("theevents").innerHTML = JSON.stringify(newEvents);
+  //   currentEvents = newEvents;
+  //   reRender();
+  // }
+  // <th>
+  //               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  //             <div class="dropdown filterList">
+  //                 <table>
+  //                   <tr>
+  //                     <th>
+  //                       Show Positions: 
+  //                     </th>
+  //                     <th id = "currentPos">
+  //                       <fieldset>
+  //                         Show All Positions
+  //                       </fieldset>
+  //                     </th>
+  //                     <th>
+  //                       <button onclick="toggleDropdown('myPosDropdown')" class="dropbtn">V</button>
+  //                       <div id="myPosDropdown"  class="dropdown-content">
+  //                           <button class = "EditDropdownButton" onclick="updatePostFilter('Show All Positions')">Show All Positions</button>
+  //                           <button class = "EditDropdownButton" onclick="updatePostFilter('Show Qualified Positions')">Show Qualified Positions</button>
+  //                           <% for(var f = 0; f < user.qualifiedPositions.length; f++) {%>
+  //                             <button class = "EditDropdownButton" onclick="updatePostFilter('<%= user.qualifiedPositions[f] %>')"><%= user.qualifiedPositions[f] %></button>
+  //                           <% } %>
+  //                       </div>
+  //                     </th>
+  //                   </tr>
+  //                 </table>
+  //             </div>
+  //           </th>
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
