@@ -56,6 +56,7 @@ exports.GetEvents = function (hasUser, callback) {
 		console.log('Shifts has a length of ' + shifts.length);
 
 		var eventsRun = 0;
+		if (shifts.length == 0) return callback(null, []);
 		shifts.forEach(function (shift) {
 			VolPos.getPositionNameByID(shift.positions_id, function(err, pName) {
 				console.log('Checking position name');
